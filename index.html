@@ -70,13 +70,13 @@ header p { font-size: 13px; color: #7a9ab8; }
 
 /* ── GRID ── */
 .grid { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; max-width: 1100px; margin: 0 auto; }
-.card-wrap { perspective: 900px; cursor: pointer; position: relative; }
-.card { width: 158px; height: 158px; position: relative; transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(.4,0,.2,1); }
-.card.flipped { transform: rotateY(180deg); }
-.face { position: absolute; inset: 0; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; text-align: center; }
+.card-wrap { perspective: 900px; -webkit-perspective: 900px; cursor: pointer; position: relative; }
+.card { width: 158px; height: 158px; position: relative; transform-style: preserve-3d; -webkit-transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(.4,0,.2,1); -webkit-transition: -webkit-transform 0.55s cubic-bezier(.4,0,.2,1); }
+.card.flipped { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; align-items: center; justify-content: center; text-align: center; -webkit-transform: translateZ(0); transform: translateZ(0); }
 .face svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .face .content { position: relative; z-index: 1; padding: 15px; }
-.face.back { transform: rotateY(180deg); }
+.face.back { transform: rotateY(180deg) translateZ(0); -webkit-transform: rotateY(180deg) translateZ(0); }
 .face.front .content .term { font-family: 'DM Serif Display', serif; font-size: 13px; line-height: 1.35; display: block; margin-bottom: 5px; }
 .face.back .content .def { font-size: 10.5px; line-height: 1.5; display: block; margin-bottom: 5px; }
 .ch-badge { display: inline-block; font-size: 9px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 8px; padding: 2px 7px; }
@@ -125,6 +125,12 @@ header p { font-size: 13px; color: #7a9ab8; }
 .modal h3 { font-family: 'DM Serif Display', serif; font-size: 1rem; color: #042C53; margin-bottom: 1rem; }
 
 footer { text-align: center; margin-top: 3rem; font-size: 11px; color: #9aafc0; }
+/* iOS Safari fix – verhindert durchscheinendes Spiegelbild */
+@supports (-webkit-touch-callout: none) {
+  .face { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+  .face.front { -webkit-transform: rotateY(0deg) translateZ(1px); transform: rotateY(0deg) translateZ(1px); }
+  .face.back { -webkit-transform: rotateY(180deg) translateZ(1px); transform: rotateY(180deg) translateZ(1px); }
+}
 @media (max-width: 480px) {
   .card, .card-wrap { width: 138px; height: 138px; }
   .face.front .content .term { font-size: 11.5px; }
