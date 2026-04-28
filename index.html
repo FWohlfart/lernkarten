@@ -214,6 +214,7 @@ footer { text-align: center; margin-top: 3rem; font-size: 11px; color: #9aafc0; 
     </div>
     <div class="admin-btns">
       <button class="abtn primary" id="sheetsLoad">⬇ Jetzt von Google Sheets laden</button>
+      <button class="abtn secondary" id="sheetsReload">🔄 Aktualisieren</button>
       <button class="abtn secondary" id="sheetsClear">🔗 Verknüpfung entfernen</button>
     </div>
     <div id="sheetsStatus" class="admin-status"></div>
@@ -782,18 +783,30 @@ async function loadFromSheets(url) {
   // Convert regular sheets URL to CSV export URL if needed
   let csvUrl = url;
   const match = url.match(/\/spreadsheets\/d\/([^/]+)/);
-  if (match && !url.includes('output=csv')) {
+  if (match) {
     const gid = (url.match(/gid=(\d+)/) || [])[1] || '0';
     csvUrl = `https://docs.google.com/spreadsheets/d/${match[1]}/export?format=csv&gid=${gid}`;
   }
-  // Use a CORS proxy since Google Sheets doesn't allow direct fetch from static pages
-  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(csvUrl)}`;
-  const res = await fetch(proxyUrl, {cache:'no-cache'});
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const text = await res.text();
-  const cards = parseCsvToCards(text);
-  if (cards.length === 0) throw new Error('Keine Karten gefunden – bitte Spaltenformat prüfen: ch, sub, term, def');
-  return cards;
+  // Cache-busting timestamp so we always get fresh data
+  const cacheBust = Date.now();
+  // Try multiple CORS proxies in order
+  const proxies = [
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(csvUrl + '&t=' + cacheBust)}`,
+    `https://corsproxy.io/?${encodeURIComponent(csvUrl + '&t=' + cacheBust)}`,
+    `https://proxy.cors.sh/${csvUrl}?t=${cacheBust}`,
+  ];
+  let lastErr = '';
+  for (const proxyUrl of proxies) {
+    try {
+      const res = await fetch(proxyUrl, {cache: 'no-store', headers: {'Cache-Control': 'no-cache'}});
+      if (!res.ok) { lastErr = `HTTP ${res.status}`; continue; }
+      const text = await res.text();
+      const cards = parseCsvToCards(text);
+      if (cards.length === 0) throw new Error('Keine Karten gefunden – bitte Spaltenformat prüfen: ch, sub, term, def');
+      return cards;
+    } catch(e) { lastErr = e.message; }
+  }
+  throw new Error(lastErr || 'Alle Proxies fehlgeschlagen');
 }
 
 function showSheetsStatus(msg, ok=true) {
@@ -835,6 +848,25 @@ document.getElementById('sheetsClear').addEventListener('click', () => {
   document.getElementById('sheetsUrl').value = '';
   document.getElementById('sheetsInfo').style.display = 'none';
   showSheetsStatus('Verknüpfung entfernt.');
+});
+
+// Reload-Button (manuell aktualisieren)
+document.getElementById('sheetsReload').addEventListener('click', async () => {
+  const url = localStorage.getItem(SHEETS_KEY);
+  if (!url) { showSheetsStatus('Kein Google Sheets Link gespeichert.', false); return; }
+  const btn = document.getElementById('sheetsReload');
+  btn.textContent = '⏳ Laden…'; btn.disabled = true;
+  try {
+    const cards = await loadFromSheets(url);
+    CARDS.length = 0; cards.forEach(c => CARDS.push(c));
+    saveCards();
+    renderSubFilters(); renderGrid();
+    showSheetsStatus(`✓ ${cards.length} Lernkarten aktualisiert!`);
+  } catch(e) {
+    showSheetsStatus('Fehler: ' + e.message, false);
+  } finally {
+    btn.textContent = '🔄 Aktualisieren'; btn.disabled = false;
+  }
 });
 
 
