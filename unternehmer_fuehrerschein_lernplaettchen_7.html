@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unternehmer-Führerschein & Business Skills – Lernkarten</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: #f0f4f8; min-height: 100vh; padding: 2rem 1rem 4rem; color: #1a2a3a; }
+
+header { text-align: center; margin-bottom: 1.8rem; position: relative; }
+header .label { font-size: 11px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: #7a9ab8; margin-bottom: 0.4rem; }
+header h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.5rem, 4vw, 2.2rem); color: #042C53; line-height: 1.2; margin-bottom: 0.4rem; }
+header p { font-size: 13px; color: #7a9ab8; }
+.admin-toggle { position: absolute; top: 0; right: 0; font-size: 11px; padding: 5px 12px; border-radius: 12px; border: 1px solid #dce8f5; background: white; color: #9aafc0; cursor: pointer; transition: all 0.2s; }
+.admin-toggle:hover { border-color: #b5d4f4; color: #378ADD; }
+.admin-toggle.active { background: #1a2a3a; color: white; border-color: #1a2a3a; }
+
+/* ── MODULE SWITCHER ── */
+.modul-switcher { display: flex; gap: 8px; justify-content: center; margin-bottom: 1.2rem; }
+.modul-btn { font-family: 'DM Serif Display', serif; font-size: 14px; padding: 9px 28px; border-radius: 26px; border: 2px solid transparent; cursor: pointer; transition: all 0.22s; background: white; }
+.modul-btn[data-mod="all"] { border-color: #b0c4d8; color: #5a7a9a; }
+.modul-btn[data-mod="all"].active { background: #1a2a3a; color: white; border-color: #1a2a3a; }
+.modul-btn[data-mod="A"] { border-color: #F0997B; color: #7A2E10; }
+.modul-btn[data-mod="A"].active { background: #7A2E10; color: white; border-color: #7A2E10; }
+.modul-btn[data-mod="B"] { border-color: #85B7EB; color: #185FA5; }
+.modul-btn[data-mod="B"].active { background: #185FA5; color: white; border-color: #185FA5; }
+
+/* ── LEGEND ── */
+.legend { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 1.4rem; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #5a7a9a; }
+.legend-dot { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
+
+/* ── CHAPTER TABS ── */
+.chapter-tabs { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; margin-bottom: 1rem; }
+.tab { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; padding: 7px 16px; border-radius: 22px; border: 2px solid transparent; cursor: pointer; transition: all 0.2s; background: white; }
+/* Modul A colors – warm earth tones */
+.tab[data-ch="a1"]  { border-color: #F5C4B3; color: #7A2E10; } .tab[data-ch="a1"].active  { background: #7A2E10; color: white; border-color: #7A2E10; }
+.tab[data-ch="a2"]  { border-color: #FAC775; color: #7A3D00; } .tab[data-ch="a2"].active  { background: #7A3D00; color: white; border-color: #7A3D00; }
+.tab[data-ch="a3"]  { border-color: #EF9F27; color: #6B3A00; } .tab[data-ch="a3"].active  { background: #6B3A00; color: white; border-color: #6B3A00; }
+.tab[data-ch="a4"]  { border-color: #E24B4A; color: #791F1F; } .tab[data-ch="a4"].active  { background: #791F1F; color: white; border-color: #791F1F; }
+.tab[data-ch="a5"]  { border-color: #ED93B1; color: #72243E; } .tab[data-ch="a5"].active  { background: #72243E; color: white; border-color: #72243E; }
+.tab[data-ch="a6"]  { border-color: #AFA9EC; color: #3C3489; } .tab[data-ch="a6"].active  { background: #3C3489; color: white; border-color: #3C3489; }
+/* Modul B colors – cool blues/greens */
+.tab[data-ch="b1"]  { border-color: #85B7EB; color: #185FA5; } .tab[data-ch="b1"].active  { background: #185FA5; color: white; }
+.tab[data-ch="b2a"] { border-color: #5DCAA5; color: #0F6E56; } .tab[data-ch="b2a"].active { background: #0F6E56; color: white; }
+.tab[data-ch="b2b"] { border-color: #AFA9EC; color: #534AB7; } .tab[data-ch="b2b"].active { background: #534AB7; color: white; }
+.tab[data-ch="b4"]  { border-color: #F0997B; color: #993C1D; } .tab[data-ch="b4"].active  { background: #993C1D; color: white; }
+.tab[data-ch="b5"]  { border-color: #EF9F27; color: #854F0B; } .tab[data-ch="b5"].active  { background: #854F0B; color: white; }
+.tab[data-ch="b6"]  { border-color: #ED93B1; color: #993556; } .tab[data-ch="b6"].active  { background: #993556; color: white; }
+.tab[data-ch="b7"]  { border-color: #97C459; color: #3B6D11; } .tab[data-ch="b7"].active  { background: #3B6D11; color: white; }
+
+/* ── SUB-FILTERS ── */
+.sub-filters { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 0.9rem; min-height: 30px; }
+.sub-btn { font-family: 'DM Sans', sans-serif; font-size: 11px; padding: 4px 13px; border-radius: 14px; border: 1px solid #b0c4d8; background: white; color: #5a7a9a; cursor: pointer; transition: all 0.2s; }
+.sub-btn.active { background: #e8f0f8; color: #042C53; border-color: #7aabcf; font-weight: 500; }
+
+/* ── ACTION ROW ── */
+.action-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+.action-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 5px 15px; border-radius: 14px; border: 1px solid #b5d4f4; background: white; color: #378ADD; cursor: pointer; transition: all 0.2s; }
+.action-btn:hover { background: #e6f1fb; }
+
+/* ── PROGRESS ── */
+.progress-wrap { max-width: 340px; margin: 0 auto 1.2rem; text-align: center; }
+.progress-label { font-size: 12px; color: #7a9ab8; margin-bottom: 5px; }
+.progress-track { height: 6px; background: #dce8f5; border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; width: 0%; background: #378ADD; }
+.hint { font-size: 11px; color: #9aafc0; text-align: center; margin-bottom: 1.4rem; }
+
+/* ── GRID ── */
+.grid { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; max-width: 1100px; margin: 0 auto; }
+.card-wrap { perspective: 900px; cursor: pointer; position: relative; }
+.card { width: 158px; height: 158px; position: relative; transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(.4,0,.2,1); }
+.card.flipped { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; text-align: center; }
+.face svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.face .content { position: relative; z-index: 1; padding: 15px; }
+.face.back { transform: rotateY(180deg); }
+.face.front .content .term { font-family: 'DM Serif Display', serif; font-size: 13px; line-height: 1.35; display: block; margin-bottom: 5px; }
+.face.back .content .def { font-size: 10.5px; line-height: 1.5; display: block; margin-bottom: 5px; }
+.ch-badge { display: inline-block; font-size: 9px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 8px; padding: 2px 7px; }
+.learn-btn { display: inline-block; margin-top: 5px; font-family: 'DM Sans', sans-serif; font-size: 10px; padding: 3px 10px; border-radius: 10px; border: 1px solid; background: transparent; cursor: pointer; transition: all 0.2s; }
+
+/* Admin overlays */
+.admin-card-btns { display: none; position: absolute; top: 4px; right: 4px; z-index: 10; gap: 4px; flex-direction: column; }
+.admin-mode .admin-card-btns { display: flex; }
+.admin-card-btn { font-size: 11px; padding: 2px 7px; border-radius: 8px; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; line-height: 1.6; }
+.admin-card-btn.edit { background: #e6f1fb; color: #185FA5; }
+.admin-card-btn.del  { background: #FCEBEB; color: #A32D2D; }
+.admin-card-btn:hover { opacity: 0.8; }
+
+/* ── ADMIN PANEL ── */
+#adminPanel { display: none; background: white; border: 1.5px solid #dce8f5; border-radius: 16px; padding: 1.5rem; max-width: 680px; margin: 0 auto 2rem; }
+#adminPanel.visible { display: block; }
+#adminPanel h2 { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: #042C53; margin-bottom: 1rem; }
+.admin-form { display: grid; gap: 10px; }
+.admin-form label { font-size: 12px; color: #5a7a9a; margin-bottom: 2px; display: block; }
+.admin-form input, .admin-form select, .admin-form textarea { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 8px 12px; border-radius: 8px; border: 1px solid #dce8f5; background: #f8fafc; color: #1a2a3a; outline: none; transition: border 0.2s; }
+.admin-form input:focus, .admin-form select:focus, .admin-form textarea:focus { border-color: #85B7EB; background: white; }
+.admin-form textarea { resize: vertical; min-height: 72px; }
+.admin-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.admin-btns { display: flex; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
+.abtn { font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 7px 18px; border-radius: 10px; border: none; cursor: pointer; font-weight: 500; transition: all 0.2s; }
+.abtn.primary { background: #185FA5; color: white; } .abtn.primary:hover { background: #042C53; }
+.abtn.secondary { background: #f0f4f8; color: #5a7a9a; border: 1px solid #dce8f5; } .abtn.secondary:hover { background: #e6f1fb; }
+.abtn.danger { background: #FCEBEB; color: #A32D2D; } .abtn.danger:hover { background: #F7C1C1; }
+.admin-divider { border: none; border-top: 1px solid #f0f4f8; margin: 1rem 0; }
+.admin-status { font-size: 12px; padding: 6px 12px; border-radius: 8px; margin-top: 6px; display: none; }
+.admin-status.ok  { background: #EAF3DE; color: #3B6D11; display: block; }
+.admin-status.err { background: #FCEBEB; color: #A32D2D; display: block; }
+
+/* ── LOCK SCREEN ── */
+#lockScreen { display: none; background: white; border: 1.5px solid #dce8f5; border-radius: 16px; padding: 1.5rem; max-width: 340px; margin: 0 auto 2rem; text-align: center; }
+#lockScreen.visible { display: block; }
+#lockScreen h3 { font-family: 'DM Serif Display', serif; font-size: 1rem; color: #042C53; margin-bottom: 0.8rem; }
+#lockScreen input { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 8px 12px; border-radius: 8px; border: 1px solid #dce8f5; background: #f8fafc; outline: none; text-align: center; letter-spacing: 0.1em; margin-bottom: 10px; }
+#lockScreen input:focus { border-color: #85B7EB; }
+.lock-err { font-size: 12px; color: #A32D2D; margin-top: 4px; display: none; }
+
+/* ── EDIT MODAL ── */
+.modal-bg { display: none; position: fixed; inset: 0; background: rgba(10,20,40,0.35); z-index: 100; align-items: center; justify-content: center; }
+.modal-bg.open { display: flex; }
+.modal { background: white; border-radius: 16px; padding: 1.5rem; width: 90%; max-width: 500px; box-shadow: 0 8px 32px rgba(4,44,83,0.12); }
+.modal h3 { font-family: 'DM Serif Display', serif; font-size: 1rem; color: #042C53; margin-bottom: 1rem; }
+
+footer { text-align: center; margin-top: 3rem; font-size: 11px; color: #9aafc0; }
+@media (max-width: 480px) {
+  .card, .card-wrap { width: 138px; height: 138px; }
+  .face.front .content .term { font-size: 11.5px; }
+  .face.back .content .def { font-size: 10px; }
+  .admin-row { grid-template-columns: 1fr; }
+  .modul-btn { padding: 8px 18px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="label">Unternehmer-Führerschein &amp; Business Skills · Dipl. Ing. Wohlfart Franz</div>
+  <h1>Lernkarten</h1>
+  <p>Klicke auf eine Karte · Rückseite zeigt die Erklärung</p>
+  <button class="admin-toggle" id="adminToggle">⚙ Admin</button>
+</header>
+
+<!-- Lock screen -->
+<div id="lockScreen">
+  <h3>🔒 Admin-Zugang</h3>
+  <input type="password" id="pwInput" placeholder="Passwort" />
+  <br>
+  <button class="abtn primary" id="pwSubmit" style="width:100%">Anmelden</button>
+  <div class="lock-err" id="lockErr">Falsches Passwort</div>
+</div>
+
+<!-- Admin Panel -->
+<div id="adminPanel">
+  <h2>⚙ Admin-Panel <span style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:#9aafc0;">– Lernkarten verwalten</span></h2>
+  <div class="admin-form">
+    <div style="font-size:12px;font-weight:500;color:#042C53;margin-bottom:2px;">Neue Lernkarte hinzufügen</div>
+    <div class="admin-row">
+      <div>
+        <label>Kapitel</label>
+        <select id="aChapter">
+          <optgroup label="── Modul A ──">
+            <option value="a1">Modul A – Kap. I · Grundlagen des Wirtschaftens &amp; Markt</option>
+            <option value="a2">Modul A – Kap. II · Das Unternehmen und sein Umfeld</option>
+            <option value="a3">Modul A – Kap. III · Kaufverträge</option>
+            <option value="a4">Modul A – Kap. IV · Bezahlen in der Praxis</option>
+            <option value="a5">Modul A – Kap. V · Finanzen im Griff</option>
+            <option value="a6">Modul A – Kap. VI · Versicherungen</option>
+          </optgroup>
+          <optgroup label="── Modul B ──">
+            <option value="b1">Modul B – Kap. I · Volkswirtschaftliche Grundlagen</option>
+            <option value="b2a">Modul B – Kap. II · Konjunktur &amp; Wachstum</option>
+            <option value="b2b">Modul B – Kap. III · Wirtschaftsprozesse</option>
+            <option value="b4">Modul B – Kap. IV · Wirtschaftspolitik</option>
+            <option value="b5">Modul B – Kap. V · Budget &amp; Budgetpolitik</option>
+            <option value="b6">Modul B – Kap. VI · Globalisierung</option>
+            <option value="b7">Modul B – Kap. VII · Nachhaltigkeit</option>
+          </optgroup>
+        </select>
+      </div>
+      <div>
+        <label>Unterthema (Subkategorie)</label>
+        <input type="text" id="aSub" placeholder="z. B. Markt, Geld, Grundlagen …" />
+      </div>
+    </div>
+    <div><label>Begriff (Vorderseite)</label><input type="text" id="aTerm" placeholder="z. B. Angebot & Nachfrage" /></div>
+    <div><label>Erklärung (Rückseite)</label><textarea id="aDef" placeholder="Kurze, prägnante Erklärung des Begriffs …"></textarea></div>
+    <div class="admin-btns">
+      <button class="abtn primary" id="addCard">+ Lernkarte hinzufügen</button>
+      <button class="abtn secondary" id="clearForm">Formular leeren</button>
+    </div>
+    <div class="admin-status" id="adminStatus"></div>
+  </div>
+  <hr class="admin-divider">
+  <div style="font-size:12px;font-weight:500;color:#042C53;margin-bottom:6px;">📊 Google Sheets verknüpfen</div>
+  <div style="font-size:11px;color:#7a9ab8;margin-bottom:10px;line-height:1.6;">
+    Pflege deine Karten direkt in Google Sheets – Änderungen sind sofort live für alle Schüler.<br>
+    <strong>Sheet-Format:</strong> 4 Spalten: <code style="background:#f0f4f8;padding:1px 5px;border-radius:4px;">ch · sub · term · def</code> (erste Zeile = Kopfzeile)<br>
+    <strong>Werte für „ch":</strong> a1, a2, a3, a4, a5, a6, b1, b2a, b2b, b4, b5, b6, b7<br>
+    <strong>Sheet veröffentlichen:</strong> Datei → Im Web veröffentlichen → CSV → Link kopieren
+  </div>
+  <div class="admin-form">
+    <div>
+      <label>Google Sheets CSV-Link (veröffentlichter Link)</label>
+      <input type="url" id="sheetsUrl" placeholder="https://docs.google.com/spreadsheets/d/.../pub?output=csv" />
+    </div>
+    <div class="admin-btns">
+      <button class="abtn primary" id="sheetsLoad">⬇ Jetzt von Google Sheets laden</button>
+      <button class="abtn secondary" id="sheetsClear">🔗 Verknüpfung entfernen</button>
+    </div>
+    <div id="sheetsStatus" class="admin-status"></div>
+  </div>
+  <div id="sheetsInfo" style="display:none;font-size:11px;background:#EAF3DE;color:#3B6D11;padding:8px 12px;border-radius:8px;margin-top:8px;line-height:1.6;">
+    ✓ Google Sheets verknüpft – Karten werden beim nächsten Seitenaufruf automatisch geladen.
+  </div>
+  <hr class="admin-divider">
+  <div style="font-size:12px;font-weight:500;color:#042C53;margin-bottom:8px;">Daten exportieren / importieren</div>
+  <div class="admin-btns">
+    <button class="abtn secondary" id="exportBtn">⬇ JSON exportieren</button>
+    <button class="abtn secondary" id="importBtn">⬆ JSON importieren</button>
+    <button class="abtn danger" id="resetAllBtn">↺ Alle Änderungen zurücksetzen</button>
+  </div>
+  <input type="file" id="importFile" accept=".json" style="display:none">
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-bg" id="editModal">
+  <div class="modal">
+    <h3>Lernkarte bearbeiten</h3>
+    <div class="admin-form">
+      <div class="admin-row">
+        <div>
+          <label>Kapitel</label>
+          <select id="eChapter">
+            <optgroup label="── Modul A ──">
+              <option value="a1">Modul A – Kap. I</option>
+              <option value="a2">Modul A – Kap. II</option>
+              <option value="a3">Modul A – Kap. III</option>
+              <option value="a4">Modul A – Kap. IV</option>
+              <option value="a5">Modul A – Kap. V</option>
+              <option value="a6">Modul A – Kap. VI</option>
+            </optgroup>
+            <optgroup label="── Modul B ──">
+              <option value="b1">Modul B – Kap. I</option>
+              <option value="b2a">Modul B – Kap. II · Konjunktur</option>
+              <option value="b2b">Modul B – Kap. III · Wirtschaftsprozesse</option>
+              <option value="b4">Modul B – Kap. IV · Wirtschaftspolitik</option>
+              <option value="b5">Modul B – Kap. V · Budget</option>
+              <option value="b6">Modul B – Kap. VI · Globalisierung</option>
+              <option value="b7">Modul B – Kap. VII · Nachhaltigkeit</option>
+            </optgroup>
+          </select>
+        </div>
+        <div><label>Unterthema</label><input type="text" id="eSub" /></div>
+      </div>
+      <div><label>Begriff</label><input type="text" id="eTerm" /></div>
+      <div><label>Erklärung</label><textarea id="eDef"></textarea></div>
+      <div class="admin-btns">
+        <button class="abtn primary" id="saveEdit">Speichern</button>
+        <button class="abtn secondary" id="cancelEdit">Abbrechen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Module switcher -->
+<div class="modul-switcher">
+  <button class="modul-btn active" data-mod="all">Alle Module</button>
+  <button class="modul-btn" data-mod="A">Modul A</button>
+  <button class="modul-btn" data-mod="B">Modul B</button>
+</div>
+
+<div class="legend" id="legend"></div>
+<div class="chapter-tabs" id="chapterTabs"></div>
+<div class="sub-filters" id="subFilters"></div>
+
+<div class="action-row">
+  <button class="action-btn" id="flipAll">Alle umdrehen ↺</button>
+  <button class="action-btn" id="resetLearned">Fortschritt zurücksetzen</button>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-label" id="progressLabel">0 von 0 gelernt</div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<p class="hint">💡 Rückseite aufdecken → „Gelernt" markieren → Fortschritt verfolgen</p>
+<div class="grid" id="grid"></div>
+<footer>Unternehmer-Führerschein &amp; Business Skills · Dipl. Ing. Wohlfart Franz · Modul A &amp; Modul B</footer>
+
+<script>
+// ── PASSWORD ───────────────────────────────────────────────────────────────
+const PW_HASH = '28845bb0a06b5278ec155ef35f08c37b26c478f44a752348ef8775f88b785c4f'; // lehrer2025
+async function hashPw(pw) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
+  return [...new Uint8Array(buf)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+
+// ── COLOR PALETTE ──────────────────────────────────────────────────────────
+const COLORS = {
+  // Modul A – warm earthy palette
+  'a1':  { ff:'#F5C4B3', fs:'#7A2E10', bf:'#FAECE7', bs:'#D85A30', tc:'#4A1B0C', dc:'#712B13', bb:'#FAECE7', bc:'#7A2E10', lb:'#F0997B', lc:'#7A2E10', pg:'#7A2E10' },
+  'a2':  { ff:'#FAC775', fs:'#7A3D00', bf:'#FAEEDA', bs:'#BA7517', tc:'#412402', dc:'#633806', bb:'#FAEEDA', bc:'#7A3D00', lb:'#EF9F27', lc:'#7A3D00', pg:'#7A3D00' },
+  'a3':  { ff:'#F7C14A', fs:'#6B3A00', bf:'#FDF3D0', bs:'#C98A10', tc:'#3D2200', dc:'#5A3200', bb:'#FDF3D0', bc:'#6B3A00', lb:'#EF9F27', lc:'#6B3A00', pg:'#6B3A00' },
+  'a4':  { ff:'#F09595', fs:'#791F1F', bf:'#FCEBEB', bs:'#E24B4A', tc:'#501313', dc:'#791F1F', bb:'#FCEBEB', bc:'#791F1F', lb:'#E24B4A', lc:'#791F1F', pg:'#791F1F' },
+  'a5':  { ff:'#F4C0D1', fs:'#72243E', bf:'#FBEAF0', bs:'#D4537E', tc:'#4B1528', dc:'#72243E', bb:'#FBEAF0', bc:'#72243E', lb:'#ED93B1', lc:'#72243E', pg:'#72243E' },
+  'a6':  { ff:'#CECBF6', fs:'#3C3489', bf:'#EEEDFE', bs:'#7F77DD', tc:'#26215C', dc:'#3C3489', bb:'#EEEDFE', bc:'#3C3489', lb:'#AFA9EC', lc:'#3C3489', pg:'#3C3489' },
+  // Modul B – cool palette
+  'b1':  { ff:'#B5D4F4', fs:'#185FA5', bf:'#E6F1FB', bs:'#378ADD', tc:'#042C53', dc:'#0C447C', bb:'#E6F1FB', bc:'#185FA5', lb:'#85B7EB', lc:'#185FA5', pg:'#185FA5' },
+  'b2a': { ff:'#9FE1CB', fs:'#0F6E56', bf:'#E1F5EE', bs:'#1D9E75', tc:'#04342C', dc:'#085041', bb:'#E1F5EE', bc:'#0F6E56', lb:'#5DCAA5', lc:'#0F6E56', pg:'#0F6E56' },
+  'b2b': { ff:'#CECBF6', fs:'#534AB7', bf:'#EEEDFE', bs:'#7F77DD', tc:'#26215C', dc:'#3C3489', bb:'#EEEDFE', bc:'#534AB7', lb:'#AFA9EC', lc:'#534AB7', pg:'#534AB7' },
+  'b4':  { ff:'#F5C4B3', fs:'#993C1D', bf:'#FAECE7', bs:'#D85A30', tc:'#4A1B0C', dc:'#712B13', bb:'#FAECE7', bc:'#993C1D', lb:'#F0997B', lc:'#993C1D', pg:'#993C1D' },
+  'b5':  { ff:'#FAC775', fs:'#854F0B', bf:'#FAEEDA', bs:'#BA7517', tc:'#412402', dc:'#633806', bb:'#FAEEDA', bc:'#854F0B', lb:'#EF9F27', lc:'#854F0B', pg:'#854F0B' },
+  'b6':  { ff:'#F4C0D1', fs:'#993556', bf:'#FBEAF0', bs:'#D4537E', tc:'#4B1528', dc:'#72243E', bb:'#FBEAF0', bc:'#993556', lb:'#ED93B1', lc:'#993556', pg:'#993556' },
+  'b7':  { ff:'#C0DD97', fs:'#3B6D11', bf:'#EAF3DE', bs:'#639922', tc:'#173404', dc:'#27500A', bb:'#EAF3DE', bc:'#3B6D11', lb:'#97C459', lc:'#3B6D11', pg:'#3B6D11' },
+};
+
+const CH_META = {
+  'a1':  { mod:'A', label:'Modul A – Kap. I · Grundlagen des Wirtschaftens &amp; Markt',  short:'Mod.A Kap.I' },
+  'a2':  { mod:'A', label:'Modul A – Kap. II · Das Unternehmen und sein Umfeld',           short:'Mod.A Kap.II' },
+  'a3':  { mod:'A', label:'Modul A – Kap. III · Kaufverträge abwickeln',                   short:'Mod.A Kap.III' },
+  'a4':  { mod:'A', label:'Modul A – Kap. IV · Bezahlen in der Praxis',                    short:'Mod.A Kap.IV' },
+  'a5':  { mod:'A', label:'Modul A – Kap. V · Die Finanzen im Griff',                      short:'Mod.A Kap.V' },
+  'a6':  { mod:'A', label:'Modul A – Kap. VI · Versicherungen',                            short:'Mod.A Kap.VI' },
+  'b1':  { mod:'B', label:'Modul B – Kap. I · Volkswirtschaftliche Grundlagen',            short:'Mod.B Kap.I' },
+  'b2a': { mod:'B', label:'Modul B – Kap. II · Konjunktur &amp; Wachstum',                 short:'Mod.B Kap.II' },
+  'b2b': { mod:'B', label:'Modul B – Kap. III · Wirtschaftsprozesse',                      short:'Mod.B Kap.III' },
+  'b4':  { mod:'B', label:'Modul B – Kap. IV · Wirtschaftspolitik',                        short:'Mod.B Kap.IV' },
+  'b5':  { mod:'B', label:'Modul B – Kap. V · Budget &amp; Budgetpolitik',                 short:'Mod.B Kap.V' },
+  'b6':  { mod:'B', label:'Modul B – Kap. VI · Internationaler Handel &amp; Globalisierung', short:'Mod.B Kap.VI' },
+  'b7':  { mod:'B', label:'Modul B – Kap. VII · Nachhaltiges Wirtschaften',                short:'Mod.B Kap.VII' },
+};
+
+// ── BASE CARDS ─────────────────────────────────────────────────────────────
+const BASE_CARDS = [
+
+// ════ MODUL A ════════════════════════════════════════════════════════════════
+
+// ── Kap. I: Grundlagen des Wirtschaftens & Der Markt ──────────────────────
+{ch:'a1',sub:'Grundlagen',term:'Wirtschaften',def:'Planen und Einsetzen knapper Mittel (Güter, Geld, Zeit) zur Befriedigung von Bedürfnissen.'},
+{ch:'a1',sub:'Grundlagen',term:'Knappheit',def:'Grundproblem der Wirtschaft: Bedürfnisse sind unbegrenzt, verfügbare Mittel sind begrenzt.'},
+{ch:'a1',sub:'Grundlagen',term:'Ökonomisches Prinzip',def:'Minimalprinzip: Ziel mit möglichst geringem Einsatz erreichen. Maximalprinzip: mit gegebenem Einsatz möglichst viel erreichen.'},
+{ch:'a1',sub:'Grundlagen',term:'Bedürfnis',def:'Empfundener Mangel, der den Wunsch nach Abhilfe auslöst. Stufen: Existenz-, Kultur-, Luxusbedürfnis.'},
+{ch:'a1',sub:'Grundlagen',term:'Bedarf',def:'Mit Kaufkraft ausgestattetes Bedürfnis – der Teil der Bedürfnisse, für den auch Geld vorhanden ist.'},
+{ch:'a1',sub:'Grundlagen',term:'Produktions-faktoren',def:'Arbeit, Kapital, Boden/Natur – die drei klassischen Einsatzmittel zur Gütererzeugung.'},
+{ch:'a1',sub:'Markt',term:'Markt',def:'Ort (real oder virtuell), an dem Anbieter und Nachfrager zusammentreffen und Preise gebildet werden.'},
+{ch:'a1',sub:'Markt',term:'Angebot',def:'Menge eines Gutes, die Anbieter zu einem bestimmten Preis verkaufen wollen. Steigt bei höherem Preis.'},
+{ch:'a1',sub:'Markt',term:'Nachfrage',def:'Menge eines Gutes, die Käufer zu einem bestimmten Preis kaufen wollen. Sinkt bei höherem Preis.'},
+{ch:'a1',sub:'Markt',term:'Gleichgewichts-preis',def:'Preis, bei dem angebotene und nachgefragte Menge übereinstimmen – kein Über- oder Unterangebot.'},
+{ch:'a1',sub:'Markt',term:'Marktversagen',def:'Situationen, in denen der Markt keine optimale Lösung liefert (externe Effekte, öffentliche Güter, Monopole).'},
+{ch:'a1',sub:'Markt',term:'Wettbewerb',def:'Rivalität zwischen Anbietern um Kunden; fördert Innovation, Qualität und günstige Preise.'},
+{ch:'a1',sub:'Markt',term:'Marktformen',def:'Polypol (viele Anbieter), Oligopol (wenige), Monopol (einer) – bestimmen Preis- und Marktmacht.'},
+{ch:'a1',sub:'Markt',term:'Preisbildung',def:'Prozess, bei dem sich durch Angebot und Nachfrage ein Marktpreis herausbildet.'},
+{ch:'a1',sub:'Markt',term:'Konsumenten-schutz',def:'Gesetzliche Regelungen, die Käufer vor unlauteren Geschäftspraktiken, Täuschung und Mängeln schützen.'},
+
+// ── Kap. II: Das Unternehmen und sein Umfeld ───────────────────────────────
+{ch:'a2',sub:'Unternehmen',term:'Unternehmen',def:'Wirtschaftliche Einheit, die Güter und Dienstleistungen produziert und am Markt anbietet, um Gewinn zu erzielen.'},
+{ch:'a2',sub:'Unternehmen',term:'Unternehmensziele',def:'Oberziele: Gewinn, Rentabilität, Wachstum. Soziale Ziele: Mitarbeiterzufriedenheit, Kundenbindung, Nachhaltigkeit.'},
+{ch:'a2',sub:'Unternehmen',term:'Rechtsform',def:'Rechtliche Struktur eines Unternehmens (z. B. Einzelunternehmen, GmbH, AG) – bestimmt Haftung, Kapital und Leitung.'},
+{ch:'a2',sub:'Unternehmen',term:'Einzelunternehmen',def:'Unternehmen einer Einzelperson: unbeschränkte persönliche Haftung, einfache Gründung, alle Entscheidungen beim Inhaber.'},
+{ch:'a2',sub:'Unternehmen',term:'GmbH',def:'Gesellschaft mit beschränkter Haftung: Haftung auf das Gesellschaftsvermögen begrenzt; Mindeststammkapital 35.000 € (AT).'},
+{ch:'a2',sub:'Unternehmen',term:'Aktiengesellschaft (AG)',def:'Kapitalgesellschaft, deren Eigenkapital in Aktien aufgeteilt ist. Aktionäre haften nur mit ihrer Einlage.'},
+{ch:'a2',sub:'Unternehmen',term:'Stakeholder',def:'Alle Gruppen mit Interesse am Unternehmen: Eigentümer, Mitarbeiter, Kunden, Lieferanten, Staat, Gesellschaft.'},
+{ch:'a2',sub:'Umfeld',term:'Unternehmens-umfeld',def:'Alle externen Einflüsse auf ein Unternehmen: wirtschaftliches, rechtliches, technologisches, soziales und ökologisches Umfeld.'},
+{ch:'a2',sub:'Umfeld',term:'SWOT-Analyse',def:'Analyse von Stärken (S), Schwächen (W), Chancen (O) und Risiken (T) eines Unternehmens.'},
+{ch:'a2',sub:'Umfeld',term:'Standortfaktoren',def:'Kriterien für die Wahl des Unternehmensstandorts: Infrastruktur, Arbeitskräfte, Steuern, Nähe zu Kunden/Lieferanten.'},
+{ch:'a2',sub:'Umfeld',term:'Wertschöpfungs-kette',def:'Abfolge aller Aktivitäten, die ein Unternehmen durchführt, um ein Produkt herzustellen und an den Kunden zu bringen.'},
+{ch:'a2',sub:'Umfeld',term:'Konjunktur & Unternehmen',def:'Konjunkturphasen beeinflussen Umsatz, Investitionen und Personalplanung; Unternehmen müssen antizyklisch planen.'},
+
+// ── Kap. III: Informiert und sicher Kaufverträge abwickeln ─────────────────
+{ch:'a3',sub:'Kaufvertrag',term:'Kaufvertrag',def:'Zweiseitiges Rechtsgeschäft: Verkäufer übergibt Eigentum, Käufer zahlt den vereinbarten Preis.'},
+{ch:'a3',sub:'Kaufvertrag',term:'Angebot & Annahme',def:'Kaufvertrag entsteht durch Angebot einer Partei und vorbehaltlose Annahme der anderen.'},
+{ch:'a3',sub:'Kaufvertrag',term:'Vertragsfreiheit',def:'Grundsatz: Jeder kann frei entscheiden, ob, mit wem und zu welchen Bedingungen er Verträge abschließt.'},
+{ch:'a3',sub:'Kaufvertrag',term:'Geschäftsfähigkeit',def:'Rechtliche Fähigkeit, Verträge wirksam abzuschließen. Voll geschäftsfähig ab 18 Jahren (AT).'},
+{ch:'a3',sub:'Kaufvertrag',term:'Allgemeine Geschäftsbedingungen (AGB)',def:'Vorformulierte Vertragsklauseln, die der Anbieter stellt; gelten nur, wenn der Käufer sie akzeptiert hat.'},
+{ch:'a3',sub:'Gewährleistung',term:'Gewährleistung',def:'Gesetzliche Pflicht des Verkäufers, für Mängel einzustehen, die bei Übergabe bereits vorhanden waren (2 Jahre AT).'},
+{ch:'a3',sub:'Gewährleistung',term:'Garantie',def:'Freiwillige Zusage des Herstellers/Händlers über die gesetzliche Gewährleistung hinaus.'},
+{ch:'a3',sub:'Gewährleistung',term:'Mangel',def:'Abweichung von der vereinbarten oder gewöhnlich vorausgesetzten Beschaffenheit einer Sache.'},
+{ch:'a3',sub:'Gewährleistung',term:'Verbesserung & Austausch',def:'Erste Stufe der Gewährleistung: Käufer kann Reparatur oder Ersatz verlangen, bevor er Preisminderung/Rücktritt fordert.'},
+{ch:'a3',sub:'Konsumentenschutz',term:'Rücktrittsrecht',def:'Bei Haustürgeschäften und Fernabsatz: 14-tägiges Widerrufsrecht ohne Angabe von Gründen (EU-Recht).'},
+{ch:'a3',sub:'Konsumentenschutz',term:'Fernabsatz-vertrag',def:'Vertrag, der ausschließlich über Fernkommunikationsmittel (Internet, Telefon) abgeschlossen wird.'},
+{ch:'a3',sub:'Konsumentenschutz',term:'Konsumenten-schutzgesetz (KSchG)',def:'Österreichisches Gesetz, das Verbraucher gegenüber Unternehmern schützt (z. B. AGB-Kontrolle, Rücktrittsrecht).'},
+
+// ── Kap. IV: Bezahlen in der Praxis ───────────────────────────────────────
+{ch:'a4',sub:'Zahlungsmittel',term:'Bargeld',def:'Gesetzliches Zahlungsmittel in Form von Münzen und Banknoten; anonym, sofort verfügbar.'},
+{ch:'a4',sub:'Zahlungsmittel',term:'Überweisung',def:'Auftrag an die Bank, einen Betrag vom eigenen Konto auf ein Empfängerkonto zu transferieren.'},
+{ch:'a4',sub:'Zahlungsmittel',term:'Lastschrift',def:'Abbuchung vom Konto des Zahlers durch den Empfänger auf Basis einer erteilten Einzugsermächtigung.'},
+{ch:'a4',sub:'Zahlungsmittel',term:'Kreditkarte',def:'Zahlungsmittel, bei dem der Betrag monatlich gesammelt und abgebucht wird; Kreditrahmen wird gewährt.'},
+{ch:'a4',sub:'Zahlungsmittel',term:'Debitkarte',def:'Zahlung wird direkt und sofort vom Girokonto abgebucht (z. B. Maestro, Visa Debit).'},
+{ch:'a4',sub:'Zahlungsmittel',term:'Online-Zahlung',def:'Bezahlung über das Internet: PayPal, Kreditkarte, Sofortüberweisung, Kryptowährungen u. a.'},
+{ch:'a4',sub:'Zahlungsmittel',term:'SEPA',def:'Single Euro Payments Area: einheitlicher europäischer Zahlungsraum für einfache, günstige Euro-Überweisungen.'},
+{ch:'a4',sub:'Zahlungsprobleme',term:'Zahlungsverzug',def:'Schuldner zahlt nicht fristgerecht; Gläubiger hat Anspruch auf Verzugszinsen und Mahnspesen.'},
+{ch:'a4',sub:'Zahlungsprobleme',term:'Mahnung',def:'Aufforderung an den Schuldner, eine fällige Zahlung zu leisten; Voraussetzung für rechtliche Schritte.'},
+{ch:'a4',sub:'Zahlungsprobleme',term:'Inkasso',def:'Beauftragung eines Inkassounternehmens zur Eintreibung offener Forderungen.'},
+{ch:'a4',sub:'Zahlungsprobleme',term:'Exekution',def:'Staatlich angeordnete Zwangsvollstreckung zur Durchsetzung von Geldforderungen (z. B. Lohnpfändung).'},
+
+// ── Kap. V: Die Finanzen im Griff ─────────────────────────────────────────
+{ch:'a5',sub:'Finanzplanung',term:'Budget (privat)',def:'Plan über Einnahmen und Ausgaben einer Person/eines Haushalts in einem bestimmten Zeitraum.'},
+{ch:'a5',sub:'Finanzplanung',term:'Liquidität',def:'Fähigkeit, fällige Zahlungen jederzeit erfüllen zu können; kurzfristige Zahlungsfähigkeit.'},
+{ch:'a5',sub:'Finanzplanung',term:'Einnahmen-Ausgaben-Rechnung',def:'Einfache Buchhaltungsmethode: Gegenüberstellung tatsächlicher Zahlungseingänge und -ausgänge.'},
+{ch:'a5',sub:'Kredit',term:'Kredit',def:'Überlassung von Geld auf Zeit gegen Zinszahlung; Kreditnehmer verpflichtet sich zur Rückzahlung.'},
+{ch:'a5',sub:'Kredit',term:'Zinsen',def:'Preis für geliehenes Kapital; ausgedrückt als Prozentsatz des Kreditbetrags pro Jahr (Zinssatz p. a.).'},
+{ch:'a5',sub:'Kredit',term:'Effektivzins',def:'Tatsächliche jährliche Kreditkosten inkl. aller Gebühren; maßgeblich für den Kreditvergleich.'},
+{ch:'a5',sub:'Kredit',term:'Bonität',def:'Kreditwürdigkeit einer Person; wird von Banken geprüft (Einkommen, Schulden, KSV-Daten).'},
+{ch:'a5',sub:'Kredit',term:'Überschuldung',def:'Schulden übersteigen das Vermögen und das Einkommen reicht nicht zur Schuldentilgung; führt oft zu Privatinsolvenz.'},
+{ch:'a5',sub:'Sparen',term:'Sparen',def:'Zurücklegen eines Teils des Einkommens für zukünftige Ausgaben oder Kapitalaufbau.'},
+{ch:'a5',sub:'Sparen',term:'Zinseszins',def:'Zinsen werden dem Kapital zugeschlagen und im nächsten Zeitraum mitverzinst – exponentielles Wachstum.'},
+{ch:'a5',sub:'Sparen',term:'Anlageformen',def:'Sparbuch, Festgeld, Anleihen, Aktien, Fonds, Immobilien – unterscheiden sich in Rendite, Risiko und Verfügbarkeit.'},
+
+// ── Kap. VI: Versicherungen ───────────────────────────────────────────────
+{ch:'a6',sub:'Grundlagen',term:'Versicherung',def:'Vertrag zur Absicherung finanzieller Risiken: viele zahlen Prämien, wenige erhalten im Schadensfall Leistungen.'},
+{ch:'a6',sub:'Grundlagen',term:'Prämie (Beitrag)',def:'Regelmäßige Zahlung des Versicherungsnehmers an die Versicherung für den Versicherungsschutz.'},
+{ch:'a6',sub:'Grundlagen',term:'Versicherungs-fall',def:'Das im Vertrag definierte Ereignis (z. B. Unfall, Brand, Diebstahl), das den Leistungsanspruch auslöst.'},
+{ch:'a6',sub:'Grundlagen',term:'Selbstbehalt',def:'Anteil am Schaden, den der Versicherte selbst trägt; senkt die Prämie, erhöht aber das Eigenrisiko.'},
+{ch:'a6',sub:'Grundlagen',term:'Pflicht- vs. freiwillige Versicherung',def:'Pflicht: gesetzlich vorgeschrieben (KFZ-Haftpflicht, Sozialversicherung). Freiwillig: nach eigenem Bedarf abgeschlossen.'},
+{ch:'a6',sub:'Arten',term:'Haftpflicht-versicherung',def:'Deckt Schäden, die man anderen zufügt; schützt vor Schadenersatzforderungen Dritter.'},
+{ch:'a6',sub:'Arten',term:'Unfallversicherung',def:'Zahlt bei dauerhafter Invalidität oder Tod durch Unfall; ergänzt die gesetzliche Unfallversicherung.'},
+{ch:'a6',sub:'Arten',term:'Krankenversicherung',def:'Übernimmt Kosten für medizinische Behandlung; in Österreich Pflichtversicherung über die GKK.'},
+{ch:'a6',sub:'Arten',term:'Lebensversicherung',def:'Zahlt im Todesfall oder Erlebensfall (Ablauf) eine vereinbarte Summe; dient Hinterbliebenenschutz oder Altersvorsorge.'},
+{ch:'a6',sub:'Arten',term:'Kfz-Versicherung',def:'Pflicht: Haftpflicht für Schäden an Dritten. Optional: Kasko (Teil-/Vollkasko) für eigene Fahrzeugschäden.'},
+{ch:'a6',sub:'Arten',term:'Haushalts-versicherung',def:'Versichert den Hausrat gegen Schäden durch Einbruch, Feuer, Wasser, Sturm u. a.'},
+{ch:'a6',sub:'Sozialversicherung',term:'Sozialversicherung',def:'Staatliche Pflichtversicherung: Kranken-, Unfall-, Pensions- und Arbeitslosenversicherung – finanziert durch Beiträge.'},
+{ch:'a6',sub:'Sozialversicherung',term:'Pensionsversicherung',def:'Sichert das Einkommen im Alter, bei Invalidität und für Hinterbliebene; Umlageverfahren in Österreich.'},
+{ch:'a6',sub:'Sozialversicherung',term:'Arbeitslosenver-sicherung',def:'Zahlt Arbeitslosengeld bei unverschuldetem Jobverlust; finanziert Weiterbildung und Jobvermittlung.'},
+
+// ════ MODUL B ════════════════════════════════════════════════════════════════
+
+// ── Kap. I: Volkswirtschaftliche Grundlagen ──────────────────────────────
+{ch:'b1',sub:'Grundbegriffe',term:'Volkswirtschaft',def:'Gesamtheit aller wirtschaftlichen Aktivitäten eines Landes – Haushalte, Unternehmen, Staat und Ausland.'},
+{ch:'b1',sub:'Grundbegriffe',term:'Wirtschafts-kreislauf',def:'Modell des Geld- und Güterstroms zwischen Haushalten, Unternehmen, Staat, Banken und Ausland.'},
+{ch:'b1',sub:'Grundbegriffe',term:'Bedürfnisse',def:'Mangelempfindungen, die zum Wirtschaften antreiben. Grundbedürfnisse → Kulturbedürfnisse → Luxusbedürfnisse.'},
+{ch:'b1',sub:'Grundbegriffe',term:'Güter & Dienst-leistungen',def:'Wirtschaftsgüter (knappe Sachgüter) und immaterielle Leistungen, die Bedürfnisse befriedigen.'},
+{ch:'b1',sub:'Markt',term:'Angebot & Nachfrage',def:'Preis bildet sich, wo angebotene und nachgefragte Menge übereinstimmen (Gleichgewichtspreis).'},
+{ch:'b1',sub:'Markt',term:'Marktgleich-gewicht',def:'Zustand, in dem Angebotsmenge = Nachfragemenge – kein Preisänderungsdruck vorhanden.'},
+{ch:'b1',sub:'Markt',term:'Marktformen',def:'Polypol (viele Anbieter), Oligopol (wenige), Monopol (einer) – je auf Angebots- und Nachfrageseite.'},
+{ch:'b1',sub:'Markt',term:'Elastizität',def:'Reaktionsstärke von Nachfrage/Angebot auf Preisänderungen: elastisch = starke, inelastisch = geringe Reaktion.'},
+{ch:'b1',sub:'Wirtschaftssystem',term:'Marktwirtschaft',def:'Preisbildung durch Angebot & Nachfrage; privates Eigentum und Wettbewerb prägen das System.'},
+{ch:'b1',sub:'Wirtschaftssystem',term:'Soziale Markt-wirtschaft',def:'Marktwirtschaft + staatlicher Sozialausgleich: Sozialversicherung, Wettbewerbsrecht, Umverteilung.'},
+{ch:'b1',sub:'Wirtschaftssystem',term:'Planwirtschaft',def:'Staatlich gelenkte Wirtschaft: Produktion, Preise und Verteilung werden zentral festgelegt.'},
+{ch:'b1',sub:'Wirtschaftssystem',term:'Wirtschafts-sektoren',def:'Primär (Landwirtschaft), Sekundär (Industrie), Tertiär (Dienstleistungen) – Strukturwandel verschiebt Gewichte.'},
+{ch:'b1',sub:'Kennzahlen',term:'BIP',def:'Bruttoinlandsprodukt: Gesamtwert aller im Inland produzierten Güter und Dienstleistungen in einem Jahr.'},
+{ch:'b1',sub:'Kennzahlen',term:'BSP',def:'Bruttosozialprodukt: Leistung aller Inländer weltweit = BIP + Auslandseinkommen − Inlandseinkommen Ausländer.'},
+{ch:'b1',sub:'Kennzahlen',term:'Kaufkraft',def:'Realer Wert des Geldes – wie viele Güter man kaufen kann; sinkt bei Inflation.'},
+// ── Kap. II: Konjunktur und Wachstum ────────────────────────────────────
+{ch:'b2a',sub:'Konjunktur',term:'Konjunktur',def:'Schwankungen der gesamtwirtschaftlichen Aktivität (BIP, Beschäftigung, Preise) um einen Wachstumstrend.'},
+{ch:'b2a',sub:'Konjunktur',term:'Konjunktur-zyklus',def:'Wiederkehrendes Muster: Aufschwung → Boom → Abschwung (Rezession) → Tiefpunkt (Depression).'},
+{ch:'b2a',sub:'Konjunktur',term:'Rezession',def:'BIP-Rückgang in zwei aufeinanderfolgenden Quartalen; Arbeitslosigkeit steigt, Investitionen sinken.'},
+{ch:'b2a',sub:'Konjunktur',term:'Boom',def:'Hochkonjunktur: hohe Auslastung, niedrige Arbeitslosigkeit, steigende Preise, hohes Investitionsniveau.'},
+{ch:'b2a',sub:'Konjunktur',term:'Konjunktur-indikatoren',def:'Frühindikatoren (Aufträge), Präsenzindikatoren (BIP), Spätindikatoren (Zinsen, Kreditvolumen).'},
+{ch:'b2a',sub:'Konjunktur',term:'Inflation',def:'Allgemeiner Preisanstieg; Kaufkraft sinkt. Gemessen am Verbraucherpreisindex (VPI).'},
+{ch:'b2a',sub:'Konjunktur',term:'Deflation',def:'Anhaltender Preisrückgang; Käufe werden aufgeschoben – gefährliche Abwärtsspirale droht.'},
+{ch:'b2a',sub:'Wachstum',term:'Wirtschafts-wachstum',def:'Zunahme des realen BIP. Quellen: Arbeit, Kapital, technischer Fortschritt, Bildung.'},
+{ch:'b2a',sub:'Wachstum',term:'Produktivität',def:'Output pro Produktionsfaktor; Steigerung durch Technologie und bessere Organisation.'},
+{ch:'b2a',sub:'Beschäftigung',term:'Arbeitslosigkeit',def:'Personen ohne Job, die aktiv suchen. Arten: friktionell, strukturell, konjunkturell, saisonal.'},
+{ch:'b2a',sub:'Beschäftigung',term:'Arbeitslosenquote',def:'Anteil der Arbeitslosen an allen Erwerbspersonen in Prozent.'},
+{ch:'b2a',sub:'Beschäftigung',term:'Vollbeschäftigung',def:'Wirtschaftsziel: Arbeitslosenquote ca. 2–3 %; strukturelle Restarbeitslosigkeit bleibt.'},
+{ch:'b2a',sub:'Beschäftigung',term:'Magisches Viereck',def:'4 Ziele: Preisstabilität · hohe Beschäftigung · Wirtschaftswachstum · außenwirtschaftliches Gleichgewicht.'},
+// ── Kap. III: Wirtschaftsprozesse ───────────────────────────────────────
+{ch:'b2b',sub:'Marktmechanismen',term:'Preis-mechanismus',def:'Preise als Signale: steigende Preise locken Anbieter an und dämpfen Nachfrage – Märkte koordinieren sich selbst.'},
+{ch:'b2b',sub:'Marktmechanismen',term:'Marktversagen',def:'Der Markt liefert kein optimales Ergebnis: externe Effekte, öffentliche Güter, Informationsasymmetrie.'},
+{ch:'b2b',sub:'Marktmechanismen',term:'Externe Effekte',def:'Nicht vergütete Auswirkungen auf Dritte: positiv (z. B. Bildung) oder negativ (z. B. Umweltverschmutzung).'},
+{ch:'b2b',sub:'Marktmechanismen',term:'Öffentliche Güter',def:'Nicht-ausschließbar und nicht-rivalisierend: Nutzung durch eine Person schränkt andere nicht ein (z. B. Straßenlaternen).'},
+{ch:'b2b',sub:'Marktmechanismen',term:'Wettbewerbs-beschränkung',def:'Kartelle, Preisabsprachen oder Marktmacht schränken freien Wettbewerb ein und erfordern staatliche Kontrolle.'},
+{ch:'b2b',sub:'VGR',term:'VGR',def:'Volkswirtschaftliche Gesamtrechnung: systematische Erfassung aller Wirtschaftsleistungen eines Landes.'},
+{ch:'b2b',sub:'VGR',term:'Entstehungs-rechnung',def:'BIP aus Branchenperspektive: Summe der Bruttowertschöpfung aller Wirtschaftssektoren.'},
+{ch:'b2b',sub:'VGR',term:'Verwendungs-rechnung',def:'BIP = privater Konsum + Investitionen + Staatsausgaben + Exporte − Importe.'},
+{ch:'b2b',sub:'VGR',term:'Verteilungs-rechnung',def:'Aufteilung des Volkseinkommens auf Arbeitnehmer (Löhne) und Unternehmen/Vermögenseigentümer (Gewinne/Zinsen).'},
+{ch:'b2b',sub:'VGR',term:'Nominal- vs. Real-BIP',def:'Nominal: zu laufenden Preisen. Real: bereinigt um Preissteigerungen → zeigt echtes Wachstum.'},
+{ch:'b2b',sub:'Geld',term:'Geld',def:'Allgemein anerkanntes Tausch- und Zahlungsmittel. Funktionen: Tauschmittel · Wertmaßstab · Wertaufbewahrung.'},
+{ch:'b2b',sub:'Geld',term:'Geldmenge',def:'Umlaufendes Geld in einer Volkswirtschaft. EZB steuert M1/M2/M3 zur Kontrolle von Inflation und Wachstum.'},
+{ch:'b2b',sub:'Geld',term:'Geldschöpfung',def:'Banken erzeugen Giralgeld durch Kreditvergabe; begrenzt durch Mindestreserve der Zentralbank.'},
+{ch:'b2b',sub:'Geld',term:'Zinsen',def:'Preis für geliehenes Kapital. Niedrige Zinsen fördern Investitionen; hohe Zinsen bremsen Inflation.'},
+{ch:'b2b',sub:'Geld',term:'Zentralbank (EZB)',def:'Steuert Geldmenge und Leitzins im Euroraum; primäres Ziel: Preisstabilität (Inflation nahe 2 %).'},
+// ── Kap. IV: Wirtschaftspolitik ─────────────────────────────────────────
+{ch:'b4',sub:'Grundlagen',term:'Wirtschafts-politik',def:'Gesamtheit staatlicher Maßnahmen zur Beeinflussung des Wirtschaftsgeschehens.'},
+{ch:'b4',sub:'Grundlagen',term:'Fiskalpolitik',def:'Staatliche Einnahmen-/Ausgabenpolitik. Expansiv: mehr Ausgaben/weniger Steuern; restriktiv: das Gegenteil.'},
+{ch:'b4',sub:'Grundlagen',term:'Geldpolitik',def:'EZB steuert Geldmenge und Zinsen zur Sicherung der Preisstabilität im Euroraum.'},
+{ch:'b4',sub:'Grundlagen',term:'Angebotspolitik',def:'Stärkung der Produktionsseite: Steuersenkungen, Deregulierung, Investitionsförderung.'},
+{ch:'b4',sub:'Grundlagen',term:'Nachfragepolitik',def:'Keynesianismus: Konjunkturpakete und öffentliche Investitionen in Krisenzeiten.'},
+{ch:'b4',sub:'Instrumente',term:'Staatlicher Haushalt',def:'Plan aller Einnahmen und Ausgaben. Defizit = Ausgaben > Einnahmen; Überschuss = umgekehrt.'},
+{ch:'b4',sub:'Instrumente',term:'Staatsverschuldung',def:'Kumulierte Defizite. Maastricht: max. 60 % des BIP; jährliches Defizit max. 3 % des BIP.'},
+{ch:'b4',sub:'Instrumente',term:'Subventionen',def:'Staatliche Finanzhilfen zur Förderung bestimmten Verhaltens (z. B. Ökostrom, Landwirtschaft).'},
+{ch:'b4',sub:'Instrumente',term:'Steuerpolitik',def:'Festlegung von Steuerarten und -sätzen zur Finanzierung öffentlicher Aufgaben und Verhaltenssteuerung.'},
+{ch:'b4',sub:'Instrumente',term:'Leitzins',def:'Von der EZB festgelegter Zinssatz: niedrig = Investitionsanreiz; hoch = Inflationsbremse.'},
+{ch:'b4',sub:'Sozialpolitik',term:'Sozialstaat',def:'Staatsprinzip: Absicherung gegen soziale Risiken (Krankheit, Alter, Arbeitslosigkeit) durch Umverteilung.'},
+{ch:'b4',sub:'Sozialpolitik',term:'Sozial-versicherung',def:'Pflichtversicherung gegen Lebensrisiken: Kranken-, Unfall-, Pensions- und Arbeitslosenversicherung.'},
+{ch:'b4',sub:'Sozialpolitik',term:'Umverteilung',def:'Übertragung von Einkommen via Steuern → Transfers und Sozialleistungen an Bedürftige.'},
+{ch:'b4',sub:'Wettbewerb',term:'Wettbewerbs-recht',def:'Kartellverbot, Fusionskontrolle, Machtmissbrauchsverbot – Schutz des freien Wettbewerbs (EU-Recht).'},
+{ch:'b4',sub:'Wettbewerb',term:'Konjunktur-paket',def:'Staatliche Maßnahmenbündel in Krisen: Investitionen, Kurzarbeit, Steuerentlastungen.'},
+// ── Kap. V: Budget und Budgetpolitik ────────────────────────────────────
+{ch:'b5',sub:'Staatsbudget',term:'Budget',def:'Jährlicher Finanzplan des Staates: Gegenüberstellung aller geplanten Einnahmen und Ausgaben.'},
+{ch:'b5',sub:'Staatsbudget',term:'Budgetdefizit',def:'Ausgaben übersteigen Einnahmen → Staat nimmt Kredite auf; führt zu steigender Staatsverschuldung.'},
+{ch:'b5',sub:'Staatsbudget',term:'Budget-überschuss',def:'Einnahmen übersteigen Ausgaben → Staat kann Schulden tilgen oder Rücklagen bilden.'},
+{ch:'b5',sub:'Staatsbudget',term:'Staatsverschuldung',def:'Summe aller aufgenommenen Staatskredite. Maastricht-Kriterium: max. 60 % des BIP.'},
+{ch:'b5',sub:'Staatseinnahmen',term:'Steuern',def:'Zwangsabgaben ohne direkte Gegenleistung. Wichtigste Arten: Einkommensteuer, Körperschaftsteuer, USt.'},
+{ch:'b5',sub:'Staatseinnahmen',term:'Abgabenquote',def:'Anteil der Steuern und Sozialabgaben am BIP; Österreich zählt zu den Ländern mit hoher Abgabenquote.'},
+{ch:'b5',sub:'Staatseinnahmen',term:'Direkte vs. indirekte Steuer',def:'Direkt: trifft Einkommen/Vermögen (Lohnsteuer). Indirekt: auf Konsum (Umsatzsteuer, Mineralölsteuer).'},
+{ch:'b5',sub:'Budgetpolitik',term:'Expansive Budget-politik',def:'Staat erhöht Ausgaben oder senkt Steuern zur Konjunkturbelebung – nimmt höhere Defizite in Kauf.'},
+{ch:'b5',sub:'Budgetpolitik',term:'Restriktive Budget-politik',def:'Staat senkt Ausgaben oder erhöht Steuern zur Konsolidierung; dämpft Konjunktur, baut Schulden ab.'},
+{ch:'b5',sub:'Budgetpolitik',term:'Schuldenbremse',def:'Verfassungsrechtliche Regel, die strukturelle Neuverschuldung begrenzt; in Österreich ab 2017 verankert.'},
+{ch:'b5',sub:'Budgetpolitik',term:'Maastricht-Kriterien',def:'EU-Regeln: Defizit max. 3 % BIP, Schuldenstand max. 60 % BIP – Voraussetzung für Euro-Mitgliedschaft.'},
+{ch:'b5',sub:'Budgetpolitik',term:'Multiplikator-effekt',def:'1 € Staatsausgabe steigert BIP um mehr als 1 € – Folgekäufe und Einkommen lösen weitere Nachfrage aus.'},
+// ── Kap. VI: Globalisierung ─────────────────────────────────────────────
+{ch:'b6',sub:'Außenhandel',term:'Globalisierung',def:'Weltweite Vernetzung von Wirtschaft, Kultur und Politik durch Handel, Technologie und Kommunikation.'},
+{ch:'b6',sub:'Außenhandel',term:'Komparativer Kostenvorteil',def:'Ein Land spezialisiert sich auf Güter, die es relativ günstiger produziert – Basis des Welthandels (Ricardo).'},
+{ch:'b6',sub:'Außenhandel',term:'Freihandel',def:'Handel ohne Zölle, Quoten oder Handelshemmnisse; fördert Spezialisierung und Effizienz.'},
+{ch:'b6',sub:'Außenhandel',term:'Protektionismus',def:'Schutz der heimischen Wirtschaft durch Zölle, Importquoten oder Subventionen gegen Auslandskonkurrenz.'},
+{ch:'b6',sub:'Außenhandel',term:'Außenhandels-bilanz',def:'Differenz zwischen Exporten und Importen: Überschuss = mehr Export; Defizit = mehr Import.'},
+{ch:'b6',sub:'Außenhandel',term:'Leistungsbilanz',def:'Außenhandelsbilanz + Dienstleistungen + Transfers; zeigt alle wirtschaftlichen Beziehungen zum Ausland.'},
+{ch:'b6',sub:'Institutionen',term:'WTO',def:'Welthandelsorganisation: legt Regeln für den Welthandel fest und schlichtet Handelsstreitigkeiten.'},
+{ch:'b6',sub:'Institutionen',term:'IWF',def:'Internationaler Währungsfonds: unterstützt Länder in Zahlungsbilanzkrise mit Krediten und Reformberatung.'},
+{ch:'b6',sub:'Institutionen',term:'Weltbank',def:'Fördert Entwicklung ärmerer Länder durch Kredite für Infrastruktur und Armutsbekämpfung.'},
+{ch:'b6',sub:'Integration',term:'Wirtschaftliche Integration',def:'Zusammenschluss von Ländern: Freihandelszone → Zollunion → Gemeinsamer Markt → Wirtschaftsunion (z. B. EU).'},
+{ch:'b6',sub:'Integration',term:'EU-Binnenmarkt',def:'Freier Verkehr von Waren, Dienstleistungen, Kapital und Personen innerhalb der EU (4 Grundfreiheiten).'},
+{ch:'b6',sub:'Integration',term:'Währungsunion (Euro)',def:'Gemeinsame Währung in 20 EU-Staaten; EZB führt einheitliche Geldpolitik; kein internes Wechselkursrisiko.'},
+{ch:'b6',sub:'Globalisierung',term:'Multinationaler Konzern',def:'Unternehmen mit Niederlassungen in mehreren Ländern, das weltweit produziert und verkauft.'},
+{ch:'b6',sub:'Globalisierung',term:'Outsourcing',def:'Auslagerung von Unternehmenstätigkeiten an externe Anbieter, oft ins kostengünstigere Ausland.'},
+{ch:'b6',sub:'Globalisierung',term:'Dumping',def:'Verkauf von Waren im Ausland unter Herstellungspreis, um Konkurrenten zu verdrängen.'},
+{ch:'b6',sub:'Globalisierung',term:'Brain Drain',def:'Abwanderung hochqualifizierter Fachkräfte aus einem Land in wirtschaftlich attraktivere Länder.'},
+{ch:'b6',sub:'Globalisierung',term:'Global Value Chain',def:'Internationale Wertschöpfungskette: Jedes Land übernimmt spezialisierte Produktionsschritte.'},
+// ── Kap. VII: Nachhaltiges Wirtschaften ─────────────────────────────────
+{ch:'b7',sub:'Grundlagen',term:'Nachhaltigkeit',def:'Wirtschaften, das die Bedürfnisse der Gegenwart erfüllt, ohne die Möglichkeiten künftiger Generationen zu gefährden (Brundtland 1987).'},
+{ch:'b7',sub:'Grundlagen',term:'3 Säulen der Nachhaltigkeit',def:'Ökonomisch (Wohlstand) · Ökologisch (Umweltschutz) · Sozial (Gerechtigkeit) – alle drei im Gleichgewicht.'},
+{ch:'b7',sub:'Grundlagen',term:'SDGs',def:'17 Sustainable Development Goals der UN (Agenda 2030): globale Ziele für Armut, Klima, Bildung, Gesundheit u. a.'},
+{ch:'b7',sub:'Grundlagen',term:'Ökologischer Fußabdruck',def:'Maß für den Flächenbedarf zur Deckung des Ressourcenverbrauchs einer Person oder Volkswirtschaft.'},
+{ch:'b7',sub:'Umweltökonomie',term:'Externe Umwelt-kosten',def:'Umweltschäden (CO₂, Lärm, Wasserverschmutzung), die nicht im Marktpreis enthalten sind – Marktversagen.'},
+{ch:'b7',sub:'Umweltökonomie',term:'Internalisierung',def:'Einbeziehung externer Kosten in den Preis (z. B. CO₂-Steuer, Emissionshandel) – Verursacher zahlen.'},
+{ch:'b7',sub:'Umweltökonomie',term:'Emissionshandel',def:'Unternehmen erhalten/kaufen Zertifikate für CO₂-Ausstoß; Gesamtmenge ist begrenzt (Cap & Trade).'},
+{ch:'b7',sub:'Umweltökonomie',term:'Kreislauf-wirtschaft',def:'Ressourcen werden möglichst lange genutzt: Wiederverwertung, Reparatur, Wiederverwendung statt Wegwerfen.'},
+{ch:'b7',sub:'Instrumente',term:'Umweltsteuern',def:'Lenkungssteuern auf umweltschädliches Verhalten (CO₂-Steuer, Mineralölsteuer) zur Verhaltensänderung.'},
+{ch:'b7',sub:'Instrumente',term:'Öko-Subventionen',def:'Staatliche Förderung umweltfreundlicher Technologien: Photovoltaik, E-Mobilität, Gebäudedämmung.'},
+{ch:'b7',sub:'Instrumente',term:'CSR',def:'Corporate Social Responsibility: freiwillige Übernahme sozialer und ökologischer Verantwortung durch Unternehmen.'},
+{ch:'b7',sub:'Instrumente',term:'ESG-Kriterien',def:'Environmental, Social, Governance: Nachhaltigkeitskriterien zur Bewertung von Unternehmen für Investoren.'},
+{ch:'b7',sub:'Konzepte',term:'Green Economy',def:'Wirtschaftsmodell, das Wachstum mit Ressourcenschonung verbindet; setzt auf erneuerbare Energien und Effizienz.'},
+{ch:'b7',sub:'Konzepte',term:'Degrowth',def:'Konzept bewusster Wachstumsreduzierung zugunsten von Lebensqualität, Umverteilung und Ökologie.'},
+{ch:'b7',sub:'Konzepte',term:'Pariser Klima-abkommen',def:'Internationales Abkommen (2015): Erderwärmung auf max. 1,5–2 °C begrenzen; Emissionen bis 2050 netto null.'},
+];
+
+// ── LOAD / SAVE ────────────────────────────────────────────────────────────
+function loadCards() {
+  try { const s=localStorage.getItem('uf_cards_v2'); if(s) return JSON.parse(s); } catch(e){}
+  return JSON.parse(JSON.stringify(BASE_CARDS));
+}
+function saveCards() {
+  try { localStorage.setItem('uf_cards_v2', JSON.stringify(CARDS)); } catch(e){}
+}
+let CARDS = loadCards();
+
+// ── SVG ────────────────────────────────────────────────────────────────────
+function octPath(s){ const c=s*0.21; return `M${c},0 L${s-c},0 L${s},${c} L${s},${s-c} L${s-c},${s} L${c},${s} L0,${s-c} L0,${c} Z`; }
+const OCT = octPath(158);
+
+// ── BUILD LEGEND ───────────────────────────────────────────────────────────
+function buildLegend(mod) {
+  const el = document.getElementById('legend');
+  el.innerHTML = '';
+  Object.entries(CH_META).forEach(([k,v]) => {
+    if (mod !== 'all' && v.mod !== mod) return;
+    const col = COLORS[k];
+    const item = document.createElement('div'); item.className = 'legend-item';
+    item.innerHTML = `<div class="legend-dot" style="background:${col.ff};border:1.5px solid ${col.fs};"></div><span>${v.label.replace(/&amp;/g,'&')}</span>`;
+    el.appendChild(item);
+  });
+}
+
+// ── BUILD CHAPTER TABS ─────────────────────────────────────────────────────
+function buildChapterTabs(mod) {
+  const container = document.getElementById('chapterTabs');
+  container.innerHTML = '';
+  const allBtn = document.createElement('button');
+  allBtn.className = 'tab active'; allBtn.dataset.ch = 'all'; allBtn.style.cssText = 'border-color:#b0c4d8;color:#5a7a9a;';
+  allBtn.textContent = 'Alle Kapitel';
+  allBtn.addEventListener('click', () => setChapter('all'));
+  container.appendChild(allBtn);
+  Object.entries(CH_META).forEach(([k,v]) => {
+    if (mod !== 'all' && v.mod !== mod) return;
+    const btn = document.createElement('button');
+    btn.className = 'tab'; btn.dataset.ch = k;
+    btn.textContent = v.label.replace(/&amp;/g,'&').replace(/Modul [AB] – /,'');
+    btn.addEventListener('click', () => setChapter(k));
+    container.appendChild(btn);
+  });
+}
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+const learned = new Set();
+let allFlipped=false, currentCh='all', currentMod='all', currentSub='all', isAdmin=false, editIdx=-1;
+
+function setModule(mod) {
+  currentMod=mod; currentCh='all'; currentSub='all'; allFlipped=false;
+  document.querySelectorAll('.modul-btn').forEach(b=>b.classList.toggle('active', b.dataset.mod===mod));
+  buildLegend(mod); buildChapterTabs(mod); renderSubFilters('all'); renderGrid();
+}
+
+function setChapter(ch) {
+  currentCh=ch; currentSub='all'; allFlipped=false;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.ch===ch));
+  renderSubFilters(ch); renderGrid();
+}
+
+function getFiltered() {
+  let src = CARDS;
+  if (currentMod !== 'all') src = src.filter(c => CH_META[c.ch] && CH_META[c.ch].mod === currentMod);
+  if (currentCh !== 'all') src = src.filter(c => c.ch === currentCh);
+  if (currentSub !== 'all') src = src.filter(c => c.sub === currentSub);
+  return src.map(c => ({...c, idx: CARDS.indexOf(c)}));
+}
+
+function getSubsForView() {
+  let src = CARDS;
+  if (currentMod !== 'all') src = src.filter(c => CH_META[c.ch] && CH_META[c.ch].mod === currentMod);
+  if (currentCh !== 'all') src = src.filter(c => c.ch === currentCh);
+  return [...new Set(src.map(c => c.sub))];
+}
+
+function renderSubFilters() {
+  const bar = document.getElementById('subFilters'); bar.innerHTML='';
+  const subs = getSubsForView();
+  if (subs.length <= 1) return;
+  const allBtn = document.createElement('button');
+  allBtn.className='sub-btn active'; allBtn.textContent='Alle Themen';
+  allBtn.addEventListener('click', ()=>{ currentSub='all'; document.querySelectorAll('.sub-btn').forEach(b=>b.classList.remove('active')); allBtn.classList.add('active'); renderGrid(); });
+  bar.appendChild(allBtn);
+  subs.forEach(s=>{
+    const btn=document.createElement('button'); btn.className='sub-btn'; btn.textContent=s;
+    btn.addEventListener('click',()=>{ currentSub=s; document.querySelectorAll('.sub-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderGrid(); });
+    bar.appendChild(btn);
+  });
+}
+
+function updateProgress() {
+  const f=getFiltered(); const total=f.length; const done=f.filter(c=>learned.has(c.idx)).length;
+  document.getElementById('progressLabel').textContent=`${done} von ${total} gelernt`;
+  document.getElementById('progressFill').style.width=total?(done/total*100)+'%':'0%';
+  const col = currentCh!=='all'&&COLORS[currentCh] ? COLORS[currentCh].pg : currentMod==='A'?'#7A2E10':currentMod==='B'?'#185FA5':'#378ADD';
+  document.getElementById('progressFill').style.background=col;
+}
+
+function showStatus(msg,ok=true){ const el=document.getElementById('adminStatus'); el.textContent=msg; el.className='admin-status '+(ok?'ok':'err'); setTimeout(()=>{el.className='admin-status';},3000); }
+
+// ── RENDER GRID ────────────────────────────────────────────────────────────
+function renderGrid() {
+  const grid=document.getElementById('grid');
+  grid.classList.toggle('admin-mode', isAdmin);
+  grid.innerHTML='';
+  getFiltered().forEach(c=>{
+    const col=COLORS[c.ch]||COLORS['b1'];
+    const isL=learned.has(c.idx);
+    const ff=isL?'#C0DD97':col.ff, fs=isL?'#3B6D11':col.fs, tc=isL?'#173404':col.tc;
+    const wrap=document.createElement('div'); wrap.className='card-wrap';
+    const meta=CH_META[c.ch]||{short:c.ch};
+    wrap.innerHTML=`
+      <div class="admin-card-btns">
+        <button class="admin-card-btn edit" data-idx="${c.idx}">✏ Edit</button>
+        <button class="admin-card-btn del" data-idx="${c.idx}">✕ Löschen</button>
+      </div>
+      <div class="card" data-idx="${c.idx}">
+        <div class="face front">
+          <svg viewBox="0 0 158 158" xmlns="http://www.w3.org/2000/svg"><path d="${OCT}" fill="${ff}" stroke="${fs}" stroke-width="1.5"/></svg>
+          <div class="content">
+            <span class="term" style="color:${tc}">${c.term}</span>
+            <span class="ch-badge" style="background:${col.bb};color:${col.bc}">${meta.short}</span>
+          </div>
+        </div>
+        <div class="face back">
+          <svg viewBox="0 0 158 158" xmlns="http://www.w3.org/2000/svg"><path d="${OCT}" fill="${col.bf}" stroke="${col.bs}" stroke-width="1.5"/></svg>
+          <div class="content">
+            <span class="def" style="color:${col.dc}">${c.def}</span>
+            <button class="learn-btn" data-idx="${c.idx}" style="border-color:${col.lb};color:${col.lc}">${isL?'✓ Gelernt':'+ Gelernt'}</button>
+          </div>
+        </div>
+      </div>`;
+    wrap.querySelector('.card').addEventListener('click',function(e){ if(e.target.closest('.learn-btn')||e.target.closest('.admin-card-btn')) return; this.classList.toggle('flipped'); });
+    wrap.querySelector('.learn-btn').addEventListener('click',function(e){ e.stopPropagation(); const idx=parseInt(this.dataset.idx); if(learned.has(idx)) learned.delete(idx); else learned.add(idx); renderGrid(); });
+    wrap.querySelector('.admin-card-btn.edit').addEventListener('click',function(e){ e.stopPropagation(); openEditModal(parseInt(this.dataset.idx)); });
+    wrap.querySelector('.admin-card-btn.del').addEventListener('click',function(e){ e.stopPropagation(); const idx=parseInt(this.dataset.idx); if(confirm(`Lernkarte „${CARDS[idx].term}" wirklich löschen?`)){ CARDS.splice(idx,1); saveCards(); renderSubFilters(); renderGrid(); showStatus('Lernkarte gelöscht.'); } });
+    grid.appendChild(wrap);
+  });
+  updateProgress();
+}
+
+// ── MODULE SWITCHER ────────────────────────────────────────────────────────
+document.querySelectorAll('.modul-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>setModule(btn.dataset.mod));
+});
+
+// ── FLIP / RESET ───────────────────────────────────────────────────────────
+document.getElementById('flipAll').addEventListener('click',function(){ allFlipped=!allFlipped; document.querySelectorAll('.card').forEach(c=>c.classList.toggle('flipped',allFlipped)); this.textContent=allFlipped?'Alle zurückdrehen ↺':'Alle umdrehen ↺'; });
+document.getElementById('resetLearned').addEventListener('click',function(){ learned.clear(); renderGrid(); });
+
+// ── ADMIN AUTH ─────────────────────────────────────────────────────────────
+document.getElementById('adminToggle').addEventListener('click',()=>{
+  if(isAdmin){ isAdmin=false; document.getElementById('adminToggle').textContent='⚙ Admin'; document.getElementById('adminToggle').classList.remove('active'); document.getElementById('adminPanel').classList.remove('visible'); renderGrid(); }
+  else { document.getElementById('lockScreen').classList.toggle('visible'); document.getElementById('adminPanel').classList.remove('visible'); document.getElementById('pwInput').focus(); }
+});
+document.getElementById('pwSubmit').addEventListener('click',async()=>{
+  const h=await hashPw(document.getElementById('pwInput').value);
+  if(h===PW_HASH){ isAdmin=true; document.getElementById('lockScreen').classList.remove('visible'); document.getElementById('adminPanel').classList.add('visible'); document.getElementById('adminToggle').textContent='⚙ Admin (aktiv)'; document.getElementById('adminToggle').classList.add('active'); document.getElementById('pwInput').value=''; document.getElementById('lockErr').style.display='none'; renderGrid(); }
+  else { document.getElementById('lockErr').style.display='block'; document.getElementById('pwInput').value=''; document.getElementById('pwInput').focus(); }
+});
+document.getElementById('pwInput').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('pwSubmit').click(); });
+
+// ── ADD CARD ───────────────────────────────────────────────────────────────
+document.getElementById('addCard').addEventListener('click',()=>{
+  const ch=document.getElementById('aChapter').value, sub=document.getElementById('aSub').value.trim(), term=document.getElementById('aTerm').value.trim(), def=document.getElementById('aDef').value.trim();
+  if(!sub||!term||!def){ showStatus('Bitte alle Felder ausfüllen.',false); return; }
+  CARDS.push({ch,sub,term,def}); saveCards(); renderSubFilters(); renderGrid();
+  document.getElementById('aSub').value=''; document.getElementById('aTerm').value=''; document.getElementById('aDef').value='';
+  showStatus(`Lernkarte „${term}" hinzugefügt!`);
+});
+document.getElementById('clearForm').addEventListener('click',()=>{ ['aSub','aTerm','aDef'].forEach(id=>document.getElementById(id).value=''); });
+
+// ── EDIT MODAL ─────────────────────────────────────────────────────────────
+function openEditModal(idx){ editIdx=idx; const c=CARDS[idx]; document.getElementById('eChapter').value=c.ch; document.getElementById('eSub').value=c.sub; document.getElementById('eTerm').value=c.term; document.getElementById('eDef').value=c.def; document.getElementById('editModal').classList.add('open'); }
+document.getElementById('saveEdit').addEventListener('click',()=>{
+  if(editIdx<0) return;
+  const ch=document.getElementById('eChapter').value, sub=document.getElementById('eSub').value.trim(), term=document.getElementById('eTerm').value.trim(), def=document.getElementById('eDef').value.trim();
+  if(!sub||!term||!def){ alert('Bitte alle Felder ausfüllen.'); return; }
+  CARDS[editIdx]={ch,sub,term,def}; saveCards(); document.getElementById('editModal').classList.remove('open'); renderSubFilters(); renderGrid(); showStatus(`„${term}" gespeichert.`); editIdx=-1;
+});
+document.getElementById('cancelEdit').addEventListener('click',()=>{ document.getElementById('editModal').classList.remove('open'); editIdx=-1; });
+document.getElementById('editModal').addEventListener('click',function(e){ if(e.target===this) this.classList.remove('open'); });
+
+// ── EXPORT / IMPORT / RESET ────────────────────────────────────────────────
+document.getElementById('exportBtn').addEventListener('click',()=>{
+  const json = JSON.stringify(CARDS, null, 2);
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([json],{type:'application/json'}));
+  a.download = 'lernkarten.json';
+  a.click();
+  showStatus('✓ lernkarten.json gespeichert – jetzt zusammen mit der HTML-Datei auf tiiny.host hochladen!');
+});
+document.getElementById('importBtn').addEventListener('click',()=>document.getElementById('importFile').click());
+document.getElementById('importFile').addEventListener('change',function(){
+  const f=this.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{ try{ const d=JSON.parse(e.target.result); if(!Array.isArray(d)) throw 0; CARDS.length=0; d.forEach(c=>CARDS.push(c)); saveCards(); renderSubFilters(); renderGrid(); showStatus(`${d.length} Lernkarten importiert!`); }catch{ showStatus('Fehler: ungültiges JSON.',false); } };
+  r.readAsText(f); this.value='';
+});
+document.getElementById('resetAllBtn').addEventListener('click',()=>{
+  if(confirm('Alle Änderungen zurücksetzen? Die Original-Lernkarten werden wiederhergestellt.')){
+    localStorage.removeItem('uf_cards_v2');
+    CARDS.length=0; BASE_CARDS.forEach(c=>CARDS.push(JSON.parse(JSON.stringify(c))));
+    renderSubFilters(); renderGrid(); showStatus('Auf Original zurückgesetzt.');
+  }
+});
+
+// ── GOOGLE SHEETS ──────────────────────────────────────────────────────────
+const SHEETS_KEY = 'uf_sheets_url';
+
+function parseCsvToCards(csv) {
+  const lines = csv.trim().split('\n').map(l => l.trim()).filter(l => l);
+  if (lines.length < 2) return [];
+  // Skip header row, parse each line
+  const cards = [];
+  for (let i = 1; i < lines.length; i++) {
+    // Handle quoted CSV fields
+    const cols = [];
+    let cur = '', inQ = false;
+    for (let c of lines[i]) {
+      if (c === '"') { inQ = !inQ; }
+      else if (c === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+      else cur += c;
+    }
+    cols.push(cur.trim());
+    if (cols.length >= 4 && cols[0] && cols[2] && cols[3]) {
+      cards.push({ ch: cols[0], sub: cols[1] || 'Allgemein', term: cols[2], def: cols[3] });
+    }
+  }
+  return cards;
+}
+
+async function loadFromSheets(url) {
+  // Convert regular sheets URL to CSV export URL if needed
+  let csvUrl = url;
+  const match = url.match(/\/spreadsheets\/d\/([^/]+)/);
+  if (match && !url.includes('output=csv')) {
+    const gid = (url.match(/gid=(\d+)/) || [])[1] || '0';
+    csvUrl = `https://docs.google.com/spreadsheets/d/${match[1]}/export?format=csv&gid=${gid}`;
+  }
+  // Use a CORS proxy since Google Sheets doesn't allow direct fetch from static pages
+  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(csvUrl)}`;
+  const res = await fetch(proxyUrl, {cache:'no-cache'});
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const text = await res.text();
+  const cards = parseCsvToCards(text);
+  if (cards.length === 0) throw new Error('Keine Karten gefunden – bitte Spaltenformat prüfen: ch, sub, term, def');
+  return cards;
+}
+
+function showSheetsStatus(msg, ok=true) {
+  const el = document.getElementById('sheetsStatus');
+  el.textContent = msg; el.className = 'admin-status ' + (ok ? 'ok' : 'err');
+  setTimeout(() => { el.className = 'admin-status'; }, 5000);
+}
+
+function updateSheetsInfo() {
+  const url = localStorage.getItem(SHEETS_KEY);
+  const urlInput = document.getElementById('sheetsUrl');
+  const info = document.getElementById('sheetsInfo');
+  if (url) { urlInput.value = url; info.style.display = 'block'; }
+  else { info.style.display = 'none'; }
+}
+
+document.getElementById('sheetsLoad').addEventListener('click', async () => {
+  const url = document.getElementById('sheetsUrl').value.trim();
+  if (!url) { showSheetsStatus('Bitte zuerst den Google Sheets Link einfügen.', false); return; }
+  const btn = document.getElementById('sheetsLoad');
+  btn.textContent = '⏳ Laden…'; btn.disabled = true;
+  try {
+    const cards = await loadFromSheets(url);
+    CARDS.length = 0; cards.forEach(c => CARDS.push(c));
+    saveCards();
+    localStorage.setItem(SHEETS_KEY, url);
+    updateSheetsInfo();
+    renderSubFilters(); renderGrid();
+    showSheetsStatus(`✓ ${cards.length} Lernkarten von Google Sheets geladen!`);
+  } catch(e) {
+    showSheetsStatus('Fehler: ' + e.message, false);
+  } finally {
+    btn.textContent = '⬇ Jetzt von Google Sheets laden'; btn.disabled = false;
+  }
+});
+
+document.getElementById('sheetsClear').addEventListener('click', () => {
+  localStorage.removeItem(SHEETS_KEY);
+  document.getElementById('sheetsUrl').value = '';
+  document.getElementById('sheetsInfo').style.display = 'none';
+  showSheetsStatus('Verknüpfung entfernt.');
+});
+
+
+async function tryLoadExternalJSON() {
+  try {
+    const res = await fetch('lernkarten.json', {cache:'no-cache'});
+    if (!res.ok) return false;
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) return false;
+    CARDS.length = 0;
+    data.forEach(c => CARDS.push(c));
+    return true;
+  } catch(e) { return false; }
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+(async () => {
+  // Priority 1: Google Sheets (if URL saved)
+  const sheetsUrl = localStorage.getItem(SHEETS_KEY);
+  if (sheetsUrl) {
+    try {
+      const cards = await loadFromSheets(sheetsUrl);
+      if (cards.length > 0) {
+        CARDS.length = 0; cards.forEach(c => CARDS.push(c));
+        saveCards();
+      }
+    } catch(e) {
+      console.warn('Google Sheets auto-load failed, using saved data:', e.message);
+    }
+  } else {
+    // Priority 2: lernkarten.json (tiiny.host upload)
+    const jsonLoaded = await tryLoadExternalJSON();
+    if (jsonLoaded) saveCards();
+    // Priority 3: localStorage (already loaded via loadCards())
+  }
+  updateSheetsInfo();
+  buildLegend('all');
+  buildChapterTabs('all');
+  renderSubFilters();
+  renderGrid();
+})();
+
+</script>
+</body>
+</html>

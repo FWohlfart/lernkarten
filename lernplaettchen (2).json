@@ -1,0 +1,1064 @@
+[
+  {
+    "ch": "a1",
+    "sub": "Grundlagen",
+    "term": "Wirtschaften",
+    "def": "Planen und Einsetzen knapper Mittel (Güter, Geld, Zeit) zur Befriedigung von Bedürfnissen."
+  },
+  {
+    "ch": "a1",
+    "sub": "Grundlagen",
+    "term": "Knappheit",
+    "def": "Grundproblem der Wirtschaft: Bedürfnisse sind unbegrenzt, verfügbare Mittel sind begrenzt."
+  },
+  {
+    "ch": "a1",
+    "sub": "Grundlagen",
+    "term": "Ökonomisches Prinzip",
+    "def": "Minimalprinzip: Ziel mit möglichst geringem Einsatz erreichen. Maximalprinzip: mit gegebenem Einsatz möglichst viel erreichen."
+  },
+  {
+    "ch": "a1",
+    "sub": "Grundlagen",
+    "term": "Bedürfnis",
+    "def": "Empfundener Mangel, der den Wunsch nach Abhilfe auslöst. Stufen: Existenz-, Kultur-, Luxusbedürfnis."
+  },
+  {
+    "ch": "a1",
+    "sub": "Grundlagen",
+    "term": "Bedarf",
+    "def": "Mit Kaufkraft ausgestattetes Bedürfnis – der Teil der Bedürfnisse, für den auch Geld vorhanden ist."
+  },
+  {
+    "ch": "a1",
+    "sub": "Grundlagen",
+    "term": "Produktionsfaktoren",
+    "def": "Arbeit, Kapital, Boden/Natur – die drei klassischen Einsatzmittel zur Gütererzeugung."
+  },
+  {
+    "ch": "a1",
+    "sub": "Markt",
+    "term": "Markt",
+    "def": "Ort (real oder virtuell), an dem Anbieter und Nachfrager zusammentreffen und Preise gebildet werden."
+  },
+  {
+    "ch": "a1",
+    "sub": "Markt",
+    "term": "Angebot",
+    "def": "Menge eines Gutes, die Anbieter zu einem bestimmten Preis verkaufen wollen. Steigt bei höherem Preis."
+  },
+  {
+    "ch": "a1",
+    "sub": "Markt",
+    "term": "Nachfrage",
+    "def": "Menge eines Gutes, die Käufer zu einem bestimmten Preis kaufen wollen. Sinkt bei höherem Preis."
+  },
+  {
+    "ch": "a1",
+    "sub": "Markt",
+    "term": "Gleichgewichts-Preis",
+    "def": "Preis, bei dem angebotene und nachgefragte Menge übereinstimmen – kein Über- oder Unterangebot."
+  },
+  {
+    "ch": "a1",
+    "sub": "Markt",
+    "term": "Marktversagen",
+    "def": "Situationen, in denen der Markt keine optimale Lösung liefert (externe Effekte, öffentliche Güter, Monopole)."
+  },
+  {
+    "ch": "a1",
+    "sub": "Markt",
+    "term": "Wettbewerb",
+    "def": "Rivalität zwischen Anbietern um Kunden; fördert Innovation, Qualität und günstige Preise."
+  },
+  {
+    "ch": "a1",
+    "sub": "Markt",
+    "term": "Marktformen",
+    "def": "Polypol (viele Anbieter), Oligopol (wenige), Monopol (einer) – bestimmen Preis- und Marktmacht."
+  },
+  {
+    "ch": "a1",
+    "sub": "Markt",
+    "term": "Preisbildung",
+    "def": "Prozess, bei dem sich durch Angebot und Nachfrage ein Marktpreis herausbildet."
+  },
+  {
+    "ch": "a1",
+    "sub": "Markt",
+    "term": "Konsumentenschutz",
+    "def": "Gesetzliche Regelungen, die Käufer vor unlauteren Geschäftspraktiken, Täuschung und Mängeln schützen."
+  },
+  {
+    "ch": "a2",
+    "sub": "Unternehmen",
+    "term": "Unternehmen",
+    "def": "Wirtschaftliche Einheit, die Güter und Dienstleistungen produziert und am Markt anbietet, um Gewinn zu erzielen."
+  },
+  {
+    "ch": "a2",
+    "sub": "Unternehmen",
+    "term": "Unternehmensziele",
+    "def": "Oberziele: Gewinn, Rentabilität, Wachstum. Soziale Ziele: Mitarbeiterzufriedenheit, Kundenbindung, Nachhaltigkeit."
+  },
+  {
+    "ch": "a2",
+    "sub": "Unternehmen",
+    "term": "Rechtsform",
+    "def": "Rechtliche Struktur eines Unternehmens (z. B. Einzelunternehmen, GmbH, AG) – bestimmt Haftung, Kapital und Leitung."
+  },
+  {
+    "ch": "a2",
+    "sub": "Unternehmen",
+    "term": "Einzelunternehmen",
+    "def": "Unternehmen einer Einzelperson: unbeschränkte persönliche Haftung, einfache Gründung, alle Entscheidungen beim Inhaber."
+  },
+  {
+    "ch": "a2",
+    "sub": "Unternehmen",
+    "term": "GmbH",
+    "def": "Gesellschaft mit beschränkter Haftung: Haftung auf das Gesellschaftsvermögen begrenzt; Mindeststammkapital 35.000 € (AT)."
+  },
+  {
+    "ch": "a2",
+    "sub": "Unternehmen",
+    "term": "Aktiengesellschaft (AG)",
+    "def": "Kapitalgesellschaft, deren Eigenkapital in Aktien aufgeteilt ist. Aktionäre haften nur mit ihrer Einlage."
+  },
+  {
+    "ch": "a2",
+    "sub": "Unternehmen",
+    "term": "Stakeholder",
+    "def": "Alle Gruppen mit Interesse am Unternehmen: Eigentümer, Mitarbeiter, Kunden, Lieferanten, Staat, Gesellschaft."
+  },
+  {
+    "ch": "a2",
+    "sub": "Umfeld",
+    "term": "Unternehmens-umfeld",
+    "def": "Alle externen Einflüsse auf ein Unternehmen: wirtschaftliches, rechtliches, technologisches, soziales und ökologisches Umfeld."
+  },
+  {
+    "ch": "a2",
+    "sub": "Umfeld",
+    "term": "SWOT-Analyse",
+    "def": "Analyse von Stärken (S), Schwächen (W), Chancen (O) und Risiken (T) eines Unternehmens."
+  },
+  {
+    "ch": "a2",
+    "sub": "Umfeld",
+    "term": "Standortfaktoren",
+    "def": "Kriterien für die Wahl des Unternehmensstandorts: Infrastruktur, Arbeitskräfte, Steuern, Nähe zu Kunden/Lieferanten."
+  },
+  {
+    "ch": "a2",
+    "sub": "Umfeld",
+    "term": "Wertschöpfungskette",
+    "def": "Abfolge aller Aktivitäten, die ein Unternehmen durchführt, um ein Produkt herzustellen und an den Kunden zu bringen."
+  },
+  {
+    "ch": "a2",
+    "sub": "Umfeld",
+    "term": "Konjunktur & Unternehmen",
+    "def": "Konjunkturphasen beeinflussen Umsatz, Investitionen und Personalplanung; Unternehmen müssen antizyklisch planen."
+  },
+  {
+    "ch": "a3",
+    "sub": "Kaufvertrag",
+    "term": "Kaufvertrag",
+    "def": "Zweiseitiges Rechtsgeschäft: Verkäufer übergibt Eigentum, Käufer zahlt den vereinbarten Preis."
+  },
+  {
+    "ch": "a3",
+    "sub": "Kaufvertrag",
+    "term": "Angebot & Annahme",
+    "def": "Kaufvertrag entsteht durch Angebot einer Partei und vorbehaltlose Annahme der anderen."
+  },
+  {
+    "ch": "a3",
+    "sub": "Kaufvertrag",
+    "term": "Vertragsfreiheit",
+    "def": "Grundsatz: Jeder kann frei entscheiden, ob, mit wem und zu welchen Bedingungen er Verträge abschließt."
+  },
+  {
+    "ch": "a3",
+    "sub": "Kaufvertrag",
+    "term": "Geschäftsfähigkeit",
+    "def": "Rechtliche Fähigkeit, Verträge wirksam abzuschließen. Voll geschäftsfähig ab 18 Jahren (AT)."
+  },
+  {
+    "ch": "a3",
+    "sub": "Kaufvertrag",
+    "term": "Allgemeine Geschäftsbedingungen (AGB)",
+    "def": "Vorformulierte Vertragsklauseln, die der Anbieter stellt; gelten nur, wenn der Käufer sie akzeptiert hat."
+  },
+  {
+    "ch": "a3",
+    "sub": "Gewährleistung",
+    "term": "Gewährleistung",
+    "def": "Gesetzliche Pflicht des Verkäufers, für Mängel einzustehen, die bei Übergabe bereits vorhanden waren (2 Jahre AT)."
+  },
+  {
+    "ch": "a3",
+    "sub": "Gewährleistung",
+    "term": "Garantie",
+    "def": "Freiwillige Zusage des Herstellers/Händlers über die gesetzliche Gewährleistung hinaus."
+  },
+  {
+    "ch": "a3",
+    "sub": "Gewährleistung",
+    "term": "Mangel",
+    "def": "Abweichung von der vereinbarten oder gewöhnlich vorausgesetzten Beschaffenheit einer Sache."
+  },
+  {
+    "ch": "a3",
+    "sub": "Gewährleistung",
+    "term": "Verbesserung & Austausch",
+    "def": "Erste Stufe der Gewährleistung: Käufer kann Reparatur oder Ersatz verlangen, bevor er Preisminderung/Rücktritt fordert."
+  },
+  {
+    "ch": "a3",
+    "sub": "Konsumentenschutz",
+    "term": "Rücktrittsrecht",
+    "def": "Bei Haustürgeschäften und Fernabsatz: 14-tägiges Widerrufsrecht ohne Angabe von Gründen (EU-Recht)."
+  },
+  {
+    "ch": "a3",
+    "sub": "Konsumentenschutz",
+    "term": "Fernabsatz-vertrag",
+    "def": "Vertrag, der ausschließlich über Fernkommunikationsmittel (Internet, Telefon) abgeschlossen wird."
+  },
+  {
+    "ch": "a3",
+    "sub": "Konsumentenschutz",
+    "term": "Konsumenten-schutzgesetz (KSchG)",
+    "def": "Österreichisches Gesetz, das Verbraucher gegenüber Unternehmern schützt (z. B. AGB-Kontrolle, Rücktrittsrecht)."
+  },
+  {
+    "ch": "a4",
+    "sub": "Zahlungsmittel",
+    "term": "Bargeld",
+    "def": "Gesetzliches Zahlungsmittel in Form von Münzen und Banknoten; anonym, sofort verfügbar."
+  },
+  {
+    "ch": "a4",
+    "sub": "Zahlungsmittel",
+    "term": "Überweisung",
+    "def": "Auftrag an die Bank, einen Betrag vom eigenen Konto auf ein Empfängerkonto zu transferieren."
+  },
+  {
+    "ch": "a4",
+    "sub": "Zahlungsmittel",
+    "term": "Lastschrift",
+    "def": "Abbuchung vom Konto des Zahlers durch den Empfänger auf Basis einer erteilten Einzugsermächtigung."
+  },
+  {
+    "ch": "a4",
+    "sub": "Zahlungsmittel",
+    "term": "Kreditkarte",
+    "def": "Zahlungsmittel, bei dem der Betrag monatlich gesammelt und abgebucht wird; Kreditrahmen wird gewährt."
+  },
+  {
+    "ch": "a4",
+    "sub": "Zahlungsmittel",
+    "term": "Debitkarte",
+    "def": "Zahlung wird direkt und sofort vom Girokonto abgebucht (z. B. Maestro, Visa Debit)."
+  },
+  {
+    "ch": "a4",
+    "sub": "Zahlungsmittel",
+    "term": "Online-Zahlung",
+    "def": "Bezahlung über das Internet: PayPal, Kreditkarte, Sofortüberweisung, Kryptowährungen u. a."
+  },
+  {
+    "ch": "a4",
+    "sub": "Zahlungsmittel",
+    "term": "SEPA",
+    "def": "Single Euro Payments Area: einheitlicher europäischer Zahlungsraum für einfache, günstige Euro-Überweisungen."
+  },
+  {
+    "ch": "a4",
+    "sub": "Zahlungsprobleme",
+    "term": "Zahlungsverzug",
+    "def": "Schuldner zahlt nicht fristgerecht; Gläubiger hat Anspruch auf Verzugszinsen und Mahnspesen."
+  },
+  {
+    "ch": "a4",
+    "sub": "Zahlungsprobleme",
+    "term": "Mahnung",
+    "def": "Aufforderung an den Schuldner, eine fällige Zahlung zu leisten; Voraussetzung für rechtliche Schritte."
+  },
+  {
+    "ch": "a4",
+    "sub": "Zahlungsprobleme",
+    "term": "Inkasso",
+    "def": "Beauftragung eines Inkassounternehmens zur Eintreibung offener Forderungen."
+  },
+  {
+    "ch": "a4",
+    "sub": "Zahlungsprobleme",
+    "term": "Exekution",
+    "def": "Staatlich angeordnete Zwangsvollstreckung zur Durchsetzung von Geldforderungen (z. B. Lohnpfändung)."
+  },
+  {
+    "ch": "a5",
+    "sub": "Finanzplanung",
+    "term": "Budget (privat)",
+    "def": "Plan über Einnahmen und Ausgaben einer Person/eines Haushalts in einem bestimmten Zeitraum."
+  },
+  {
+    "ch": "a5",
+    "sub": "Finanzplanung",
+    "term": "Liquidität",
+    "def": "Fähigkeit, fällige Zahlungen jederzeit erfüllen zu können; kurzfristige Zahlungsfähigkeit."
+  },
+  {
+    "ch": "a5",
+    "sub": "Finanzplanung",
+    "term": "Einnahmen-Ausgaben-Rechnung",
+    "def": "Einfache Buchhaltungsmethode: Gegenüberstellung tatsächlicher Zahlungseingänge und -ausgänge."
+  },
+  {
+    "ch": "a5",
+    "sub": "Kredit",
+    "term": "Kredit",
+    "def": "Überlassung von Geld auf Zeit gegen Zinszahlung; Kreditnehmer verpflichtet sich zur Rückzahlung."
+  },
+  {
+    "ch": "a5",
+    "sub": "Kredit",
+    "term": "Zinsen",
+    "def": "Preis für geliehenes Kapital; ausgedrückt als Prozentsatz des Kreditbetrags pro Jahr (Zinssatz p. a.)."
+  },
+  {
+    "ch": "a5",
+    "sub": "Kredit",
+    "term": "Effektivzins",
+    "def": "Tatsächliche jährliche Kreditkosten inkl. aller Gebühren; maßgeblich für den Kreditvergleich."
+  },
+  {
+    "ch": "a5",
+    "sub": "Kredit",
+    "term": "Bonität",
+    "def": "Kreditwürdigkeit einer Person; wird von Banken geprüft (Einkommen, Schulden, KSV-Daten)."
+  },
+  {
+    "ch": "a5",
+    "sub": "Kredit",
+    "term": "Überschuldung",
+    "def": "Schulden übersteigen das Vermögen und das Einkommen reicht nicht zur Schuldentilgung; führt oft zu Privatinsolvenz."
+  },
+  {
+    "ch": "a5",
+    "sub": "Sparen",
+    "term": "Sparen",
+    "def": "Zurücklegen eines Teils des Einkommens für zukünftige Ausgaben oder Kapitalaufbau."
+  },
+  {
+    "ch": "a5",
+    "sub": "Sparen",
+    "term": "Zinseszins",
+    "def": "Zinsen werden dem Kapital zugeschlagen und im nächsten Zeitraum mitverzinst – exponentielles Wachstum."
+  },
+  {
+    "ch": "a5",
+    "sub": "Sparen",
+    "term": "Anlageformen",
+    "def": "Sparbuch, Festgeld, Anleihen, Aktien, Fonds, Immobilien – unterscheiden sich in Rendite, Risiko und Verfügbarkeit."
+  },
+  {
+    "ch": "a6",
+    "sub": "Grundlagen",
+    "term": "Versicherung",
+    "def": "Vertrag zur Absicherung finanzieller Risiken: viele zahlen Prämien, wenige erhalten im Schadensfall Leistungen."
+  },
+  {
+    "ch": "a6",
+    "sub": "Grundlagen",
+    "term": "Prämie (Beitrag)",
+    "def": "Regelmäßige Zahlung des Versicherungsnehmers an die Versicherung für den Versicherungsschutz."
+  },
+  {
+    "ch": "a6",
+    "sub": "Grundlagen",
+    "term": "Versicherungsfall",
+    "def": "Das im Vertrag definierte Ereignis (z. B. Unfall, Brand, Diebstahl), das den Leistungsanspruch auslöst."
+  },
+  {
+    "ch": "a6",
+    "sub": "Grundlagen",
+    "term": "Selbstbehalt",
+    "def": "Anteil am Schaden, den der Versicherte selbst trägt; senkt die Prämie, erhöht aber das Eigenrisiko."
+  },
+  {
+    "ch": "a6",
+    "sub": "Grundlagen",
+    "term": "Pflicht- vs. freiwillige Versicherung",
+    "def": "Pflicht: gesetzlich vorgeschrieben (KFZ-Haftpflicht, Sozialversicherung). Freiwillig: nach eigenem Bedarf abgeschlossen."
+  },
+  {
+    "ch": "a6",
+    "sub": "Arten",
+    "term": "Haftpflicht-Versicherung",
+    "def": "Deckt Schäden, die man anderen zufügt; schützt vor Schadenersatzforderungen Dritter."
+  },
+  {
+    "ch": "a6",
+    "sub": "Arten",
+    "term": "Unfallversicherung",
+    "def": "Zahlt bei dauerhafter Invalidität oder Tod durch Unfall; ergänzt die gesetzliche Unfallversicherung."
+  },
+  {
+    "ch": "a6",
+    "sub": "Arten",
+    "term": "Krankenversicherung",
+    "def": "Übernimmt Kosten für medizinische Behandlung; in Österreich Pflichtversicherung über die GKK."
+  },
+  {
+    "ch": "a6",
+    "sub": "Arten",
+    "term": "Lebensversicherung",
+    "def": "Zahlt im Todesfall oder Erlebensfall (Ablauf) eine vereinbarte Summe; dient Hinterbliebenenschutz oder Altersvorsorge."
+  },
+  {
+    "ch": "a6",
+    "sub": "Arten",
+    "term": "Kfz-Versicherung",
+    "def": "Pflicht: Haftpflicht für Schäden an Dritten. Optional: Kasko (Teil-/Vollkasko) für eigene Fahrzeugschäden."
+  },
+  {
+    "ch": "a6",
+    "sub": "Arten",
+    "term": "Haushalts-Versicherung",
+    "def": "Versichert den Hausrat gegen Schäden durch Einbruch, Feuer, Wasser, Sturm u. a."
+  },
+  {
+    "ch": "a6",
+    "sub": "Sozialversicherung",
+    "term": "Sozialversicherung",
+    "def": "Staatliche Pflichtversicherung: Kranken-, Unfall-, Pensions- und Arbeitslosenversicherung – finanziert durch Beiträge."
+  },
+  {
+    "ch": "a6",
+    "sub": "Sozialversicherung",
+    "term": "Pensionsversicherung",
+    "def": "Sichert das Einkommen im Alter, bei Invalidität und für Hinterbliebene; Umlageverfahren in Österreich."
+  },
+  {
+    "ch": "a6",
+    "sub": "Sozialversicherung",
+    "term": "Arbeitslosen-Versicherung",
+    "def": "Zahlt Arbeitslosengeld bei unverschuldetem Jobverlust; finanziert Weiterbildung und Jobvermittlung."
+  },
+  {
+    "ch": "b1",
+    "sub": "Grundbegriffe",
+    "term": "Volkswirtschaft",
+    "def": "Gesamtheit aller wirtschaftlichen Aktivitäten eines Landes – Haushalte, Unternehmen, Staat und Ausland."
+  },
+  {
+    "ch": "b1",
+    "sub": "Grundbegriffe",
+    "term": "Wirtschafts-kreislauf",
+    "def": "Modell des Geld- und Güterstroms zwischen Haushalten, Unternehmen, Staat, Banken und Ausland."
+  },
+  {
+    "ch": "b1",
+    "sub": "Grundbegriffe",
+    "term": "Bedürfnisse",
+    "def": "Mangelempfindungen, die zum Wirtschaften antreiben. Grundbedürfnisse → Kulturbedürfnisse → Luxusbedürfnisse."
+  },
+  {
+    "ch": "b1",
+    "sub": "Grundbegriffe",
+    "term": "Güter & Dienst-leistungen",
+    "def": "Wirtschaftsgüter (knappe Sachgüter) und immaterielle Leistungen, die Bedürfnisse befriedigen."
+  },
+  {
+    "ch": "b1",
+    "sub": "Markt",
+    "term": "Angebot & Nachfrage",
+    "def": "Preis bildet sich, wo angebotene und nachgefragte Menge übereinstimmen (Gleichgewichtspreis)."
+  },
+  {
+    "ch": "b1",
+    "sub": "Markt",
+    "term": "Marktgleich-gewicht",
+    "def": "Zustand, in dem Angebotsmenge = Nachfragemenge – kein Preisänderungsdruck vorhanden."
+  },
+  {
+    "ch": "b1",
+    "sub": "Markt",
+    "term": "Marktformen",
+    "def": "Polypol (viele Anbieter), Oligopol (wenige), Monopol (einer) – je auf Angebots- und Nachfrageseite."
+  },
+  {
+    "ch": "b1",
+    "sub": "Markt",
+    "term": "Elastizität",
+    "def": "Reaktionsstärke von Nachfrage/Angebot auf Preisänderungen: elastisch = starke, inelastisch = geringe Reaktion."
+  },
+  {
+    "ch": "b1",
+    "sub": "Wirtschaftssystem",
+    "term": "Marktwirtschaft",
+    "def": "Preisbildung durch Angebot & Nachfrage; privates Eigentum und Wettbewerb prägen das System."
+  },
+  {
+    "ch": "b1",
+    "sub": "Wirtschaftssystem",
+    "term": "Soziale Markt-wirtschaft",
+    "def": "Marktwirtschaft + staatlicher Sozialausgleich: Sozialversicherung, Wettbewerbsrecht, Umverteilung."
+  },
+  {
+    "ch": "b1",
+    "sub": "Wirtschaftssystem",
+    "term": "Planwirtschaft",
+    "def": "Staatlich gelenkte Wirtschaft: Produktion, Preise und Verteilung werden zentral festgelegt."
+  },
+  {
+    "ch": "b1",
+    "sub": "Wirtschaftssystem",
+    "term": "Wirtschafts-sektoren",
+    "def": "Primär (Landwirtschaft), Sekundär (Industrie), Tertiär (Dienstleistungen) – Strukturwandel verschiebt Gewichte."
+  },
+  {
+    "ch": "b1",
+    "sub": "Kennzahlen",
+    "term": "BIP",
+    "def": "Bruttoinlandsprodukt: Gesamtwert aller im Inland produzierten Güter und Dienstleistungen in einem Jahr."
+  },
+  {
+    "ch": "b1",
+    "sub": "Kennzahlen",
+    "term": "BSP",
+    "def": "Bruttosozialprodukt: Leistung aller Inländer weltweit = BIP + Auslandseinkommen − Inlandseinkommen Ausländer."
+  },
+  {
+    "ch": "b1",
+    "sub": "Kennzahlen",
+    "term": "Kaufkraft",
+    "def": "Realer Wert des Geldes – wie viele Güter man kaufen kann; sinkt bei Inflation."
+  },
+  {
+    "ch": "b2a",
+    "sub": "Konjunktur",
+    "term": "Konjunktur",
+    "def": "Schwankungen der gesamtwirtschaftlichen Aktivität (BIP, Beschäftigung, Preise) um einen Wachstumstrend."
+  },
+  {
+    "ch": "b2a",
+    "sub": "Konjunktur",
+    "term": "Konjunktur-zyklus",
+    "def": "Wiederkehrendes Muster: Aufschwung → Boom → Abschwung (Rezession) → Tiefpunkt (Depression)."
+  },
+  {
+    "ch": "b2a",
+    "sub": "Konjunktur",
+    "term": "Rezession",
+    "def": "BIP-Rückgang in zwei aufeinanderfolgenden Quartalen; Arbeitslosigkeit steigt, Investitionen sinken."
+  },
+  {
+    "ch": "b2a",
+    "sub": "Konjunktur",
+    "term": "Boom",
+    "def": "Hochkonjunktur: hohe Auslastung, niedrige Arbeitslosigkeit, steigende Preise, hohes Investitionsniveau."
+  },
+  {
+    "ch": "b2a",
+    "sub": "Konjunktur",
+    "term": "Konjunktur-indikatoren",
+    "def": "Frühindikatoren (Aufträge), Präsenzindikatoren (BIP), Spätindikatoren (Zinsen, Kreditvolumen)."
+  },
+  {
+    "ch": "b2a",
+    "sub": "Konjunktur",
+    "term": "Inflation",
+    "def": "Allgemeiner Preisanstieg; Kaufkraft sinkt. Gemessen am Verbraucherpreisindex (VPI)."
+  },
+  {
+    "ch": "b2a",
+    "sub": "Konjunktur",
+    "term": "Deflation",
+    "def": "Anhaltender Preisrückgang; Käufe werden aufgeschoben – gefährliche Abwärtsspirale droht."
+  },
+  {
+    "ch": "b2a",
+    "sub": "Wachstum",
+    "term": "Wirtschafts-wachstum",
+    "def": "Zunahme des realen BIP. Quellen: Arbeit, Kapital, technischer Fortschritt, Bildung."
+  },
+  {
+    "ch": "b2a",
+    "sub": "Wachstum",
+    "term": "Produktivität",
+    "def": "Output pro Produktionsfaktor; Steigerung durch Technologie und bessere Organisation."
+  },
+  {
+    "ch": "b2a",
+    "sub": "Beschäftigung",
+    "term": "Arbeitslosigkeit",
+    "def": "Personen ohne Job, die aktiv suchen. Arten: friktionell, strukturell, konjunkturell, saisonal."
+  },
+  {
+    "ch": "b2a",
+    "sub": "Beschäftigung",
+    "term": "Arbeitslosenquote",
+    "def": "Anteil der Arbeitslosen an allen Erwerbspersonen in Prozent."
+  },
+  {
+    "ch": "b2a",
+    "sub": "Beschäftigung",
+    "term": "Vollbeschäftigung",
+    "def": "Wirtschaftsziel: Arbeitslosenquote ca. 2–3 %; strukturelle Restarbeitslosigkeit bleibt."
+  },
+  {
+    "ch": "b2a",
+    "sub": "Beschäftigung",
+    "term": "Magisches Viereck",
+    "def": "4 Ziele: Preisstabilität · hohe Beschäftigung · Wirtschaftswachstum · außenwirtschaftliches Gleichgewicht."
+  },
+  {
+    "ch": "b2b",
+    "sub": "Marktmechanismen",
+    "term": "Preis-mechanismus",
+    "def": "Preise als Signale: steigende Preise locken Anbieter an und dämpfen Nachfrage – Märkte koordinieren sich selbst."
+  },
+  {
+    "ch": "b2b",
+    "sub": "Marktmechanismen",
+    "term": "Marktversagen",
+    "def": "Der Markt liefert kein optimales Ergebnis: externe Effekte, öffentliche Güter, Informationsasymmetrie."
+  },
+  {
+    "ch": "b2b",
+    "sub": "Marktmechanismen",
+    "term": "Externe Effekte",
+    "def": "Nicht vergütete Auswirkungen auf Dritte: positiv (z. B. Bildung) oder negativ (z. B. Umweltverschmutzung)."
+  },
+  {
+    "ch": "b2b",
+    "sub": "Marktmechanismen",
+    "term": "Öffentliche Güter",
+    "def": "Nicht-ausschließbar und nicht-rivalisierend: Nutzung durch eine Person schränkt andere nicht ein (z. B. Straßenlaternen)."
+  },
+  {
+    "ch": "b2b",
+    "sub": "Marktmechanismen",
+    "term": "Wettbewerbs-beschränkung",
+    "def": "Kartelle, Preisabsprachen oder Marktmacht schränken freien Wettbewerb ein und erfordern staatliche Kontrolle."
+  },
+  {
+    "ch": "b2b",
+    "sub": "VGR",
+    "term": "VGR",
+    "def": "Volkswirtschaftliche Gesamtrechnung: systematische Erfassung aller Wirtschaftsleistungen eines Landes."
+  },
+  {
+    "ch": "b2b",
+    "sub": "VGR",
+    "term": "Entstehungs-rechnung",
+    "def": "BIP aus Branchenperspektive: Summe der Bruttowertschöpfung aller Wirtschaftssektoren."
+  },
+  {
+    "ch": "b2b",
+    "sub": "VGR",
+    "term": "Verwendungs-rechnung",
+    "def": "BIP = privater Konsum + Investitionen + Staatsausgaben + Exporte − Importe."
+  },
+  {
+    "ch": "b2b",
+    "sub": "VGR",
+    "term": "Verteilungs-rechnung",
+    "def": "Aufteilung des Volkseinkommens auf Arbeitnehmer (Löhne) und Unternehmen/Vermögenseigentümer (Gewinne/Zinsen)."
+  },
+  {
+    "ch": "b2b",
+    "sub": "VGR",
+    "term": "Nominal- vs. Real-BIP",
+    "def": "Nominal: zu laufenden Preisen. Real: bereinigt um Preissteigerungen → zeigt echtes Wachstum."
+  },
+  {
+    "ch": "b2b",
+    "sub": "Geld",
+    "term": "Geld",
+    "def": "Allgemein anerkanntes Tausch- und Zahlungsmittel. Funktionen: Tauschmittel · Wertmaßstab · Wertaufbewahrung."
+  },
+  {
+    "ch": "b2b",
+    "sub": "Geld",
+    "term": "Geldmenge",
+    "def": "Umlaufendes Geld in einer Volkswirtschaft. EZB steuert M1/M2/M3 zur Kontrolle von Inflation und Wachstum."
+  },
+  {
+    "ch": "b2b",
+    "sub": "Geld",
+    "term": "Geldschöpfung",
+    "def": "Banken erzeugen Giralgeld durch Kreditvergabe; begrenzt durch Mindestreserve der Zentralbank."
+  },
+  {
+    "ch": "b2b",
+    "sub": "Geld",
+    "term": "Zinsen",
+    "def": "Preis für geliehenes Kapital. Niedrige Zinsen fördern Investitionen; hohe Zinsen bremsen Inflation."
+  },
+  {
+    "ch": "b2b",
+    "sub": "Geld",
+    "term": "Zentralbank (EZB)",
+    "def": "Steuert Geldmenge und Leitzins im Euroraum; primäres Ziel: Preisstabilität (Inflation nahe 2 %)."
+  },
+  {
+    "ch": "b4",
+    "sub": "Grundlagen",
+    "term": "Wirtschafts-politik",
+    "def": "Gesamtheit staatlicher Maßnahmen zur Beeinflussung des Wirtschaftsgeschehens."
+  },
+  {
+    "ch": "b4",
+    "sub": "Grundlagen",
+    "term": "Fiskalpolitik",
+    "def": "Staatliche Einnahmen-/Ausgabenpolitik. Expansiv: mehr Ausgaben/weniger Steuern; restriktiv: das Gegenteil."
+  },
+  {
+    "ch": "b4",
+    "sub": "Grundlagen",
+    "term": "Geldpolitik",
+    "def": "EZB steuert Geldmenge und Zinsen zur Sicherung der Preisstabilität im Euroraum."
+  },
+  {
+    "ch": "b4",
+    "sub": "Grundlagen",
+    "term": "Angebotspolitik",
+    "def": "Stärkung der Produktionsseite: Steuersenkungen, Deregulierung, Investitionsförderung."
+  },
+  {
+    "ch": "b4",
+    "sub": "Grundlagen",
+    "term": "Nachfragepolitik",
+    "def": "Keynesianismus: Konjunkturpakete und öffentliche Investitionen in Krisenzeiten."
+  },
+  {
+    "ch": "b4",
+    "sub": "Instrumente",
+    "term": "Staatlicher Haushalt",
+    "def": "Plan aller Einnahmen und Ausgaben. Defizit = Ausgaben > Einnahmen; Überschuss = umgekehrt."
+  },
+  {
+    "ch": "b4",
+    "sub": "Instrumente",
+    "term": "Staatsverschuldung",
+    "def": "Kumulierte Defizite. Maastricht: max. 60 % des BIP; jährliches Defizit max. 3 % des BIP."
+  },
+  {
+    "ch": "b4",
+    "sub": "Instrumente",
+    "term": "Subventionen",
+    "def": "Staatliche Finanzhilfen zur Förderung bestimmten Verhaltens (z. B. Ökostrom, Landwirtschaft)."
+  },
+  {
+    "ch": "b4",
+    "sub": "Instrumente",
+    "term": "Steuerpolitik",
+    "def": "Festlegung von Steuerarten und -sätzen zur Finanzierung öffentlicher Aufgaben und Verhaltenssteuerung."
+  },
+  {
+    "ch": "b4",
+    "sub": "Instrumente",
+    "term": "Leitzins",
+    "def": "Von der EZB festgelegter Zinssatz: niedrig = Investitionsanreiz; hoch = Inflationsbremse."
+  },
+  {
+    "ch": "b4",
+    "sub": "Sozialpolitik",
+    "term": "Sozialstaat",
+    "def": "Staatsprinzip: Absicherung gegen soziale Risiken (Krankheit, Alter, Arbeitslosigkeit) durch Umverteilung."
+  },
+  {
+    "ch": "b4",
+    "sub": "Sozialpolitik",
+    "term": "Sozial-versicherung",
+    "def": "Pflichtversicherung gegen Lebensrisiken: Kranken-, Unfall-, Pensions- und Arbeitslosenversicherung."
+  },
+  {
+    "ch": "b4",
+    "sub": "Sozialpolitik",
+    "term": "Umverteilung",
+    "def": "Übertragung von Einkommen via Steuern → Transfers und Sozialleistungen an Bedürftige."
+  },
+  {
+    "ch": "b4",
+    "sub": "Wettbewerb",
+    "term": "Wettbewerbs-recht",
+    "def": "Kartellverbot, Fusionskontrolle, Machtmissbrauchsverbot – Schutz des freien Wettbewerbs (EU-Recht)."
+  },
+  {
+    "ch": "b4",
+    "sub": "Wettbewerb",
+    "term": "Konjunktur-paket",
+    "def": "Staatliche Maßnahmenbündel in Krisen: Investitionen, Kurzarbeit, Steuerentlastungen."
+  },
+  {
+    "ch": "b5",
+    "sub": "Staatsbudget",
+    "term": "Budget",
+    "def": "Jährlicher Finanzplan des Staates: Gegenüberstellung aller geplanten Einnahmen und Ausgaben."
+  },
+  {
+    "ch": "b5",
+    "sub": "Staatsbudget",
+    "term": "Budgetdefizit",
+    "def": "Ausgaben übersteigen Einnahmen → Staat nimmt Kredite auf; führt zu steigender Staatsverschuldung."
+  },
+  {
+    "ch": "b5",
+    "sub": "Staatsbudget",
+    "term": "Budget-überschuss",
+    "def": "Einnahmen übersteigen Ausgaben → Staat kann Schulden tilgen oder Rücklagen bilden."
+  },
+  {
+    "ch": "b5",
+    "sub": "Staatsbudget",
+    "term": "Staatsverschuldung",
+    "def": "Summe aller aufgenommenen Staatskredite. Maastricht-Kriterium: max. 60 % des BIP."
+  },
+  {
+    "ch": "b5",
+    "sub": "Staatseinnahmen",
+    "term": "Steuern",
+    "def": "Zwangsabgaben ohne direkte Gegenleistung. Wichtigste Arten: Einkommensteuer, Körperschaftsteuer, USt."
+  },
+  {
+    "ch": "b5",
+    "sub": "Staatseinnahmen",
+    "term": "Abgabenquote",
+    "def": "Anteil der Steuern und Sozialabgaben am BIP; Österreich zählt zu den Ländern mit hoher Abgabenquote."
+  },
+  {
+    "ch": "b5",
+    "sub": "Staatseinnahmen",
+    "term": "Direkte vs. indirekte Steuer",
+    "def": "Direkt: trifft Einkommen/Vermögen (Lohnsteuer). Indirekt: auf Konsum (Umsatzsteuer, Mineralölsteuer)."
+  },
+  {
+    "ch": "b5",
+    "sub": "Budgetpolitik",
+    "term": "Expansive Budget-politik",
+    "def": "Staat erhöht Ausgaben oder senkt Steuern zur Konjunkturbelebung – nimmt höhere Defizite in Kauf."
+  },
+  {
+    "ch": "b5",
+    "sub": "Budgetpolitik",
+    "term": "Restriktive Budget-politik",
+    "def": "Staat senkt Ausgaben oder erhöht Steuern zur Konsolidierung; dämpft Konjunktur, baut Schulden ab."
+  },
+  {
+    "ch": "b5",
+    "sub": "Budgetpolitik",
+    "term": "Schuldenbremse",
+    "def": "Verfassungsrechtliche Regel, die strukturelle Neuverschuldung begrenzt; in Österreich ab 2017 verankert."
+  },
+  {
+    "ch": "b5",
+    "sub": "Budgetpolitik",
+    "term": "Maastricht-Kriterien",
+    "def": "EU-Regeln: Defizit max. 3 % BIP, Schuldenstand max. 60 % BIP – Voraussetzung für Euro-Mitgliedschaft."
+  },
+  {
+    "ch": "b5",
+    "sub": "Budgetpolitik",
+    "term": "Multiplikator-effekt",
+    "def": "1 € Staatsausgabe steigert BIP um mehr als 1 € – Folgekäufe und Einkommen lösen weitere Nachfrage aus."
+  },
+  {
+    "ch": "b6",
+    "sub": "Außenhandel",
+    "term": "Globalisierung",
+    "def": "Weltweite Vernetzung von Wirtschaft, Kultur und Politik durch Handel, Technologie und Kommunikation."
+  },
+  {
+    "ch": "b6",
+    "sub": "Außenhandel",
+    "term": "Komparativer Kostenvorteil",
+    "def": "Ein Land spezialisiert sich auf Güter, die es relativ günstiger produziert – Basis des Welthandels (Ricardo)."
+  },
+  {
+    "ch": "b6",
+    "sub": "Außenhandel",
+    "term": "Freihandel",
+    "def": "Handel ohne Zölle, Quoten oder Handelshemmnisse; fördert Spezialisierung und Effizienz."
+  },
+  {
+    "ch": "b6",
+    "sub": "Außenhandel",
+    "term": "Protektionismus",
+    "def": "Schutz der heimischen Wirtschaft durch Zölle, Importquoten oder Subventionen gegen Auslandskonkurrenz."
+  },
+  {
+    "ch": "b6",
+    "sub": "Außenhandel",
+    "term": "Außenhandels-bilanz",
+    "def": "Differenz zwischen Exporten und Importen: Überschuss = mehr Export; Defizit = mehr Import."
+  },
+  {
+    "ch": "b6",
+    "sub": "Außenhandel",
+    "term": "Leistungsbilanz",
+    "def": "Außenhandelsbilanz + Dienstleistungen + Transfers; zeigt alle wirtschaftlichen Beziehungen zum Ausland."
+  },
+  {
+    "ch": "b6",
+    "sub": "Institutionen",
+    "term": "WTO",
+    "def": "Welthandelsorganisation: legt Regeln für den Welthandel fest und schlichtet Handelsstreitigkeiten."
+  },
+  {
+    "ch": "b6",
+    "sub": "Institutionen",
+    "term": "IWF",
+    "def": "Internationaler Währungsfonds: unterstützt Länder in Zahlungsbilanzkrise mit Krediten und Reformberatung."
+  },
+  {
+    "ch": "b6",
+    "sub": "Institutionen",
+    "term": "Weltbank",
+    "def": "Fördert Entwicklung ärmerer Länder durch Kredite für Infrastruktur und Armutsbekämpfung."
+  },
+  {
+    "ch": "b6",
+    "sub": "Integration",
+    "term": "Wirtschaftliche Integration",
+    "def": "Zusammenschluss von Ländern: Freihandelszone → Zollunion → Gemeinsamer Markt → Wirtschaftsunion (z. B. EU)."
+  },
+  {
+    "ch": "b6",
+    "sub": "Integration",
+    "term": "EU-Binnenmarkt",
+    "def": "Freier Verkehr von Waren, Dienstleistungen, Kapital und Personen innerhalb der EU (4 Grundfreiheiten)."
+  },
+  {
+    "ch": "b6",
+    "sub": "Integration",
+    "term": "Währungsunion (Euro)",
+    "def": "Gemeinsame Währung in 20 EU-Staaten; EZB führt einheitliche Geldpolitik; kein internes Wechselkursrisiko."
+  },
+  {
+    "ch": "b6",
+    "sub": "Globalisierung",
+    "term": "Multinationaler Konzern",
+    "def": "Unternehmen mit Niederlassungen in mehreren Ländern, das weltweit produziert und verkauft."
+  },
+  {
+    "ch": "b6",
+    "sub": "Globalisierung",
+    "term": "Outsourcing",
+    "def": "Auslagerung von Unternehmenstätigkeiten an externe Anbieter, oft ins kostengünstigere Ausland."
+  },
+  {
+    "ch": "b6",
+    "sub": "Globalisierung",
+    "term": "Dumping",
+    "def": "Verkauf von Waren im Ausland unter Herstellungspreis, um Konkurrenten zu verdrängen."
+  },
+  {
+    "ch": "b6",
+    "sub": "Globalisierung",
+    "term": "Brain Drain",
+    "def": "Abwanderung hochqualifizierter Fachkräfte aus einem Land in wirtschaftlich attraktivere Länder."
+  },
+  {
+    "ch": "b6",
+    "sub": "Globalisierung",
+    "term": "Global Value Chain",
+    "def": "Internationale Wertschöpfungskette: Jedes Land übernimmt spezialisierte Produktionsschritte."
+  },
+  {
+    "ch": "b7",
+    "sub": "Grundlagen",
+    "term": "Nachhaltigkeit",
+    "def": "Wirtschaften, das die Bedürfnisse der Gegenwart erfüllt, ohne die Möglichkeiten künftiger Generationen zu gefährden (Brundtland 1987)."
+  },
+  {
+    "ch": "b7",
+    "sub": "Grundlagen",
+    "term": "3 Säulen der Nachhaltigkeit",
+    "def": "Ökonomisch (Wohlstand) · Ökologisch (Umweltschutz) · Sozial (Gerechtigkeit) – alle drei im Gleichgewicht."
+  },
+  {
+    "ch": "b7",
+    "sub": "Grundlagen",
+    "term": "SDGs",
+    "def": "17 Sustainable Development Goals der UN (Agenda 2030): globale Ziele für Armut, Klima, Bildung, Gesundheit u. a."
+  },
+  {
+    "ch": "b7",
+    "sub": "Grundlagen",
+    "term": "Ökologischer Fußabdruck",
+    "def": "Maß für den Flächenbedarf zur Deckung des Ressourcenverbrauchs einer Person oder Volkswirtschaft."
+  },
+  {
+    "ch": "b7",
+    "sub": "Umweltökonomie",
+    "term": "Externe Umwelt-kosten",
+    "def": "Umweltschäden (CO₂, Lärm, Wasserverschmutzung), die nicht im Marktpreis enthalten sind – Marktversagen."
+  },
+  {
+    "ch": "b7",
+    "sub": "Umweltökonomie",
+    "term": "Internalisierung",
+    "def": "Einbeziehung externer Kosten in den Preis (z. B. CO₂-Steuer, Emissionshandel) – Verursacher zahlen."
+  },
+  {
+    "ch": "b7",
+    "sub": "Umweltökonomie",
+    "term": "Emissionshandel",
+    "def": "Unternehmen erhalten/kaufen Zertifikate für CO₂-Ausstoß; Gesamtmenge ist begrenzt (Cap & Trade)."
+  },
+  {
+    "ch": "b7",
+    "sub": "Umweltökonomie",
+    "term": "Kreislauf-wirtschaft",
+    "def": "Ressourcen werden möglichst lange genutzt: Wiederverwertung, Reparatur, Wiederverwendung statt Wegwerfen."
+  },
+  {
+    "ch": "b7",
+    "sub": "Instrumente",
+    "term": "Umweltsteuern",
+    "def": "Lenkungssteuern auf umweltschädliches Verhalten (CO₂-Steuer, Mineralölsteuer) zur Verhaltensänderung."
+  },
+  {
+    "ch": "b7",
+    "sub": "Instrumente",
+    "term": "Öko-Subventionen",
+    "def": "Staatliche Förderung umweltfreundlicher Technologien: Photovoltaik, E-Mobilität, Gebäudedämmung."
+  },
+  {
+    "ch": "b7",
+    "sub": "Instrumente",
+    "term": "CSR",
+    "def": "Corporate Social Responsibility: freiwillige Übernahme sozialer und ökologischer Verantwortung durch Unternehmen."
+  },
+  {
+    "ch": "b7",
+    "sub": "Instrumente",
+    "term": "ESG-Kriterien",
+    "def": "Environmental, Social, Governance: Nachhaltigkeitskriterien zur Bewertung von Unternehmen für Investoren."
+  },
+  {
+    "ch": "b7",
+    "sub": "Konzepte",
+    "term": "Green Economy",
+    "def": "Wirtschaftsmodell, das Wachstum mit Ressourcenschonung verbindet; setzt auf erneuerbare Energien und Effizienz."
+  },
+  {
+    "ch": "b7",
+    "sub": "Konzepte",
+    "term": "Degrowth",
+    "def": "Konzept bewusster Wachstumsreduzierung zugunsten von Lebensqualität, Umverteilung und Ökologie."
+  },
+  {
+    "ch": "b7",
+    "sub": "Konzepte",
+    "term": "Pariser Klima-abkommen",
+    "def": "Internationales Abkommen (2015): Erderwärmung auf max. 1,5–2 °C begrenzen; Emissionen bis 2050 netto null."
+  }
+]
