@@ -8,7 +8,7 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'DM Sans', sans-serif; background: #f0f4f8; min-height: 100vh; padding: 2rem 1rem 4rem; color: #1a2a3a; }
-
+ 
 header { text-align: center; margin-bottom: 1.8rem; position: relative; }
 header .label { font-size: 11px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: #7a9ab8; margin-bottom: 0.4rem; }
 header h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.5rem, 4vw, 2.2rem); color: #042C53; line-height: 1.2; margin-bottom: 0.4rem; }
@@ -16,7 +16,7 @@ header p { font-size: 13px; color: #7a9ab8; }
 .admin-toggle { position: absolute; top: 0; right: 0; font-size: 11px; padding: 5px 12px; border-radius: 12px; border: 1px solid #dce8f5; background: white; color: #9aafc0; cursor: pointer; transition: all 0.2s; }
 .admin-toggle:hover { border-color: #b5d4f4; color: #378ADD; }
 .admin-toggle.active { background: #1a2a3a; color: white; border-color: #1a2a3a; }
-
+ 
 /* ── MODULE SWITCHER ── */
 .modul-switcher { display: flex; gap: 8px; justify-content: center; margin-bottom: 1.2rem; }
 .modul-btn { font-family: 'DM Serif Display', serif; font-size: 14px; padding: 9px 28px; border-radius: 26px; border: 2px solid transparent; cursor: pointer; transition: all 0.22s; background: white; }
@@ -26,12 +26,12 @@ header p { font-size: 13px; color: #7a9ab8; }
 .modul-btn[data-mod="A"].active { background: #7A2E10; color: white; border-color: #7A2E10; }
 .modul-btn[data-mod="B"] { border-color: #85B7EB; color: #185FA5; }
 .modul-btn[data-mod="B"].active { background: #185FA5; color: white; border-color: #185FA5; }
-
+ 
 /* ── LEGEND ── */
 .legend { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 1.4rem; }
 .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #5a7a9a; }
 .legend-dot { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
-
+ 
 /* ── CHAPTER TABS ── */
 .chapter-tabs { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; margin-bottom: 1rem; }
 .tab { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; padding: 7px 16px; border-radius: 22px; border: 2px solid transparent; cursor: pointer; transition: all 0.2s; background: white; }
@@ -50,24 +50,24 @@ header p { font-size: 13px; color: #7a9ab8; }
 .tab[data-ch="b5"]  { border-color: #EF9F27; color: #854F0B; } .tab[data-ch="b5"].active  { background: #854F0B; color: white; }
 .tab[data-ch="b6"]  { border-color: #ED93B1; color: #993556; } .tab[data-ch="b6"].active  { background: #993556; color: white; }
 .tab[data-ch="b7"]  { border-color: #97C459; color: #3B6D11; } .tab[data-ch="b7"].active  { background: #3B6D11; color: white; }
-
+ 
 /* ── SUB-FILTERS ── */
 .sub-filters { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 0.9rem; min-height: 30px; }
 .sub-btn { font-family: 'DM Sans', sans-serif; font-size: 11px; padding: 4px 13px; border-radius: 14px; border: 1px solid #b0c4d8; background: white; color: #5a7a9a; cursor: pointer; transition: all 0.2s; }
 .sub-btn.active { background: #e8f0f8; color: #042C53; border-color: #7aabcf; font-weight: 500; }
-
+ 
 /* ── ACTION ROW ── */
 .action-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
 .action-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 5px 15px; border-radius: 14px; border: 1px solid #b5d4f4; background: white; color: #378ADD; cursor: pointer; transition: all 0.2s; }
 .action-btn:hover { background: #e6f1fb; }
-
+ 
 /* ── PROGRESS ── */
 .progress-wrap { max-width: 340px; margin: 0 auto 1.2rem; text-align: center; }
 .progress-label { font-size: 12px; color: #7a9ab8; margin-bottom: 5px; }
 .progress-track { height: 6px; background: #dce8f5; border-radius: 3px; overflow: hidden; }
 .progress-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; width: 0%; background: #378ADD; }
 .hint { font-size: 11px; color: #9aafc0; text-align: center; margin-bottom: 1.4rem; }
-
+ 
 /* ── GRID ── */
 .grid { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; max-width: 1100px; margin: 0 auto; }
 .card-wrap { perspective: 900px; -webkit-perspective: 900px; cursor: pointer; position: relative; }
@@ -81,7 +81,7 @@ header p { font-size: 13px; color: #7a9ab8; }
 .face.back .content .def { font-size: 10.5px; line-height: 1.5; display: block; margin-bottom: 5px; }
 .ch-badge { display: inline-block; font-size: 9px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 8px; padding: 2px 7px; }
 .learn-btn { display: inline-block; margin-top: 5px; font-family: 'DM Sans', sans-serif; font-size: 10px; padding: 3px 10px; border-radius: 10px; border: 1px solid; background: transparent; cursor: pointer; transition: all 0.2s; }
-
+ 
 /* Admin overlays */
 .admin-card-btns { display: none; position: absolute; top: 4px; right: 4px; z-index: 10; gap: 4px; flex-direction: column; }
 .admin-mode .admin-card-btns { display: flex; }
@@ -89,7 +89,7 @@ header p { font-size: 13px; color: #7a9ab8; }
 .admin-card-btn.edit { background: #e6f1fb; color: #185FA5; }
 .admin-card-btn.del  { background: #FCEBEB; color: #A32D2D; }
 .admin-card-btn:hover { opacity: 0.8; }
-
+ 
 /* ── ADMIN PANEL ── */
 #adminPanel { display: none; background: white; border: 1.5px solid #dce8f5; border-radius: 16px; padding: 1.5rem; max-width: 680px; margin: 0 auto 2rem; }
 #adminPanel.visible { display: block; }
@@ -109,7 +109,7 @@ header p { font-size: 13px; color: #7a9ab8; }
 .admin-status { font-size: 12px; padding: 6px 12px; border-radius: 8px; margin-top: 6px; display: none; }
 .admin-status.ok  { background: #EAF3DE; color: #3B6D11; display: block; }
 .admin-status.err { background: #FCEBEB; color: #A32D2D; display: block; }
-
+ 
 /* ── LOCK SCREEN ── */
 #lockScreen { display: none; background: white; border: 1.5px solid #dce8f5; border-radius: 16px; padding: 1.5rem; max-width: 340px; margin: 0 auto 2rem; text-align: center; }
 #lockScreen.visible { display: block; }
@@ -117,13 +117,13 @@ header p { font-size: 13px; color: #7a9ab8; }
 #lockScreen input { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 8px 12px; border-radius: 8px; border: 1px solid #dce8f5; background: #f8fafc; outline: none; text-align: center; letter-spacing: 0.1em; margin-bottom: 10px; }
 #lockScreen input:focus { border-color: #85B7EB; }
 .lock-err { font-size: 12px; color: #A32D2D; margin-top: 4px; display: none; }
-
+ 
 /* ── EDIT MODAL ── */
 .modal-bg { display: none; position: fixed; inset: 0; background: rgba(10,20,40,0.35); z-index: 100; align-items: center; justify-content: center; }
 .modal-bg.open { display: flex; }
 .modal { background: white; border-radius: 16px; padding: 1.5rem; width: 90%; max-width: 500px; box-shadow: 0 8px 32px rgba(4,44,83,0.12); }
 .modal h3 { font-family: 'DM Serif Display', serif; font-size: 1rem; color: #042C53; margin-bottom: 1rem; }
-
+ 
 footer { text-align: center; margin-top: 3rem; font-size: 11px; color: #9aafc0; }
 /* iOS Safari fix – verhindert durchscheinendes Spiegelbild */
 @supports (-webkit-touch-callout: none) {
@@ -141,14 +141,14 @@ footer { text-align: center; margin-top: 3rem; font-size: 11px; color: #9aafc0; 
 </style>
 </head>
 <body>
-
+ 
 <header>
   <div class="label">Unternehmer-Führerschein &amp; Business Skills · Dipl. Ing. Wohlfart Franz</div>
   <h1>Lernkarten</h1>
   <p>Klicke auf eine Karte · Rückseite zeigt die Erklärung</p>
   <button class="admin-toggle" id="adminToggle">⚙ Admin</button>
 </header>
-
+ 
 <!-- Lock screen -->
 <div id="lockScreen">
   <h3>🔒 Admin-Zugang</h3>
@@ -157,7 +157,7 @@ footer { text-align: center; margin-top: 3rem; font-size: 11px; color: #9aafc0; 
   <button class="abtn primary" id="pwSubmit" style="width:100%">Anmelden</button>
   <div class="lock-err" id="lockErr">Falsches Passwort</div>
 </div>
-
+ 
 <!-- Admin Panel -->
 <div id="adminPanel">
   <h2>⚙ Admin-Panel <span style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:#9aafc0;">– Lernkarten verwalten</span></h2>
@@ -231,7 +231,7 @@ footer { text-align: center; margin-top: 3rem; font-size: 11px; color: #9aafc0; 
   </div>
   <input type="file" id="importFile" accept=".json" style="display:none">
 </div>
-
+ 
 <!-- Edit Modal -->
 <div class="modal-bg" id="editModal">
   <div class="modal">
@@ -271,32 +271,32 @@ footer { text-align: center; margin-top: 3rem; font-size: 11px; color: #9aafc0; 
     </div>
   </div>
 </div>
-
+ 
 <!-- Module switcher -->
 <div class="modul-switcher">
   <button class="modul-btn active" data-mod="all">Alle Module</button>
   <button class="modul-btn" data-mod="A">Modul A</button>
   <button class="modul-btn" data-mod="B">Modul B</button>
 </div>
-
+ 
 <div class="legend" id="legend"></div>
 <div class="chapter-tabs" id="chapterTabs"></div>
 <div class="sub-filters" id="subFilters"></div>
-
+ 
 <div class="action-row">
   <button class="action-btn" id="flipAll">Alle umdrehen ↺</button>
   <button class="action-btn" id="resetLearned">Fortschritt zurücksetzen</button>
 </div>
-
+ 
 <div class="progress-wrap">
   <div class="progress-label" id="progressLabel">0 von 0 gelernt</div>
   <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
 </div>
-
+ 
 <p class="hint">💡 Rückseite aufdecken → „Gelernt" markieren → Fortschritt verfolgen</p>
 <div class="grid" id="grid"></div>
 <footer>Unternehmer-Führerschein &amp; Business Skills · Dipl. Ing. Wohlfart Franz · Modul A &amp; Modul B</footer>
-
+ 
 <script>
 // ── PASSWORD ───────────────────────────────────────────────────────────────
 const PW_HASH = '28845bb0a06b5278ec155ef35f08c37b26c478f44a752348ef8775f88b785c4f'; // lehrer2025
@@ -304,7 +304,7 @@ async function hashPw(pw) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
   return [...new Uint8Array(buf)].map(x=>x.toString(16).padStart(2,'0')).join('');
 }
-
+ 
 // ── COLOR PALETTE ──────────────────────────────────────────────────────────
 const COLORS = {
   // Modul A – warm earthy palette
@@ -323,7 +323,7 @@ const COLORS = {
   'b6':  { ff:'#F4C0D1', fs:'#993556', bf:'#FBEAF0', bs:'#D4537E', tc:'#4B1528', dc:'#72243E', bb:'#FBEAF0', bc:'#993556', lb:'#ED93B1', lc:'#993556', pg:'#993556' },
   'b7':  { ff:'#C0DD97', fs:'#3B6D11', bf:'#EAF3DE', bs:'#639922', tc:'#173404', dc:'#27500A', bb:'#EAF3DE', bc:'#3B6D11', lb:'#97C459', lc:'#3B6D11', pg:'#3B6D11' },
 };
-
+ 
 const CH_META = {
   'a1':  { mod:'A', label:'Modul A – Kap. I · Grundlagen des Wirtschaftens &amp; Markt',  short:'Mod.A Kap.I' },
   'a2':  { mod:'A', label:'Modul A – Kap. II · Das Unternehmen und sein Umfeld',           short:'Mod.A Kap.II' },
@@ -339,12 +339,12 @@ const CH_META = {
   'b6':  { mod:'B', label:'Modul B – Kap. VI · Internationaler Handel &amp; Globalisierung', short:'Mod.B Kap.VI' },
   'b7':  { mod:'B', label:'Modul B – Kap. VII · Nachhaltiges Wirtschaften',                short:'Mod.B Kap.VII' },
 };
-
+ 
 // ── BASE CARDS ─────────────────────────────────────────────────────────────
 const BASE_CARDS = [
-
+ 
 // ════ MODUL A ════════════════════════════════════════════════════════════════
-
+ 
 // ── Kap. I: Grundlagen des Wirtschaftens & Der Markt ──────────────────────
 {ch:'a1',sub:'Grundlagen',term:'Wirtschaften',def:'Planen und Einsetzen knapper Mittel (Güter, Geld, Zeit) zur Befriedigung von Bedürfnissen.'},
 {ch:'a1',sub:'Grundlagen',term:'Knappheit',def:'Grundproblem der Wirtschaft: Bedürfnisse sind unbegrenzt, verfügbare Mittel sind begrenzt.'},
@@ -361,7 +361,7 @@ const BASE_CARDS = [
 {ch:'a1',sub:'Markt',term:'Marktformen',def:'Polypol (viele Anbieter), Oligopol (wenige), Monopol (einer) – bestimmen Preis- und Marktmacht.'},
 {ch:'a1',sub:'Markt',term:'Preisbildung',def:'Prozess, bei dem sich durch Angebot und Nachfrage ein Marktpreis herausbildet.'},
 {ch:'a1',sub:'Markt',term:'Konsumenten-schutz',def:'Gesetzliche Regelungen, die Käufer vor unlauteren Geschäftspraktiken, Täuschung und Mängeln schützen.'},
-
+ 
 // ── Kap. II: Das Unternehmen und sein Umfeld ───────────────────────────────
 {ch:'a2',sub:'Unternehmen',term:'Unternehmen',def:'Wirtschaftliche Einheit, die Güter und Dienstleistungen produziert und am Markt anbietet, um Gewinn zu erzielen.'},
 {ch:'a2',sub:'Unternehmen',term:'Unternehmensziele',def:'Oberziele: Gewinn, Rentabilität, Wachstum. Soziale Ziele: Mitarbeiterzufriedenheit, Kundenbindung, Nachhaltigkeit.'},
@@ -375,7 +375,7 @@ const BASE_CARDS = [
 {ch:'a2',sub:'Umfeld',term:'Standortfaktoren',def:'Kriterien für die Wahl des Unternehmensstandorts: Infrastruktur, Arbeitskräfte, Steuern, Nähe zu Kunden/Lieferanten.'},
 {ch:'a2',sub:'Umfeld',term:'Wertschöpfungs-kette',def:'Abfolge aller Aktivitäten, die ein Unternehmen durchführt, um ein Produkt herzustellen und an den Kunden zu bringen.'},
 {ch:'a2',sub:'Umfeld',term:'Konjunktur & Unternehmen',def:'Konjunkturphasen beeinflussen Umsatz, Investitionen und Personalplanung; Unternehmen müssen antizyklisch planen.'},
-
+ 
 // ── Kap. III: Informiert und sicher Kaufverträge abwickeln ─────────────────
 {ch:'a3',sub:'Kaufvertrag',term:'Kaufvertrag',def:'Zweiseitiges Rechtsgeschäft: Verkäufer übergibt Eigentum, Käufer zahlt den vereinbarten Preis.'},
 {ch:'a3',sub:'Kaufvertrag',term:'Angebot & Annahme',def:'Kaufvertrag entsteht durch Angebot einer Partei und vorbehaltlose Annahme der anderen.'},
@@ -389,7 +389,7 @@ const BASE_CARDS = [
 {ch:'a3',sub:'Konsumentenschutz',term:'Rücktrittsrecht',def:'Bei Haustürgeschäften und Fernabsatz: 14-tägiges Widerrufsrecht ohne Angabe von Gründen (EU-Recht).'},
 {ch:'a3',sub:'Konsumentenschutz',term:'Fernabsatz-vertrag',def:'Vertrag, der ausschließlich über Fernkommunikationsmittel (Internet, Telefon) abgeschlossen wird.'},
 {ch:'a3',sub:'Konsumentenschutz',term:'Konsumenten-schutzgesetz (KSchG)',def:'Österreichisches Gesetz, das Verbraucher gegenüber Unternehmern schützt (z. B. AGB-Kontrolle, Rücktrittsrecht).'},
-
+ 
 // ── Kap. IV: Bezahlen in der Praxis ───────────────────────────────────────
 {ch:'a4',sub:'Zahlungsmittel',term:'Bargeld',def:'Gesetzliches Zahlungsmittel in Form von Münzen und Banknoten; anonym, sofort verfügbar.'},
 {ch:'a4',sub:'Zahlungsmittel',term:'Überweisung',def:'Auftrag an die Bank, einen Betrag vom eigenen Konto auf ein Empfängerkonto zu transferieren.'},
@@ -402,7 +402,7 @@ const BASE_CARDS = [
 {ch:'a4',sub:'Zahlungsprobleme',term:'Mahnung',def:'Aufforderung an den Schuldner, eine fällige Zahlung zu leisten; Voraussetzung für rechtliche Schritte.'},
 {ch:'a4',sub:'Zahlungsprobleme',term:'Inkasso',def:'Beauftragung eines Inkassounternehmens zur Eintreibung offener Forderungen.'},
 {ch:'a4',sub:'Zahlungsprobleme',term:'Exekution',def:'Staatlich angeordnete Zwangsvollstreckung zur Durchsetzung von Geldforderungen (z. B. Lohnpfändung).'},
-
+ 
 // ── Kap. V: Die Finanzen im Griff ─────────────────────────────────────────
 {ch:'a5',sub:'Finanzplanung',term:'Budget (privat)',def:'Plan über Einnahmen und Ausgaben einer Person/eines Haushalts in einem bestimmten Zeitraum.'},
 {ch:'a5',sub:'Finanzplanung',term:'Liquidität',def:'Fähigkeit, fällige Zahlungen jederzeit erfüllen zu können; kurzfristige Zahlungsfähigkeit.'},
@@ -415,7 +415,7 @@ const BASE_CARDS = [
 {ch:'a5',sub:'Sparen',term:'Sparen',def:'Zurücklegen eines Teils des Einkommens für zukünftige Ausgaben oder Kapitalaufbau.'},
 {ch:'a5',sub:'Sparen',term:'Zinseszins',def:'Zinsen werden dem Kapital zugeschlagen und im nächsten Zeitraum mitverzinst – exponentielles Wachstum.'},
 {ch:'a5',sub:'Sparen',term:'Anlageformen',def:'Sparbuch, Festgeld, Anleihen, Aktien, Fonds, Immobilien – unterscheiden sich in Rendite, Risiko und Verfügbarkeit.'},
-
+ 
 // ── Kap. VI: Versicherungen ───────────────────────────────────────────────
 {ch:'a6',sub:'Grundlagen',term:'Versicherung',def:'Vertrag zur Absicherung finanzieller Risiken: viele zahlen Prämien, wenige erhalten im Schadensfall Leistungen.'},
 {ch:'a6',sub:'Grundlagen',term:'Prämie (Beitrag)',def:'Regelmäßige Zahlung des Versicherungsnehmers an die Versicherung für den Versicherungsschutz.'},
@@ -431,9 +431,9 @@ const BASE_CARDS = [
 {ch:'a6',sub:'Sozialversicherung',term:'Sozialversicherung',def:'Staatliche Pflichtversicherung: Kranken-, Unfall-, Pensions- und Arbeitslosenversicherung – finanziert durch Beiträge.'},
 {ch:'a6',sub:'Sozialversicherung',term:'Pensionsversicherung',def:'Sichert das Einkommen im Alter, bei Invalidität und für Hinterbliebene; Umlageverfahren in Österreich.'},
 {ch:'a6',sub:'Sozialversicherung',term:'Arbeitslosenver-sicherung',def:'Zahlt Arbeitslosengeld bei unverschuldetem Jobverlust; finanziert Weiterbildung und Jobvermittlung.'},
-
+ 
 // ════ MODUL B ════════════════════════════════════════════════════════════════
-
+ 
 // ── Kap. I: Volkswirtschaftliche Grundlagen ──────────────────────────────
 {ch:'b1',sub:'Grundbegriffe',term:'Volkswirtschaft',def:'Gesamtheit aller wirtschaftlichen Aktivitäten eines Landes – Haushalte, Unternehmen, Staat und Ausland.'},
 {ch:'b1',sub:'Grundbegriffe',term:'Wirtschafts-kreislauf',def:'Modell des Geld- und Güterstroms zwischen Haushalten, Unternehmen, Staat, Banken und Ausland.'},
@@ -544,7 +544,7 @@ const BASE_CARDS = [
 {ch:'b7',sub:'Konzepte',term:'Degrowth',def:'Konzept bewusster Wachstumsreduzierung zugunsten von Lebensqualität, Umverteilung und Ökologie.'},
 {ch:'b7',sub:'Konzepte',term:'Pariser Klima-abkommen',def:'Internationales Abkommen (2015): Erderwärmung auf max. 1,5–2 °C begrenzen; Emissionen bis 2050 netto null.'},
 ];
-
+ 
 // ── LOAD / SAVE ────────────────────────────────────────────────────────────
 function loadCards() {
   try { const s=localStorage.getItem('uf_cards_v2'); if(s) return JSON.parse(s); } catch(e){}
@@ -554,11 +554,11 @@ function saveCards() {
   try { localStorage.setItem('uf_cards_v2', JSON.stringify(CARDS)); } catch(e){}
 }
 let CARDS = loadCards();
-
+ 
 // ── SVG ────────────────────────────────────────────────────────────────────
 function octPath(s){ const c=s*0.21; return `M${c},0 L${s-c},0 L${s},${c} L${s},${s-c} L${s-c},${s} L${c},${s} L0,${s-c} L0,${c} Z`; }
 const OCT = octPath(158);
-
+ 
 // ── BUILD LEGEND ───────────────────────────────────────────────────────────
 function buildLegend(mod) {
   const el = document.getElementById('legend');
@@ -571,7 +571,7 @@ function buildLegend(mod) {
     el.appendChild(item);
   });
 }
-
+ 
 // ── BUILD CHAPTER TABS ─────────────────────────────────────────────────────
 function buildChapterTabs(mod) {
   const container = document.getElementById('chapterTabs');
@@ -590,23 +590,23 @@ function buildChapterTabs(mod) {
     container.appendChild(btn);
   });
 }
-
+ 
 // ── STATE ──────────────────────────────────────────────────────────────────
 const learned = new Set();
 let allFlipped=false, currentCh='all', currentMod='all', currentSub='all', isAdmin=false, editIdx=-1;
-
+ 
 function setModule(mod) {
   currentMod=mod; currentCh='all'; currentSub='all'; allFlipped=false;
   document.querySelectorAll('.modul-btn').forEach(b=>b.classList.toggle('active', b.dataset.mod===mod));
   buildLegend(mod); buildChapterTabs(mod); renderSubFilters('all'); renderGrid();
 }
-
+ 
 function setChapter(ch) {
   currentCh=ch; currentSub='all'; allFlipped=false;
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.ch===ch));
   renderSubFilters(ch); renderGrid();
 }
-
+ 
 function getFiltered() {
   let src = CARDS;
   if (currentMod !== 'all') src = src.filter(c => CH_META[c.ch] && CH_META[c.ch].mod === currentMod);
@@ -614,14 +614,14 @@ function getFiltered() {
   if (currentSub !== 'all') src = src.filter(c => c.sub === currentSub);
   return src.map(c => ({...c, idx: CARDS.indexOf(c)}));
 }
-
+ 
 function getSubsForView() {
   let src = CARDS;
   if (currentMod !== 'all') src = src.filter(c => CH_META[c.ch] && CH_META[c.ch].mod === currentMod);
   if (currentCh !== 'all') src = src.filter(c => c.ch === currentCh);
   return [...new Set(src.map(c => c.sub))];
 }
-
+ 
 function renderSubFilters() {
   const bar = document.getElementById('subFilters'); bar.innerHTML='';
   const subs = getSubsForView();
@@ -636,7 +636,7 @@ function renderSubFilters() {
     bar.appendChild(btn);
   });
 }
-
+ 
 function updateProgress() {
   const f=getFiltered(); const total=f.length; const done=f.filter(c=>learned.has(c.idx)).length;
   document.getElementById('progressLabel').textContent=`${done} von ${total} gelernt`;
@@ -644,9 +644,9 @@ function updateProgress() {
   const col = currentCh!=='all'&&COLORS[currentCh] ? COLORS[currentCh].pg : currentMod==='A'?'#7A2E10':currentMod==='B'?'#185FA5':'#378ADD';
   document.getElementById('progressFill').style.background=col;
 }
-
+ 
 function showStatus(msg,ok=true){ const el=document.getElementById('adminStatus'); el.textContent=msg; el.className='admin-status '+(ok?'ok':'err'); setTimeout(()=>{el.className='admin-status';},3000); }
-
+ 
 // ── RENDER GRID ────────────────────────────────────────────────────────────
 function renderGrid() {
   const grid=document.getElementById('grid');
@@ -687,16 +687,16 @@ function renderGrid() {
   });
   updateProgress();
 }
-
+ 
 // ── MODULE SWITCHER ────────────────────────────────────────────────────────
 document.querySelectorAll('.modul-btn').forEach(btn=>{
   btn.addEventListener('click',()=>setModule(btn.dataset.mod));
 });
-
+ 
 // ── FLIP / RESET ───────────────────────────────────────────────────────────
 document.getElementById('flipAll').addEventListener('click',function(){ allFlipped=!allFlipped; document.querySelectorAll('.card').forEach(c=>c.classList.toggle('flipped',allFlipped)); this.textContent=allFlipped?'Alle zurückdrehen ↺':'Alle umdrehen ↺'; });
 document.getElementById('resetLearned').addEventListener('click',function(){ learned.clear(); renderGrid(); });
-
+ 
 // ── ADMIN AUTH ─────────────────────────────────────────────────────────────
 document.getElementById('adminToggle').addEventListener('click',()=>{
   if(isAdmin){ isAdmin=false; document.getElementById('adminToggle').textContent='⚙ Admin'; document.getElementById('adminToggle').classList.remove('active'); document.getElementById('adminPanel').classList.remove('visible'); renderGrid(); }
@@ -708,7 +708,7 @@ document.getElementById('pwSubmit').addEventListener('click',async()=>{
   else { document.getElementById('lockErr').style.display='block'; document.getElementById('pwInput').value=''; document.getElementById('pwInput').focus(); }
 });
 document.getElementById('pwInput').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('pwSubmit').click(); });
-
+ 
 // ── ADD CARD ───────────────────────────────────────────────────────────────
 document.getElementById('addCard').addEventListener('click',()=>{
   const ch=document.getElementById('aChapter').value, sub=document.getElementById('aSub').value.trim(), term=document.getElementById('aTerm').value.trim(), def=document.getElementById('aDef').value.trim();
@@ -718,7 +718,7 @@ document.getElementById('addCard').addEventListener('click',()=>{
   showStatus(`Lernkarte „${term}" hinzugefügt!`);
 });
 document.getElementById('clearForm').addEventListener('click',()=>{ ['aSub','aTerm','aDef'].forEach(id=>document.getElementById(id).value=''); });
-
+ 
 // ── EDIT MODAL ─────────────────────────────────────────────────────────────
 function openEditModal(idx){ editIdx=idx; const c=CARDS[idx]; document.getElementById('eChapter').value=c.ch; document.getElementById('eSub').value=c.sub; document.getElementById('eTerm').value=c.term; document.getElementById('eDef').value=c.def; document.getElementById('editModal').classList.add('open'); }
 document.getElementById('saveEdit').addEventListener('click',()=>{
@@ -729,7 +729,7 @@ document.getElementById('saveEdit').addEventListener('click',()=>{
 });
 document.getElementById('cancelEdit').addEventListener('click',()=>{ document.getElementById('editModal').classList.remove('open'); editIdx=-1; });
 document.getElementById('editModal').addEventListener('click',function(e){ if(e.target===this) this.classList.remove('open'); });
-
+ 
 // ── EXPORT / IMPORT / RESET ────────────────────────────────────────────────
 document.getElementById('exportBtn').addEventListener('click',()=>{
   const json = JSON.stringify(CARDS, null, 2);
@@ -753,10 +753,13 @@ document.getElementById('resetAllBtn').addEventListener('click',()=>{
     renderSubFilters(); renderGrid(); showStatus('Auf Original zurückgesetzt.');
   }
 });
-
+ 
 // ── GOOGLE SHEETS ──────────────────────────────────────────────────────────
 const SHEETS_KEY = 'uf_sheets_url';
-
+ 
+// ► HIER deinen Google Sheets CSV-Link eintragen (einmalig):
+const SHEETS_URL_DEFAULT = 'https://script.google.com/macros/s/AKfycbwruOmRwVk_9FcDYWWRIp5ahhgQeQrfginU1KpgD68UrWPWxU0FjHQxcd3Xo1J4LtdcmA/exec';
+ 
 function parseCsvToCards(csv) {
   const lines = csv.trim().split('\n').map(l => l.trim()).filter(l => l);
   if (lines.length < 2) return [];
@@ -778,51 +781,56 @@ function parseCsvToCards(csv) {
   }
   return cards;
 }
-
+ 
 async function loadFromSheets(url) {
-  // Convert regular sheets URL to CSV export URL if needed
+  const cacheBust = Date.now();
+  // Apps Script URL → liefert direkt JSON, kein Proxy nötig
+  if (url.includes('script.google.com')) {
+    const res = await fetch(url + '?t=' + cacheBust, {cache: 'no-store'});
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) throw new Error('Keine Karten gefunden');
+    return data;
+  }
+  // CSV URL → CORS Proxy nötig
   let csvUrl = url;
   const match = url.match(/\/spreadsheets\/d\/([^/]+)/);
   if (match) {
     const gid = (url.match(/gid=(\d+)/) || [])[1] || '0';
     csvUrl = `https://docs.google.com/spreadsheets/d/${match[1]}/export?format=csv&gid=${gid}`;
   }
-  // Cache-busting timestamp so we always get fresh data
-  const cacheBust = Date.now();
-  // Try multiple CORS proxies in order
   const proxies = [
     `https://api.allorigins.win/raw?url=${encodeURIComponent(csvUrl + '&t=' + cacheBust)}`,
     `https://corsproxy.io/?${encodeURIComponent(csvUrl + '&t=' + cacheBust)}`,
-    `https://proxy.cors.sh/${csvUrl}?t=${cacheBust}`,
   ];
   let lastErr = '';
   for (const proxyUrl of proxies) {
     try {
-      const res = await fetch(proxyUrl, {cache: 'no-store', headers: {'Cache-Control': 'no-cache'}});
+      const res = await fetch(proxyUrl, {cache: 'no-store'});
       if (!res.ok) { lastErr = `HTTP ${res.status}`; continue; }
       const text = await res.text();
       const cards = parseCsvToCards(text);
-      if (cards.length === 0) throw new Error('Keine Karten gefunden – bitte Spaltenformat prüfen: ch, sub, term, def');
+      if (cards.length === 0) throw new Error('Keine Karten gefunden');
       return cards;
     } catch(e) { lastErr = e.message; }
   }
-  throw new Error(lastErr || 'Alle Proxies fehlgeschlagen');
+  throw new Error(lastErr || 'Laden fehlgeschlagen');
 }
-
+ 
 function showSheetsStatus(msg, ok=true) {
   const el = document.getElementById('sheetsStatus');
   el.textContent = msg; el.className = 'admin-status ' + (ok ? 'ok' : 'err');
   setTimeout(() => { el.className = 'admin-status'; }, 5000);
 }
-
+ 
 function updateSheetsInfo() {
-  const url = localStorage.getItem(SHEETS_KEY);
+  const url = localStorage.getItem(SHEETS_KEY) || SHEETS_URL_DEFAULT;
   const urlInput = document.getElementById('sheetsUrl');
   const info = document.getElementById('sheetsInfo');
   if (url) { urlInput.value = url; info.style.display = 'block'; }
   else { info.style.display = 'none'; }
 }
-
+ 
 document.getElementById('sheetsLoad').addEventListener('click', async () => {
   const url = document.getElementById('sheetsUrl').value.trim();
   if (!url) { showSheetsStatus('Bitte zuerst den Google Sheets Link einfügen.', false); return; }
@@ -842,14 +850,14 @@ document.getElementById('sheetsLoad').addEventListener('click', async () => {
     btn.textContent = '⬇ Jetzt von Google Sheets laden'; btn.disabled = false;
   }
 });
-
+ 
 document.getElementById('sheetsClear').addEventListener('click', () => {
   localStorage.removeItem(SHEETS_KEY);
   document.getElementById('sheetsUrl').value = '';
   document.getElementById('sheetsInfo').style.display = 'none';
   showSheetsStatus('Verknüpfung entfernt.');
 });
-
+ 
 // Reload-Button (manuell aktualisieren)
 document.getElementById('sheetsReload').addEventListener('click', async () => {
   const url = localStorage.getItem(SHEETS_KEY);
@@ -868,8 +876,8 @@ document.getElementById('sheetsReload').addEventListener('click', async () => {
     btn.textContent = '🔄 Aktualisieren'; btn.disabled = false;
   }
 });
-
-
+ 
+ 
 async function tryLoadExternalJSON() {
   try {
     const res = await fetch('lernkarten.json', {cache:'no-cache'});
@@ -881,11 +889,11 @@ async function tryLoadExternalJSON() {
     return true;
   } catch(e) { return false; }
 }
-
+ 
 // ── INIT ───────────────────────────────────────────────────────────────────
 (async () => {
-  // Priority 1: Google Sheets (if URL saved)
-  const sheetsUrl = localStorage.getItem(SHEETS_KEY);
+  // Priority 1: Google Sheets (gespeicherter Link ODER fest eingebauter Link)
+  const sheetsUrl = localStorage.getItem(SHEETS_KEY) || SHEETS_URL_DEFAULT;
   if (sheetsUrl) {
     try {
       const cards = await loadFromSheets(sheetsUrl);
@@ -908,7 +916,8 @@ async function tryLoadExternalJSON() {
   renderSubFilters();
   renderGrid();
 })();
-
+ 
 </script>
 </body>
 </html>
+ 
