@@ -7,18 +7,40 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'DM Sans', sans-serif; background: #f0f4f8; min-height: 100vh; padding: 2rem 1rem 4rem; color: #1a2a3a; }
+
+/* ── DARK MODE ── */
+:root {
+  --bg: #f0f4f8; --bg2: #ffffff; --bg3: #e8f0f8;
+  --text: #1a2a3a; --text2: #5a7a9a; --text3: #9aafc0;
+  --border: #dce8f5; --border2: #b5d4f4;
+  --card-bg: #ffffff; --card-border: #dce8f5;
+  --input-bg: #f8fafc; --shadow: rgba(4,44,83,0.08);
+}
+body.dark {
+  --bg: #0f1923; --bg2: #1a2535; --bg3: #151f2d;
+  --text: #e8f0f8; --text2: #7a9ab8; --text3: #4a6a88;
+  --border: #2a3a4a; --border2: #3a5a78;
+  --card-bg: #1a2535; --card-border: #2a3a4a;
+  --input-bg: #151f2d; --shadow: rgba(0,0,0,0.3);
+}
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); min-height: 100vh; padding: 2rem 1rem 4rem; color: var(--text); transition: background 0.3s, color 0.3s; }
 
 header { text-align: center; margin-bottom: 1.8rem; position: relative; }
-header .label { font-size: 11px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: #7a9ab8; margin-bottom: 0.4rem; }
-header h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.5rem, 4vw, 2.2rem); color: #042C53; line-height: 1.2; margin-bottom: 0.4rem; }
-header p { font-size: 13px; color: #7a9ab8; }
-.admin-toggle { position: absolute; top: 0; right: 0; font-size: 11px; padding: 5px 12px; border-radius: 12px; border: 1px solid #dce8f5; background: white; color: #9aafc0; cursor: pointer; transition: all 0.2s; }
-.admin-toggle:hover { border-color: #b5d4f4; color: #378ADD; }
+header .label { font-size: 11px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: var(--text3); margin-bottom: 0.4rem; }
+header h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.5rem, 4vw, 2.2rem); color: var(--text); line-height: 1.2; margin-bottom: 0.4rem; }
+header p { font-size: 13px; color: var(--text2); }
+.header-btns { position: absolute; top: 0; right: 0; display: flex; gap: 6px; align-items: center; }
+.admin-toggle { font-size: 11px; padding: 5px 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text3); cursor: pointer; transition: all 0.2s; }
+.admin-toggle:hover { border-color: var(--border2); color: #378ADD; }
 .admin-toggle.active { background: #1a2a3a; color: white; border-color: #1a2a3a; }
+.dark-toggle { font-size: 14px; padding: 5px 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text3); cursor: pointer; transition: all 0.2s; }
+.dark-toggle:hover { border-color: var(--border2); }
 
-.modul-switcher { display: flex; gap: 8px; justify-content: center; margin-bottom: 1.2rem; }
-.modul-btn { font-family: 'DM Serif Display', serif; font-size: 14px; padding: 9px 28px; border-radius: 26px; border: 2px solid transparent; cursor: pointer; transition: all 0.22s; background: white; }
+.modul-switcher { display: flex; gap: 8px; justify-content: center; margin-bottom: 0.8rem; flex-wrap: wrap; }
+.mode-switcher { display: flex; gap: 6px; justify-content: center; margin-bottom: 1.2rem; }
+.mode-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; padding: 6px 18px; border-radius: 20px; border: 1.5px solid var(--border); background: var(--card-bg); color: var(--text2); cursor: pointer; transition: all 0.2s; }
+.mode-btn.active { background: #185FA5; color: white; border-color: #185FA5; }
+.modul-btn { font-family: 'DM Serif Display', serif; font-size: 14px; padding: 9px 28px; border-radius: 26px; border: 2px solid transparent; cursor: pointer; transition: all 0.22s; background: var(--card-bg); color: var(--text2); }
 .modul-btn[data-mod="all"] { border-color: #b0c4d8; color: #5a7a9a; }
 .modul-btn[data-mod="all"].active { background: #1a2a3a; color: white; border-color: #1a2a3a; }
 .modul-btn[data-mod="A"] { border-color: #F0997B; color: #7A2E10; }
@@ -27,11 +49,11 @@ header p { font-size: 13px; color: #7a9ab8; }
 .modul-btn[data-mod="B"].active { background: #185FA5; color: white; border-color: #185FA5; }
 
 .legend { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 1.4rem; }
-.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #5a7a9a; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text2); }
 .legend-dot { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
 
 .chapter-tabs { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; margin-bottom: 1rem; }
-.tab { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; padding: 7px 16px; border-radius: 22px; border: 2px solid transparent; cursor: pointer; transition: all 0.2s; background: white; }
+.tab { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; padding: 7px 16px; border-radius: 22px; border: 2px solid transparent; cursor: pointer; transition: all 0.2s; background: var(--card-bg); }
 .tab[data-ch="a1"]  { border-color: #F5C4B3; color: #7A2E10; } .tab[data-ch="a1"].active  { background: #7A2E10; color: white; border-color: #7A2E10; }
 .tab[data-ch="a2"]  { border-color: #FAC775; color: #7A3D00; } .tab[data-ch="a2"].active  { background: #7A3D00; color: white; border-color: #7A3D00; }
 .tab[data-ch="a3"]  { border-color: #EF9F27; color: #6B3A00; } .tab[data-ch="a3"].active  { background: #6B3A00; color: white; border-color: #6B3A00; }
@@ -47,24 +69,24 @@ header p { font-size: 13px; color: #7a9ab8; }
 .tab[data-ch="b7"]  { border-color: #97C459; color: #3B6D11; } .tab[data-ch="b7"].active  { background: #3B6D11; color: white; }
 
 .sub-filters { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 0.9rem; min-height: 30px; }
-.sub-btn { font-family: 'DM Sans', sans-serif; font-size: 11px; padding: 4px 13px; border-radius: 14px; border: 1px solid #b0c4d8; background: white; color: #5a7a9a; cursor: pointer; transition: all 0.2s; }
-.sub-btn.active { background: #e8f0f8; color: #042C53; border-color: #7aabcf; font-weight: 500; }
+.sub-btn { font-family: 'DM Sans', sans-serif; font-size: 11px; padding: 4px 13px; border-radius: 14px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text2); cursor: pointer; transition: all 0.2s; }
+.sub-btn.active { background: var(--bg3); color: var(--text); border-color: var(--border2); font-weight: 500; }
 
 .action-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
-.action-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 5px 15px; border-radius: 14px; border: 1px solid #b5d4f4; background: white; color: #378ADD; cursor: pointer; transition: all 0.2s; }
-.action-btn:hover { background: #e6f1fb; }
+.action-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 5px 15px; border-radius: 14px; border: 1px solid var(--border2); background: var(--card-bg); color: #378ADD; cursor: pointer; transition: all 0.2s; }
+.action-btn:hover { background: var(--bg3); }
 
 .progress-wrap { max-width: 340px; margin: 0 auto 1.2rem; text-align: center; }
-.progress-label { font-size: 12px; color: #7a9ab8; margin-bottom: 5px; }
-.progress-track { height: 6px; background: #dce8f5; border-radius: 3px; overflow: hidden; }
+.progress-label { font-size: 12px; color: var(--text2); margin-bottom: 5px; }
+.progress-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
 .progress-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; width: 0%; background: #378ADD; }
 .search-wrap { max-width: 420px; margin: 0 auto 1.2rem; position: relative; }
-.search-wrap input { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 9px 36px 9px 14px; border-radius: 22px; border: 1.5px solid #dce8f5; background: white; color: #1a2a3a; outline: none; transition: border 0.2s; }
+.search-wrap input { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 9px 36px 9px 14px; border-radius: 22px; border: 1.5px solid var(--border); background: var(--card-bg); color: var(--text); outline: none; transition: border 0.2s; }
 .search-wrap input:focus { border-color: #85B7EB; }
-.search-wrap input::placeholder { color: #b0c4d8; }
-.search-clear { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #b0c4d8; font-size: 16px; cursor: pointer; display: none; padding: 0; line-height: 1; }
+.search-wrap input::placeholder { color: var(--text3); }
+.search-clear { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text3); font-size: 16px; cursor: pointer; display: none; padding: 0; line-height: 1; }
 .search-clear.visible { display: block; }
-.search-count { text-align: center; font-size: 11px; color: #7a9ab8; margin-bottom: 0.8rem; min-height: 16px; }
+.search-count { text-align: center; font-size: 11px; color: var(--text2); margin-bottom: 0.8rem; min-height: 16px; }
 .search-highlight { background: #FFF3A3; border-radius: 2px; padding: 0 1px; }
 
 /* ── GRID & CARDS ── */
@@ -100,28 +122,28 @@ header p { font-size: 13px; color: #7a9ab8; }
 .admin-card-btn:hover { opacity: 0.8; }
 
 /* ── ADMIN PANEL ── */
-#adminPanel { display: none; background: white; border: 1.5px solid #dce8f5; border-radius: 16px; padding: 1.5rem; max-width: 680px; margin: 0 auto 2rem; }
+#adminPanel { display: none; background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 16px; padding: 1.5rem; max-width: 680px; margin: 0 auto 2rem; }
 #adminPanel.visible { display: block; }
-#adminPanel h2 { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: #042C53; margin-bottom: 1rem; }
+#adminPanel h2 { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--text); margin-bottom: 1rem; }
 .admin-form { display: grid; gap: 10px; }
 .admin-form label { font-size: 12px; color: #5a7a9a; margin-bottom: 2px; display: block; }
-.admin-form input, .admin-form select, .admin-form textarea { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 8px 12px; border-radius: 8px; border: 1px solid #dce8f5; background: #f8fafc; color: #1a2a3a; outline: none; transition: border 0.2s; }
-.admin-form input:focus, .admin-form select:focus, .admin-form textarea:focus { border-color: #85B7EB; background: white; }
+.admin-form input, .admin-form select, .admin-form textarea { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text); outline: none; transition: border 0.2s; }
+.admin-form input:focus, .admin-form select:focus, .admin-form textarea:focus { border-color: #85B7EB; background: var(--card-bg); }
 .admin-form textarea { resize: vertical; min-height: 72px; }
 .admin-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .admin-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
 .admin-btns { display: flex; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
 .abtn { font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 7px 18px; border-radius: 10px; border: none; cursor: pointer; font-weight: 500; transition: all 0.2s; }
 .abtn.primary { background: #185FA5; color: white; } .abtn.primary:hover { background: #042C53; }
-.abtn.secondary { background: #f0f4f8; color: #5a7a9a; border: 1px solid #dce8f5; } .abtn.secondary:hover { background: #e6f1fb; }
+.abtn.secondary { background: var(--bg3); color: var(--text2); border: 1px solid var(--border); } .abtn.secondary:hover { background: var(--bg); }
 .abtn.danger { background: #FCEBEB; color: #A32D2D; } .abtn.danger:hover { background: #F7C1C1; }
-.admin-divider { border: none; border-top: 1px solid #f0f4f8; margin: 1rem 0; }
+.admin-divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
 .admin-status { font-size: 12px; padding: 6px 12px; border-radius: 8px; margin-top: 6px; display: none; }
 .admin-status.ok  { background: #EAF3DE; color: #3B6D11; display: block; }
 .admin-status.err { background: #FCEBEB; color: #A32D2D; display: block; }
 
 /* ── LOCK SCREEN ── */
-#lockScreen { display: none; background: white; border: 1.5px solid #dce8f5; border-radius: 16px; padding: 1.5rem; max-width: 340px; margin: 0 auto 2rem; text-align: center; }
+#lockScreen { display: none; background: var(--card-bg); border: 1.5px solid #dce8f5; border-radius: 16px; padding: 1.5rem; max-width: 340px; margin: 0 auto 2rem; text-align: center; }
 #lockScreen.visible { display: block; }
 #lockScreen h3 { font-family: 'DM Serif Display', serif; font-size: 1rem; color: #042C53; margin-bottom: 0.8rem; }
 #lockScreen input { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 8px 12px; border-radius: 8px; border: 1px solid #dce8f5; background: #f8fafc; outline: none; text-align: center; letter-spacing: 0.1em; margin-bottom: 10px; }
@@ -131,10 +153,53 @@ header p { font-size: 13px; color: #7a9ab8; }
 /* ── EDIT MODAL ── */
 .modal-bg { display: none; position: fixed; inset: 0; background: rgba(10,20,40,0.35); z-index: 100; align-items: center; justify-content: center; }
 .modal-bg.open { display: flex; }
-.modal { background: white; border-radius: 16px; padding: 1.5rem; width: 90%; max-width: 520px; box-shadow: 0 8px 32px rgba(4,44,83,0.12); }
-.modal h3 { font-family: 'DM Serif Display', serif; font-size: 1rem; color: #042C53; margin-bottom: 1rem; }
+.modal { background: var(--card-bg); border-radius: 16px; padding: 1.5rem; width: 90%; max-width: 520px; box-shadow: 0 8px 32px rgba(4,44,83,0.12); }
+.modal h3 { font-family: 'DM Serif Display', serif; font-size: 1rem; color: var(--text); margin-bottom: 1rem; }
 
-footer { text-align: center; margin-top: 3rem; font-size: 11px; color: #9aafc0; }
+footer { text-align: center; margin-top: 3rem; font-size: 11px; color: var(--text3); }
+/* ── QUIZ MODE ── */
+#quizView { display: none; max-width: 560px; margin: 0 auto; padding: 0 0 2rem; }
+#quizView.visible { display: block; }
+#cardView { display: block; }
+#cardView.hidden { display: none; }
+.quiz-setup { background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.quiz-setup h3 { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--text); margin-bottom: 1rem; }
+.quiz-option-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1rem; }
+.quiz-opt-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 5px 14px; border-radius: 16px; border: 1.5px solid var(--border); background: var(--card-bg); color: var(--text2); cursor: pointer; transition: all 0.2s; }
+.quiz-opt-btn.active { background: #185FA5; color: white; border-color: #185FA5; }
+.quiz-start-btn { width: 100%; padding: 11px; border-radius: 10px; border: none; background: #185FA5; color: white; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s; margin-top: 0.5rem; }
+.quiz-start-btn:hover { background: #042C53; }
+.quiz-progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 1.5rem; }
+.quiz-progress-fill { height: 100%; background: #185FA5; border-radius: 3px; transition: width 0.4s ease; }
+.quiz-q-card { background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 16px; padding: 2rem 1.5rem; margin-bottom: 1.2rem; text-align: center; min-height: 130px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.quiz-q-kap { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-bottom: 0.4rem; }
+.quiz-q-term { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--text); margin-bottom: 0.3rem; line-height: 1.3; }
+.quiz-q-eng { font-size: 12px; color: #378ADD; font-style: italic; }
+.quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem; }
+.quiz-ans { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px; font-family: 'DM Sans', sans-serif; font-size: 12.5px; color: var(--text); cursor: pointer; text-align: left; line-height: 1.4; transition: all 0.15s; }
+.quiz-ans:hover:not(:disabled) { border-color: #85B7EB; background: var(--bg3); }
+.quiz-ans.correct { border-color: #3B6D11; background: #EAF3DE; color: #173404; }
+.quiz-ans.wrong { border-color: #A32D2D; background: #FCEBEB; color: #501313; }
+.quiz-ans.reveal { border-color: #3B6D11; background: #EAF3DE; color: #173404; }
+.quiz-ans:disabled { cursor: default; }
+.quiz-feedback { text-align: center; font-size: 13px; min-height: 20px; margin-bottom: 0.8rem; font-weight: 500; }
+.quiz-feedback.ok { color: #3B6D11; }
+.quiz-feedback.err { color: #A32D2D; }
+.quiz-next { display: block; width: 100%; padding: 11px; border-radius: 10px; border: none; background: #185FA5; color: white; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+.quiz-next:hover { background: #042C53; }
+.quiz-next:disabled { background: var(--border); cursor: default; }
+.quiz-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; }
+.quiz-score-wrap { text-align: center; background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 16px; padding: 2.5rem 1.5rem; }
+.quiz-score-num { font-size: 3.5rem; font-weight: 500; color: #185FA5; line-height: 1; }
+.quiz-score-sub { font-size: 14px; color: var(--text2); margin: 0.5rem 0 1.2rem; }
+.quiz-stat-row { display: flex; justify-content: center; gap: 32px; margin-bottom: 1.5rem; }
+.quiz-stat { text-align: center; }
+.quiz-stat-n { font-size: 1.6rem; font-weight: 500; }
+.quiz-stat-l { font-size: 12px; color: var(--text2); }
+.quiz-badge { display: inline-block; font-size: 13px; padding: 6px 18px; border-radius: 20px; margin-bottom: 1.5rem; }
+.quiz-again { display: inline-block; padding: 10px 28px; border-radius: 10px; border: 1.5px solid #85B7EB; background: var(--card-bg); color: #185FA5; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; margin-right: 8px; }
+.quiz-back { display: inline-block; padding: 10px 28px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--card-bg); color: var(--text2); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; }
+
 @media (max-width: 480px) {
   .card, .card-wrap { width: 138px; height: 138px; }
   .face.front .content .term { font-size: 11.5px; }
@@ -143,6 +208,7 @@ footer { text-align: center; margin-top: 3rem; font-size: 11px; color: #9aafc0; 
   .admin-row { grid-template-columns: 1fr; }
   .admin-row3 { grid-template-columns: 1fr; }
   .modul-btn { padding: 8px 18px; font-size: 13px; }
+  .quiz-options { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -152,7 +218,10 @@ footer { text-align: center; margin-top: 3rem; font-size: 11px; color: #9aafc0; 
   <div class="label">Unternehmer-Führerschein &amp; Business Skills · Dipl. Ing. Wohlfart Franz</div>
   <h1>Lernkarten</h1>
   <p>Klicke auf eine Karte · Rückseite zeigt die Erklärung</p>
-  <button class="admin-toggle" id="adminToggle">⚙ Admin</button>
+  <div class="header-btns">
+    <button class="dark-toggle" id="darkToggle" title="Dark Mode">🌙</button>
+    <button class="admin-toggle" id="adminToggle">⚙ Admin</button>
+  </div>
 </header>
 
 <div id="lockScreen">
@@ -284,6 +353,20 @@ footer { text-align: center; margin-top: 3rem; font-size: 11px; color: #9aafc0; 
   <button class="modul-btn" data-mod="B">Modul B</button>
 </div>
 
+<!-- Mode: Lernkarten / Quiz -->
+<div class="mode-switcher">
+  <button class="mode-btn active" id="modeCards">🃏 Lernkarten</button>
+  <button class="mode-btn" id="modeQuiz">🎯 Quiz</button>
+</div>
+
+<!-- QUIZ VIEW -->
+<div id="quizView">
+  <div id="quizContent"></div>
+</div>
+
+<!-- CARD VIEW -->
+
+<div id="cardView">
 <div class="legend" id="legend"></div>
 <div class="chapter-tabs" id="chapterTabs"></div>
 <div class="sub-filters" id="subFilters"></div>
@@ -306,6 +389,7 @@ footer { text-align: center; margin-top: 3rem; font-size: 11px; color: #9aafc0; 
 
 <p class="hint">💡 Rückseite aufdecken → „Gelernt" markieren → Fortschritt verfolgen</p>
 <div class="grid" id="grid"></div>
+</div><!-- end cardView -->
 <footer>Unternehmer-Führerschein &amp; Business Skills · Dipl. Ing. Wohlfart Franz · Modul A &amp; Modul B</footer>
 
 <script>
@@ -872,7 +956,179 @@ document.getElementById('sheetsClear').addEventListener('click',()=>{
   showSheetsStatus('Verknüpfung entfernt.');
 });
 
-// ── AUTO-LOAD ──────────────────────────────────────────────────────────────
+// ── DARK MODE ──────────────────────────────────────────────────────────────
+function applyDark(on) {
+  document.body.classList.toggle('dark', on);
+  document.getElementById('darkToggle').textContent = on ? '☀️' : '🌙';
+  localStorage.setItem('uf_dark', on ? '1' : '0');
+}
+document.getElementById('darkToggle').addEventListener('click', () => {
+  applyDark(!document.body.classList.contains('dark'));
+});
+if (localStorage.getItem('uf_dark') === '1') applyDark(true);
+
+// ── MODE SWITCHER (Lernkarten / Quiz) ──────────────────────────────────────
+let currentMode = 'cards';
+document.getElementById('modeCards').addEventListener('click', () => {
+  currentMode = 'cards';
+  document.getElementById('modeCards').classList.add('active');
+  document.getElementById('modeQuiz').classList.remove('active');
+  document.getElementById('quizView').classList.remove('visible');
+  document.getElementById('cardView').classList.remove('hidden');
+});
+document.getElementById('modeQuiz').addEventListener('click', () => {
+  currentMode = 'quiz';
+  document.getElementById('modeQuiz').classList.add('active');
+  document.getElementById('modeCards').classList.remove('active');
+  document.getElementById('quizView').classList.add('visible');
+  document.getElementById('cardView').classList.add('hidden');
+  showQuizSetup();
+});
+
+// ── QUIZ ───────────────────────────────────────────────────────────────────
+let quizQuestions = [], quizIdx = 0, quizScore = 0, quizAnswered = false;
+let quizMod = 'all', quizCh = 'all', quizCount = 10;
+
+function getQuizPool() {
+  let src = CARDS;
+  if (quizMod !== 'all') src = src.filter(c => CH_META[c.ch] && CH_META[c.ch].mod === quizMod);
+  if (quizCh !== 'all') src = src.filter(c => c.ch === quizCh);
+  return src;
+}
+
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+function buildQuizQuestions(pool, n) {
+  const cards = shuffle(pool).slice(0, n);
+  return cards.map(card => {
+    const wrong = shuffle(pool.filter(c => c.def !== card.def)).slice(0, 3).map(c => c.def);
+    const opts = shuffle([card.def, ...wrong]);
+    return { card, correct: card.def, opts };
+  });
+}
+
+function showQuizSetup() {
+  const pool = getQuizPool();
+  const maxQ = Math.min(pool.length, 50);
+  const counts = [5, 10, 20, 30, 50].filter(n => n <= maxQ);
+  if (!counts.includes(quizCount)) quizCount = counts[1] || counts[0];
+
+  const modLabels = { all: 'Alle Module', A: 'Modul A', B: 'Modul B' };
+  const chOptions = [{ val: 'all', label: 'Alle Kapitel' }, ...Object.entries(CH_META)
+    .filter(([k, v]) => quizMod === 'all' || v.mod === quizMod)
+    .map(([k, v]) => ({ val: k, label: v.label.replace(/&amp;/g, '&').replace(/Modul [AB] – /, '') }))];
+
+  document.getElementById('quizContent').innerHTML = `
+    <div class="quiz-setup">
+      <h3>🎯 Quiz starten</h3>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:8px;">Modul</div>
+      <div class="quiz-option-row" id="qModRow">
+        ${['all','A','B'].map(m => `<button class="quiz-opt-btn${quizMod===m?' active':''}" data-qmod="${m}">${modLabels[m]}</button>`).join('')}
+      </div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:8px;">Kapitel</div>
+      <div class="quiz-option-row" id="qChRow">
+        ${chOptions.map(o => `<button class="quiz-opt-btn${quizCh===o.val?' active':''}" data-qch="${o.val}">${o.label}</button>`).join('')}
+      </div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:8px;">Anzahl Fragen <span style="color:var(--text3)">(${pool.length} Karten verfügbar)</span></div>
+      <div class="quiz-option-row" id="qCountRow">
+        ${counts.map(n => `<button class="quiz-opt-btn${quizCount===n?' active':''}" data-qcount="${n}">${n}</button>`).join('')}
+      </div>
+      <button class="quiz-start-btn" id="quizStartBtn">Quiz starten →</button>
+    </div>`;
+
+  document.querySelectorAll('[data-qmod]').forEach(btn => btn.addEventListener('click', function() {
+    quizMod = this.dataset.qmod; quizCh = 'all'; showQuizSetup();
+  }));
+  document.querySelectorAll('[data-qch]').forEach(btn => btn.addEventListener('click', function() {
+    quizCh = this.dataset.qch; showQuizSetup();
+  }));
+  document.querySelectorAll('[data-qcount]').forEach(btn => btn.addEventListener('click', function() {
+    quizCount = parseInt(this.dataset.qcount); showQuizSetup();
+  }));
+  document.getElementById('quizStartBtn').addEventListener('click', () => {
+    const pool2 = getQuizPool();
+    if (pool2.length < 4) { alert('Zu wenige Karten für ein Quiz. Bitte einen anderen Filter wählen.'); return; }
+    quizQuestions = buildQuizQuestions(pool2, quizCount);
+    quizIdx = 0; quizScore = 0;
+    renderQuizQuestion();
+  });
+}
+
+function renderQuizQuestion() {
+  if (quizIdx >= quizQuestions.length) { renderQuizScore(); return; }
+  const q = quizQuestions[quizIdx];
+  quizAnswered = false;
+  const pct = Math.round((quizIdx / quizQuestions.length) * 100);
+  const meta = CH_META[q.card.ch] || { short: q.card.ch };
+  document.getElementById('quizContent').innerHTML = `
+    <div class="quiz-header-row">
+      <span style="font-size:13px;color:var(--text2);">Frage ${quizIdx+1} / ${quizQuestions.length}</span>
+      <span style="font-size:13px;color:var(--text2);">Punkte: <b style="color:var(--text)">${quizScore}</b></span>
+    </div>
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
+    <div class="quiz-q-card">
+      <div class="quiz-q-kap">${meta.short}</div>
+      <div class="quiz-q-term">${q.card.term}</div>
+      ${q.card.eng ? `<div class="quiz-q-eng">[${q.card.eng}]</div>` : ''}
+    </div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:10px;text-align:center;">Welche Erklärung passt?</div>
+    <div class="quiz-options">
+      ${q.opts.map((o, i) => `<button class="quiz-ans" data-i="${i}">${o}</button>`).join('')}
+    </div>
+    <div class="quiz-feedback" id="qFeedback"></div>
+    <button class="quiz-next" id="qNext" disabled>${quizIdx < quizQuestions.length-1 ? 'Nächste Frage →' : 'Ergebnis anzeigen'}</button>`;
+
+  document.querySelectorAll('.quiz-ans').forEach(btn => {
+    btn.addEventListener('click', function() {
+      if (quizAnswered) return;
+      quizAnswered = true;
+      const chosen = q.opts[parseInt(this.dataset.i)];
+      const ok = chosen === q.correct;
+      if (ok) quizScore++;
+      document.querySelectorAll('.quiz-ans').forEach(b => {
+        b.disabled = true;
+        if (q.opts[parseInt(b.dataset.i)] === q.correct) b.classList.add(ok ? 'correct' : 'reveal');
+      });
+      if (!ok) this.classList.add('wrong');
+      const fb = document.getElementById('qFeedback');
+      fb.textContent = ok ? '✓ Richtig!' : '✗ Leider falsch.';
+      fb.className = 'quiz-feedback ' + (ok ? 'ok' : 'err');
+      document.getElementById('qNext').disabled = false;
+    });
+  });
+  document.getElementById('qNext').addEventListener('click', () => { quizIdx++; renderQuizQuestion(); });
+}
+
+function renderQuizScore() {
+  const pct = Math.round((quizScore / quizQuestions.length) * 100);
+  let badge, badgeStyle;
+  if (pct >= 80) { badge = '🏆 Ausgezeichnet!'; badgeStyle = 'background:#EAF3DE;color:#3B6D11;'; }
+  else if (pct >= 60) { badge = '👍 Gut gemacht!'; badgeStyle = 'background:#E6F1FB;color:#185FA5;'; }
+  else if (pct >= 40) { badge = '📚 Weiter üben!'; badgeStyle = 'background:#FAEEDA;color:#854F0B;'; }
+  else { badge = '💪 Nicht aufgeben!'; badgeStyle = 'background:#FCEBEB;color:#A32D2D;'; }
+  document.getElementById('quizContent').innerHTML = `
+    <div class="quiz-score-wrap">
+      <div class="quiz-score-num">${pct}%</div>
+      <div class="quiz-score-sub">${quizScore} von ${quizQuestions.length} richtig</div>
+      <div class="quiz-stat-row">
+        <div class="quiz-stat"><div class="quiz-stat-n" style="color:#3B6D11">${quizScore}</div><div class="quiz-stat-l">Richtig</div></div>
+        <div class="quiz-stat"><div class="quiz-stat-n" style="color:#A32D2D">${quizQuestions.length - quizScore}</div><div class="quiz-stat-l">Falsch</div></div>
+        <div class="quiz-stat"><div class="quiz-stat-n" style="color:#185FA5">${pct}%</div><div class="quiz-stat-l">Score</div></div>
+      </div>
+      <div class="quiz-badge" style="${badgeStyle}">${badge}</div>
+      <br>
+      <button class="quiz-again" id="quizAgain">Nochmal →</button>
+      <button class="quiz-back" id="quizBack">Neues Quiz</button>
+    </div>`;
+  document.getElementById('quizAgain').addEventListener('click', () => {
+    const pool = getQuizPool();
+    quizQuestions = buildQuizQuestions(pool, quizCount);
+    quizIdx = 0; quizScore = 0; renderQuizQuestion();
+  });
+  document.getElementById('quizBack').addEventListener('click', showQuizSetup);
+}
+
+
 async function tryLoadExternalJSON(){
   try{ const res=await fetch('lernkarten.json',{cache:'no-cache'}); if(!res.ok) return false; const data=await res.json(); if(!Array.isArray(data)||data.length===0) return false; CARDS.length=0; data.forEach(c=>CARDS.push(c)); return true; }catch(e){return false;}
 }
