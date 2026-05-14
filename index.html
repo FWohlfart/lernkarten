@@ -58,7 +58,14 @@ header p { font-size: 13px; color: #7a9ab8; }
 .progress-label { font-size: 12px; color: #7a9ab8; margin-bottom: 5px; }
 .progress-track { height: 6px; background: #dce8f5; border-radius: 3px; overflow: hidden; }
 .progress-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; width: 0%; background: #378ADD; }
-.hint { font-size: 11px; color: #9aafc0; text-align: center; margin-bottom: 1.4rem; }
+.search-wrap { max-width: 420px; margin: 0 auto 1.2rem; position: relative; }
+.search-wrap input { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 9px 36px 9px 14px; border-radius: 22px; border: 1.5px solid #dce8f5; background: white; color: #1a2a3a; outline: none; transition: border 0.2s; }
+.search-wrap input:focus { border-color: #85B7EB; }
+.search-wrap input::placeholder { color: #b0c4d8; }
+.search-clear { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #b0c4d8; font-size: 16px; cursor: pointer; display: none; padding: 0; line-height: 1; }
+.search-clear.visible { display: block; }
+.search-count { text-align: center; font-size: 11px; color: #7a9ab8; margin-bottom: 0.8rem; min-height: 16px; }
+.search-highlight { background: #FFF3A3; border-radius: 2px; padding: 0 1px; }
 
 /* ── GRID & CARDS ── */
 .grid { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; max-width: 1100px; margin: 0 auto; }
@@ -290,6 +297,12 @@ footer { text-align: center; margin-top: 3rem; font-size: 11px; color: #9aafc0; 
   <div class="progress-label" id="progressLabel">0 von 0 gelernt</div>
   <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
 </div>
+
+<div class="search-wrap">
+  <input type="text" id="searchInput" placeholder="🔍 Begriff, Englisch oder Erklärung suchen …" autocomplete="off" />
+  <button class="search-clear" id="searchClear">✕</button>
+</div>
+<div class="search-count" id="searchCount"></div>
 
 <p class="hint">💡 Rückseite aufdecken → „Gelernt" markieren → Fortschritt verfolgen</p>
 <div class="grid" id="grid"></div>
@@ -573,7 +586,7 @@ function buildChapterTabs(mod) {
 
 // ── STATE ──────────────────────────────────────────────────────────────────
 const learned=new Set();
-let allFlipped=false, currentCh='all', currentMod='all', currentSub='all', isAdmin=false, editIdx=-1;
+let allFlipped=false, currentCh='all', currentMod='all', currentSub='all', currentSearch='', isAdmin=false, editIdx=-1;
 
 function setModule(mod){
   currentMod=mod; currentCh='all'; currentSub='all'; allFlipped=false;
@@ -590,6 +603,14 @@ function getFiltered(){
   if(currentMod!=='all') src=src.filter(c=>CH_META[c.ch]&&CH_META[c.ch].mod===currentMod);
   if(currentCh!=='all') src=src.filter(c=>c.ch===currentCh);
   if(currentSub!=='all') src=src.filter(c=>c.sub===currentSub);
+  if(currentSearch){
+    const q=currentSearch.toLowerCase();
+    src=src.filter(c=>
+      (c.term||'').toLowerCase().includes(q) ||
+      (c.eng||'').toLowerCase().includes(q)  ||
+      (c.def||'').toLowerCase().includes(q)
+    );
+  }
   return src.map(c=>({...c,idx:CARDS.indexOf(c)}));
 }
 function getSubsForView(){
@@ -616,17 +637,33 @@ function updateProgress(){
 }
 function showStatus(msg,ok=true){ const el=document.getElementById('adminStatus'); el.textContent=msg; el.className='admin-status '+(ok?'ok':'err'); setTimeout(()=>{el.className='admin-status';},3000); }
 
+function highlight(text, q) {
+  if (!q) return text;
+  const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${escaped})`, 'gi'), '<span class="search-highlight">$1</span>');
+}
+
 // ── RENDER GRID ────────────────────────────────────────────────────────────
 function renderGrid(){
   const grid=document.getElementById('grid');
   grid.classList.toggle('admin-mode',isAdmin);
   grid.innerHTML='';
-  getFiltered().forEach(c=>{
+  const filtered=getFiltered();
+  const q=currentSearch;
+
+  // Search count
+  const countEl=document.getElementById('searchCount');
+  if(q) countEl.textContent=`${filtered.length} Karte${filtered.length!==1?'n':''} gefunden für „${q}"`;
+  else countEl.textContent='';
+
+  filtered.forEach(c=>{
     const col=COLORS[c.ch]||COLORS['b1'];
     const isL=learned.has(c.idx);
     const ff=isL?'#C0DD97':col.ff, fs=isL?'#3B6D11':col.fs, tc=isL?'#173404':col.tc;
     const meta=CH_META[c.ch]||{short:c.ch};
-    const engHtml = c.eng ? `<span class="term-eng">[${c.eng}]</span>` : '';
+    const termHtml = highlight(c.term||'', q);
+    const engHtml  = c.eng ? `<span class="term-eng">[${highlight(c.eng, q)}]</span>` : '';
+    const defHtml  = highlight(c.def||'', q);
     const wrap=document.createElement('div'); wrap.className='card-wrap';
     wrap.innerHTML=`
       <div class="admin-card-btns">
@@ -637,7 +674,7 @@ function renderGrid(){
         <div class="face front">
           <svg viewBox="0 0 158 158" xmlns="http://www.w3.org/2000/svg"><path d="${OCT}" fill="${ff}" stroke="${fs}" stroke-width="1.5"/></svg>
           <div class="content">
-            <span class="term" style="color:${tc}">${c.term}</span>
+            <span class="term" style="color:${tc}">${termHtml}</span>
             ${engHtml}
             <span class="ch-badge" style="background:${col.bb};color:${col.bc}">${meta.short}</span>
           </div>
@@ -645,7 +682,7 @@ function renderGrid(){
         <div class="face back">
           <svg viewBox="0 0 158 158" xmlns="http://www.w3.org/2000/svg"><path d="${OCT}" fill="${col.bf}" stroke="${col.bs}" stroke-width="1.5"/></svg>
           <div class="content">
-            <span class="def" style="color:${col.dc}">${c.def}</span>
+            <span class="def" style="color:${col.dc}">${defHtml}</span>
             <button class="learn-btn" data-idx="${c.idx}" style="border-color:${col.lb};color:${col.lc}">${isL?'✓ Gelernt':'+ Gelernt'}</button>
           </div>
         </div>
@@ -663,6 +700,20 @@ function renderGrid(){
 document.querySelectorAll('.modul-btn').forEach(btn=>btn.addEventListener('click',()=>setModule(btn.dataset.mod)));
 document.getElementById('flipAll').addEventListener('click',function(){ allFlipped=!allFlipped; document.querySelectorAll('.card').forEach(c=>c.classList.toggle('flipped',allFlipped)); this.textContent=allFlipped?'Alle zurückdrehen ↺':'Alle umdrehen ↺'; });
 document.getElementById('resetLearned').addEventListener('click',()=>{ learned.clear(); renderGrid(); });
+
+// ── SEARCH ─────────────────────────────────────────────────────────────────
+document.getElementById('searchInput').addEventListener('input', function(){
+  currentSearch = this.value.trim();
+  document.getElementById('searchClear').classList.toggle('visible', currentSearch.length > 0);
+  renderGrid();
+});
+document.getElementById('searchClear').addEventListener('click', function(){
+  currentSearch = '';
+  document.getElementById('searchInput').value = '';
+  this.classList.remove('visible');
+  document.getElementById('searchCount').textContent = '';
+  renderGrid();
+});
 
 // ── ADMIN AUTH ─────────────────────────────────────────────────────────────
 document.getElementById('adminToggle').addEventListener('click',()=>{
