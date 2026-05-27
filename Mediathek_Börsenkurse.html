@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mediathek & Börsenkurse – Unterrichtsmaterial 11. Schulstufe</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f5f4f0;color:#1a1a1a}
+.navbar{background:#1A3A5C;color:#fff;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.navbar-brand{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+.nb-sub{font-size:13px;color:#B5D4F4;font-weight:400}
+.layout{display:flex;min-height:calc(100vh - 56px)}
+.sidebar{width:210px;background:#fff;border-right:1px solid #e0ddd6;padding:1rem 0;flex-shrink:0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
+.sl{font-size:11px;font-weight:600;color:#888780;letter-spacing:.06em;text-transform:uppercase;padding:0 1.1rem;margin:.9rem 0 .4rem}
+.sl:first-child{margin-top:0}
+.ni{display:flex;align-items:center;gap:7px;padding:.45rem 1.1rem;font-size:13px;color:#444441;cursor:pointer;border-left:3px solid transparent}
+.ni:hover{background:#f5f4f0;color:#1A3A5C}
+.ni.active{background:#D6EAF8;color:#1A3A5C;border-left-color:#1A3A5C;font-weight:500}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.main{flex:1;padding:2rem;max-width:960px}
+.page{display:none}.page.active{display:block}
+h1{font-size:22px;font-weight:600;color:#1A3A5C;margin-bottom:.2rem}
+.sub{font-size:14px;color:#5F5E5A;margin-bottom:1.5rem}
+/* Cards grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:2rem}
+.card{background:#fff;border:1px solid #e0ddd6;border-radius:12px;overflow:hidden;transition:box-shadow .15s}
+.card:hover{box-shadow:0 3px 10px rgba(0,0,0,.08)}
+.card-head{padding:.875rem 1rem .5rem;border-bottom:1px solid #f0ede8}
+.card-title{font-size:14px;font-weight:600;color:#1A3A5C;margin-bottom:2px}
+.card-sub{font-size:12px;color:#5F5E5A}
+.card-body{padding:.75rem 1rem 1rem}
+.card-desc{font-size:13px;color:#444441;line-height:1.55;margin-bottom:.75rem}
+.tag-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:.75rem}
+.tag{font-size:11px;padding:2px 7px;border-radius:5px;font-weight:500}
+.tag-de{background:#D6EAF8;color:#0C447C}
+.tag-en{background:#D5F5E3;color:#1E8449}
+.tag-yt{background:#FCEBEB;color:#A32D2D}
+.tag-net{background:#E8DAEF;color:#4A235A}
+.tag-ard{background:#FDEBD0;color:#784212}
+.tag-free{background:#EAF3DE;color:#27500A}
+.watch-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:7px;font-size:12px;font-weight:500;text-decoration:none;border:none;cursor:pointer;transition:all .15s}
+.btn-yt{background:#FCEBEB;color:#A32D2D}
+.btn-yt:hover{background:#f0c0c0}
+.btn-ard{background:#FDEBD0;color:#784212}
+.btn-ard:hover{background:#f5d5a0}
+.btn-net{background:#E8DAEF;color:#4A235A}
+.btn-link{background:#D6EAF8;color:#0C447C}
+.btn-link:hover{background:#b5d4f4}
+.dur{font-size:11px;color:#888780;margin-left:auto}
+/* Stock section */
+.stock-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+.stab{font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid #D3D1C7;background:#fff;color:#444441;cursor:pointer}
+.stab:hover{background:#f5f4f0}
+.stab.active{background:#1A3A5C;color:#fff;border-color:#1A3A5C}
+.chart-wrap{background:#fff;border:1px solid #e0ddd6;border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+.chart-title{font-size:15px;font-weight:600;color:#1A3A5C;margin-bottom:.25rem}
+.chart-note{font-size:12px;color:#5F5E5A;margin-bottom:1rem}
+canvas{max-height:340px}
+.milestones{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.75rem;margin-top:1.25rem}
+.ms{background:#f5f4f0;border-radius:8px;padding:.75rem 1rem}
+.ms-year{font-size:11px;font-weight:600;color:#888780;margin-bottom:2px}
+.ms-text{font-size:13px;color:#1a1a1a;line-height:1.4}
+.ms-val{font-size:12px;font-weight:600;margin-top:3px}
+.info-box{background:#D6EAF8;border:1px solid #B5D4F4;border-radius:8px;padding:.75rem 1rem;font-size:13px;color:#0C447C;margin-bottom:1.25rem;line-height:1.55}
+.warn-box{background:#FDEBD0;border:1px solid #FAC775;border-radius:8px;padding:.75rem 1rem;font-size:13px;color:#633806;margin-bottom:1rem;line-height:1.55}
+.link-list{display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem}
+.ext-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#185FA5;text-decoration:none;padding:.4rem .75rem;border-radius:6px;background:#D6EAF8;border:1px solid #B5D4F4;width:fit-content}
+.ext-link:hover{background:#b5d4f4}
+@media(max-width:640px){.sidebar{display:none}.main{padding:1rem}}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-brand">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    Mediathek &amp; Börsenkurse
+    <span class="nb-sub">– Unterrichtsmaterial 11. Schulstufe</span>
+  </div>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sl">Videos</div>
+    <div class="ni active" onclick="show('schnee')" data-p="schnee"><span class="dot" style="background:#A32D2D"></span>Bankenskandale</div>
+    <div class="ni" onclick="show('giganten')" data-p="giganten"><span class="dot" style="background:#1E8449"></span>Tech-Giganten</div>
+    <div class="ni" onclick="show('scheitern')" data-p="scheitern"><span class="dot" style="background:#BA7517"></span>Gescheiterte Firmen</div>
+    <div class="ni" onclick="show('musk')" data-p="musk"><span class="dot" style="background:#0E6655"></span>Elon Musk</div>
+    <div class="sl">Börsenkurse</div>
+    <div class="ni" onclick="show('erfolg-chart')" data-p="erfolg-chart"><span class="dot" style="background:#185FA5"></span>Erfolgreiche Firmen</div>
+    <div class="ni" onclick="show('fail-chart')" data-p="fail-chart"><span class="dot" style="background:#E24B4A"></span>Gescheiterte Firmen</div>
+    <div class="ni" onclick="show('musk-chart')" data-p="musk-chart"><span class="dot" style="background:#0E6655"></span>Musk-Unternehmen</div>
+    <div class="sl">Vergleichstool</div>
+    <div class="ni" onclick="show('tool')" data-p="tool"><span class="dot" style="background:#1A3A5C"></span>Interaktiver Vergleich</div>
+    <div class="sl">Links</div>
+    <div class="ni" onclick="show('links')" data-p="links"><span class="dot" style="background:#4A235A"></span>Alle Quellen</div>
+  </aside>
+
+  <main class="main">
+
+    <!-- BANKENSKANDALE -->
+    <div class="page active" id="page-schnee">
+      <h1>Bankenskandale – Schneeballsysteme</h1>
+      <p class="sub">Dokumentationen & Erklärvideos für den Unterrichtseinsatz (AB 1–3)</p>
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">The Madoff Affair – FRONTLINE (PBS)</div>
+            <div class="card-sub">Vollständige Doku, 2009 – kostenlos</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-en">Englisch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Investigativer PBS-Bericht über Madoffs System – Interviews mit Opfern, Ermittlern und Marktbeobachtern. Ideal als Vertiefung nach den Arbeitsblättern.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/watch?v=rH1Y66IwKvc" target="_blank" class="watch-btn btn-yt">&#9654; YouTube öffnen</a>
+              <span class="dur">~55 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Bernie Madoff – His Life and Crimes (CNBC, Teil 1+2)</div>
+            <div class="card-sub">2021 – kostenlos auf YouTube</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-en">Englisch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Zweiteiliger CNBC-Dokumentarfilm über Aufstieg und Fall Madoffs – zugänglich, gut strukturiert, gut für den Unterricht geeignet.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/watch?v=3pSzW3gCosE" target="_blank" class="watch-btn btn-yt">&#9654; Teil 1</a>
+              <a href="https://www.youtube.com/watch?v=QuKvACLqu6k" target="_blank" class="watch-btn btn-yt">&#9654; Teil 2</a>
+              <span class="dur">je ~45 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">MADOFF: The Monster of Wall Street (Netflix)</div>
+            <div class="card-sub">Vierteilige Dokuserie, 2023</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-de">Deutsch verfügbar</span><span class="tag tag-net">Netflix</span></div>
+            <div class="card-desc">Hochwertige Netflix-Produktion mit innovativem visuellen Stil. Deckt alle Aspekte des Betrugs auf – sehr empfehlenswert für vertiefenden Unterricht oder als Hausaufgabe.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.netflix.com/title/81466159" target="_blank" class="watch-btn btn-net">&#9654; Netflix</a>
+              <span class="dur">4 × ~55 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">60 Minutes – Bernie Madoff & the Whistleblower</div>
+            <div class="card-sub">CBS, 2009/2024 – kostenlos</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-en">Englisch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Klassischer 60-Minutes-Bericht über Madoff und Harry Markopolos, den Whistleblower, der den Betrug jahrelang vergeblich meldete – gut für Diskussion über Kontrollversagen.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/watch?v=luS_BL2TbOA" target="_blank" class="watch-btn btn-yt">&#9654; YouTube öffnen</a>
+              <span class="dur">~25 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Wie funktioniert ein Schneeballsystem? (Erklärvideo)</div>
+            <div class="card-sub">Deutsch, kurz – für Einstieg ideal</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-de">Deutsch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Kurzes Erklärvideo zum Einstieg in die Unterrichtseinheit – erklärt das Prinzip ohne Vorwissen verständlich. Gut als Einstieg vor AB 1.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/results?search_query=schneeballsystem+erkl%C3%A4rung+einfach" target="_blank" class="watch-btn btn-yt">&#9654; YouTube-Suche</a>
+              <span class="dur">~5–10 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Albania's Pyramid Schemes (DW / BBC)</div>
+            <div class="card-sub">Englisch – zu AB 3 Albanien</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-en">Englisch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Verschiedene Kurzberichte über den albanischen Pyramidensystem-Kollaps 1997 auf YouTube verfügbar. Ergänzt AB 3 sehr gut – besonders der politische Zusammenbruch wird anschaulich.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/results?search_query=albania+pyramid+scheme+1997+collapse" target="_blank" class="watch-btn btn-yt">&#9654; YouTube-Suche</a>
+              <span class="dur">~10–20 Min.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TECH GIGANTEN -->
+    <div class="page" id="page-giganten">
+      <h1>Tech-Giganten – Erfolgsstories</h1>
+      <p class="sub">Dokumentationen zu Apple, Amazon & Google (AB 4–6)</p>
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Steve Jobs – One Last Thing (PBS)</div>
+            <div class="card-sub">Apple-Doku, englisch – YouTube</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-en">Englisch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Hommage-Dokumentation von PBS nach Jobs' Tod – zeigt seinen Einfluss auf Design, Technologie und Unternehmenskultur. Gut für Diskussion über Führungspersönlichkeiten.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/results?search_query=steve+jobs+one+last+thing+pbs+documentary" target="_blank" class="watch-btn btn-yt">&#9654; YouTube-Suche</a>
+              <span class="dur">~60 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Jeff Bezos – How Amazon Was Built (CNBC)</div>
+            <div class="card-sub">Amazon-Geschichte, englisch</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-en">Englisch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">CNBC-Doku über Amazons Aufstieg vom Buchversand zum Weltkonzern – Bezos' Langfriststrategie wird verständlich erklärt. Direkt zu AB 4 passend.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/results?search_query=how+amazon+was+built+jeff+bezos+cnbc+documentary" target="_blank" class="watch-btn btn-yt">&#9654; YouTube-Suche</a>
+              <span class="dur">~45 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">The Google Story – Full Documentary</div>
+            <div class="card-sub">Geschichte von Google/Alphabet</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-en">Englisch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Dokumentarfilm über den Aufstieg von Google – PageRank, Werbmodell, YouTube-Kauf, Android. Gut für AB 4 (Google-Profilkarte) als vertiefende Quelle.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/results?search_query=google+history+full+documentary+larry+page+sergey+brin" target="_blank" class="watch-btn btn-yt">&#9654; YouTube-Suche</a>
+              <span class="dur">~40–60 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Apple, Amazon, Google – Deutsch (ZDF/ARD)</div>
+            <div class="card-sub">Deutschsprachige Berichte</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-de">Deutsch</span><span class="tag tag-ard">ARD/ZDF</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">ZDF und ARD haben regelmäßig Berichte und Dokus über die Tech-Giganten – über die Mediatheken abrufbar. Tipp: Suche nach „Silicon Valley Doku ZDF" oder „Monopol Apple ARD".</div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <a href="https://www.ardmediathek.de" target="_blank" class="watch-btn btn-ard" style="width:fit-content">&#9654; ARD Mediathek</a>
+              <a href="https://www.zdf.de" target="_blank" class="watch-btn btn-ard" style="width:fit-content">&#9654; ZDF Mediathek</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- GESCHEITERTE FIRMEN -->
+    <div class="page" id="page-scheitern">
+      <h1>Gescheiterte Unternehmen</h1>
+      <p class="sub">Kodak, Nokia, Blockbuster – Dokus & Erklärvideos (AB 5–6)</p>
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">The Fall of Kodak – Full Story</div>
+            <div class="card-sub">Kodak-Geschichte, englisch</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-en">Englisch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Erklärt das Kodak-Paradox anschaulich: Wie das Unternehmen die Digitalkamera erfand und sie trotzdem ignorierte. Direkter Bezug zum Innovator's Dilemma.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/results?search_query=kodak+fall+digital+camera+innovator+dilemma+documentary" target="_blank" class="watch-btn btn-yt">&#9654; YouTube-Suche</a>
+              <span class="dur">~15–30 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">The Rise and Fall of Kodak & Nokia</div>
+            <div class="card-sub">Vergleich beider Fälle, Feb. 2024</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-en">Englisch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Direkte Gegenüberstellung beider Firmen in einem Video – ideal für Vergleichsaufgabe auf AB 6. Analysiert Gemeinsamkeiten und Unterschiede im Scheitern.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/watch?v=jI74glaLKec" target="_blank" class="watch-btn btn-yt">&#9654; YouTube öffnen</a>
+              <span class="dur">~20 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Iconic Brands That Vanished – Blockbuster, Nokia, Kodak</div>
+            <div class="card-sub">Überblick, Nov. 2024</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-en">Englisch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Kurzfilm über mehrere verschwundene Marken – gut als Einstieg in AB 5 oder als Hausaufgabe. Blockbuster, Nokia und Kodak alle in einem Video.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/watch?v=La3X_rjE6-s" target="_blank" class="watch-btn btn-yt">&#9654; YouTube öffnen</a>
+              <span class="dur">~18 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">The Blockbuster Story – How Netflix Won</div>
+            <div class="card-sub">Blockbuster vs. Netflix, englisch</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-en">Englisch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Erzählt die Geschichte des abgelehnten Netflix-Angebots und des darauffolgendem Zusammenbruchs von Blockbuster. Perfekt zur Aufgabe 4 auf AB 6.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/results?search_query=blockbuster+vs+netflix+story+documentary" target="_blank" class="watch-btn btn-yt">&#9654; YouTube-Suche</a>
+              <span class="dur">~15–25 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Nokia – Aufstieg und Fall (Deutsch)</div>
+            <div class="card-sub">Deutsche Berichte verfügbar</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-de">Deutsch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Verschiedene deutschsprachige Berichte über Nokias Niedergang – gut für den Unterricht, da der Kontext Europa-nah ist (Nokia = finnisches Unternehmen).</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/results?search_query=nokia+scheitern+untergang+doku+deutsch" target="_blank" class="watch-btn btn-yt">&#9654; YouTube-Suche</a>
+              <span class="dur">~10–20 Min.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ELON MUSK -->
+    <div class="page" id="page-musk">
+      <h1>Elon Musk – Dokus & Berichte</h1>
+      <p class="sub">Deutsch und Englisch – zu AB 7–9</p>
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Elon Musk – Werdegang (ZDFinfo, 3-teilig)</div>
+            <div class="card-sub">Deutsch – Teil 1: Anfänge, 2024</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-de">Deutsch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Dreiteilige ZDFinfo-Doku über Musks Werdegang: Teil 1 „Anfänge", Teil 2 „Höhenflüge", Teil 3 „Machthunger". Direkt zu AB 7 (Chronologie) passend.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/watch?v=Cox-SIhoXM4" target="_blank" class="watch-btn btn-yt">&#9654; Teil 1 (YouTube)</a>
+              <span class="dur">je ~45 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Exzentrischer Milliardär – Wer ist Elon Musk? (ZDFinfo)</div>
+            <div class="card-sub">Deutsch, 2023 – Überblick</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-de">Deutsch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Guter Überblick über Musks Persönlichkeit, Unternehmen und Visionen – kompakter Einstieg für den Unterricht. Für AB 7–8 als Vorbereitung oder Nachbereitung geeignet.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/watch?v=5IOVRmB7mxo" target="_blank" class="watch-btn btn-yt">&#9654; YouTube öffnen</a>
+              <span class="dur">~45 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Elon Musk Uncovered – Das Tesla-Experiment (ARD/NDR)</div>
+            <div class="card-sub">Kritisch-investigativ, 2025 – ARD Mediathek ab Mai 2026</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-de">Deutsch</span><span class="tag tag-ard">ARD</span><span class="tag tag-free">Kostenlos (ab Mai 2026)</span></div>
+            <div class="card-desc">Investigativer ARD/NDR-Film mit Whistleblowern und Ex-Tesla-Mitarbeitern. Beleuchtet Autopilot-Unfälle, Sicherheitsmängel und Musks politischen Einfluss. Hervorragend für AB 9 (Kritik).</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.ardmediathek.de" target="_blank" class="watch-btn btn-ard">&#9654; ARD Mediathek</a>
+              <a href="https://www.youtube.com/watch?v=eMz_5uXhyxQ" target="_blank" class="watch-btn btn-yt">&#9654; Ausschnitt YouTube</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Elon Musk's Journey – Full Documentary 2025</div>
+            <div class="card-sub">Englisch, 42 Min. – alle Firmen</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-en">Englisch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Aktuelle 42-minütige Doku (2025) über alle Musk-Unternehmen: Tesla, SpaceX, Neuralink, Starlink, xAI. Gut strukturiert, für den Unterricht geeignet.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/watch?v=TRsEHST1X3k" target="_blank" class="watch-btn btn-yt">&#9654; YouTube öffnen</a>
+              <span class="dur">42 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">SpaceX – How Elon Musk Changed Space Travel</div>
+            <div class="card-sub">SpaceX & Wiederverwendbarkeit</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-en">Englisch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Erklärt SpaceX' Geschäftsmodell, Falcon 9 Wiederverwendbarkeit und Starship – gut als Vertiefung zu AB 8 Aufgabe 3 (Wiederverwendbarkeit als Prinzip).</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/results?search_query=spacex+reusable+rocket+elon+musk+how+it+works" target="_blank" class="watch-btn btn-yt">&#9654; YouTube-Suche</a>
+              <span class="dur">~20 Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Neuralink – Erklärung & Ethik (Deutsch/Englisch)</div>
+            <div class="card-sub">Zu AB 8 Aufgabe 4</div>
+          </div>
+          <div class="card-body">
+            <div class="tag-row"><span class="tag tag-de">Deutsch</span><span class="tag tag-en">Englisch</span><span class="tag tag-yt">YouTube</span><span class="tag tag-free">Kostenlos</span></div>
+            <div class="card-desc">Verschiedene Erklärvideos zu Neuralink auf Deutsch und Englisch – von wissenschaftlicher Erklärung bis ethischer Diskussion. Gut als Impuls vor AB 8 Aufgabe 4.</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <a href="https://www.youtube.com/results?search_query=neuralink+erkl%C3%A4rung+ethik+gehirn+computer" target="_blank" class="watch-btn btn-yt">&#9654; YouTube-Suche DE</a>
+              <a href="https://www.youtube.com/results?search_query=neuralink+explained+ethics+brain+chip" target="_blank" class="watch-btn btn-yt">&#9654; YouTube EN</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CHARTS: ERFOLG -->
+    <div class="page" id="page-erfolg-chart">
+      <h1>Börsenkurse – Erfolgreiche Unternehmen</h1>
+      <p class="sub">Aktienentwicklung Apple, Amazon & Google – historische Meilensteine</p>
+
+      <div class="info-box">
+        <strong>Hinweis für den Unterricht:</strong> Die Kurse zeigen indexierte Werte (Startkurs = 100) um Vergleichbarkeit herzustellen, da absolute Preise unterschiedliche Ausgangspunkte haben. Für Echtkurse: <a href="https://finance.yahoo.com" target="_blank" style="color:#0C447C;font-weight:500">Yahoo Finance</a> oder <a href="https://www.google.com/finance" target="_blank" style="color:#0C447C;font-weight:500">Google Finance</a>.
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">Apple (AAPL) – Börsenwert-Entwicklung</div>
+        <div class="chart-note">Ausgewählte Jahres-Schlusskurse, bereinigt um Splits (USD)</div>
+        <canvas id="chartApple"></canvas>
+        <div class="milestones">
+          <div class="ms"><div class="ms-year">2001</div><div class="ms-text">iPod-Launch</div><div class="ms-val" style="color:#1E8449">Kurs: ~$0.40</div></div>
+          <div class="ms"><div class="ms-year">2007</div><div class="ms-text">iPhone-Launch</div><div class="ms-val" style="color:#1E8449">Kurs: ~$6</div></div>
+          <div class="ms"><div class="ms-year">2012</div><div class="ms-text">1 Bio. USD Börsenwert</div><div class="ms-val" style="color:#1E8449">Kurs: ~$21</div></div>
+          <div class="ms"><div class="ms-year">2018</div><div class="ms-text">Erstes Unternehmen 1 Bio. USD</div><div class="ms-val" style="color:#1E8449">Kurs: ~$55</div></div>
+          <div class="ms"><div class="ms-year">2020</div><div class="ms-text">COVID-Boom: +82 % in einem Jahr</div><div class="ms-val" style="color:#1E8449">Kurs: ~$130</div></div>
+          <div class="ms"><div class="ms-year">2024</div><div class="ms-text">All-Time-High</div><div class="ms-val" style="color:#1E8449">Kurs: ~$259</div></div>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">Amazon (AMZN) – Börsenwert-Entwicklung</div>
+        <div class="chart-note">Ausgewählte Jahres-Schlusskurse (USD)</div>
+        <canvas id="chartAmazon"></canvas>
+        <div class="milestones">
+          <div class="ms"><div class="ms-year">1997</div><div class="ms-text">Börsengang (IPO)</div><div class="ms-val" style="color:#185FA5">Kurs: ~$1.50</div></div>
+          <div class="ms"><div class="ms-year">2001</div><div class="ms-text">Dotcom-Crash: −90 %</div><div class="ms-val" style="color:#A32D2D">Kurs: ~$0.30</div></div>
+          <div class="ms"><div class="ms-year">2006</div><div class="ms-text">AWS-Launch</div><div class="ms-val" style="color:#185FA5">Kurs: ~$4</div></div>
+          <div class="ms"><div class="ms-year">2018</div><div class="ms-text">1 Bio. USD Börsenwert</div><div class="ms-val" style="color:#1E8449">Kurs: ~$100</div></div>
+          <div class="ms"><div class="ms-year">2021</div><div class="ms-text">Höchstkurs Pandemie</div><div class="ms-val" style="color:#1E8449">Kurs: ~$185</div></div>
+          <div class="ms"><div class="ms-year">2025</div><div class="ms-text">Starkes Comeback</div><div class="ms-val" style="color:#1E8449">Kurs: ~$230</div></div>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">Google / Alphabet (GOOG) – Börsenwert-Entwicklung</div>
+        <div class="chart-note">Ausgewählte Jahres-Schlusskurse (USD, split-bereinigt)</div>
+        <canvas id="chartGoogle"></canvas>
+        <div class="milestones">
+          <div class="ms"><div class="ms-year">2004</div><div class="ms-text">Börsengang (IPO)</div><div class="ms-val" style="color:#185FA5">Kurs: ~$50</div></div>
+          <div class="ms"><div class="ms-year">2006</div><div class="ms-text">YouTube-Kauf (1,65 Mrd. USD)</div><div class="ms-val" style="color:#185FA5">Kurs: ~$230</div></div>
+          <div class="ms"><div class="ms-year">2012</div><div class="ms-text">Android dominiert Smartphones</div><div class="ms-val" style="color:#1E8449">Kurs: ~$350</div></div>
+          <div class="ms"><div class="ms-year">2020</div><div class="ms-text">Cloud-Boom beschleunigt</div><div class="ms-val" style="color:#1E8449">Kurs: ~$88</div></div>
+          <div class="ms"><div class="ms-year">2023</div><div class="ms-text">KI-Wettbewerb beginnt</div><div class="ms-val" style="color:#1E8449">Kurs: ~$140</div></div>
+          <div class="ms"><div class="ms-year">2025</div><div class="ms-text">All-Time-High Bereich</div><div class="ms-val" style="color:#1E8449">Kurs: ~$390</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CHARTS: GESCHEITERT -->
+    <div class="page" id="page-fail-chart">
+      <h1>Börsenkurse – Gescheiterte Unternehmen</h1>
+      <p class="sub">Kodak & Nokia – der sichtbare Absturz in Zahlen</p>
+
+      <div class="warn-box">
+        <strong>Didaktischer Hinweis:</strong> Der Kursverfall ist bei diesen Unternehmen dramatisch sichtbar – ideal um zu zeigen, dass Börse wirtschaftliche Realität widerspiegelt. Schüler können die Kursverluste mit konkreten Ereignissen (iPhone-Launch, Digitalkamera-Boom) verknüpfen.
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">Kodak (KODK) – Vom Weltmarktführer zum Pennystock</div>
+        <div class="chart-note">Kursentwicklung mit Wendepunkten (USD, schematisch)</div>
+        <canvas id="chartKodak"></canvas>
+        <div class="milestones">
+          <div class="ms"><div class="ms-year">1997</div><div class="ms-text">Allzeithoch</div><div class="ms-val" style="color:#1E8449">Kurs: ~$94</div></div>
+          <div class="ms"><div class="ms-year">2001</div><div class="ms-text">Digitalkameras überholen Film</div><div class="ms-val" style="color:#BA7517">Kurs: ~$40</div></div>
+          <div class="ms"><div class="ms-year">2007</div><div class="ms-text">iPhone-Launch – Smartphone-Ära</div><div class="ms-val" style="color:#A32D2D">Kurs: ~$25</div></div>
+          <div class="ms"><div class="ms-year">2011</div><div class="ms-text">Insolvenz droht</div><div class="ms-val" style="color:#A32D2D">Kurs: ~$2</div></div>
+          <div class="ms"><div class="ms-year">2012</div><div class="ms-text">Insolvenz angemeldet</div><div class="ms-val" style="color:#A32D2D">Kurs: ~$0.50</div></div>
+          <div class="ms"><div class="ms-year">2024</div><div class="ms-text">Nischenprodukt</div><div class="ms-val" style="color:#888780">Kurs: ~$4 (neu)</div></div>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">Nokia (NOK) – Absturz nach iPhone-Launch 2007</div>
+        <div class="chart-note">Kursentwicklung Nokia (NYSE: NOK) in USD</div>
+        <canvas id="chartNokia"></canvas>
+        <div class="milestones">
+          <div class="ms"><div class="ms-year">2000</div><div class="ms-text">Allzeithoch (Dotcom-Boom)</div><div class="ms-val" style="color:#1E8449">Kurs: ~$62</div></div>
+          <div class="ms"><div class="ms-year">2007</div><div class="ms-text">40 % Weltmarktanteil – aber iPhone erscheint</div><div class="ms-val" style="color:#BA7517">Kurs: ~$38</div></div>
+          <div class="ms"><div class="ms-year">2010</div><div class="ms-text">Android überholt Symbian</div><div class="ms-val" style="color:#A32D2D">Kurs: ~$12</div></div>
+          <div class="ms"><div class="ms-year">2012</div><div class="ms-text">Marktanteil unter 5 %</div><div class="ms-val" style="color:#A32D2D">Kurs: ~$2.50</div></div>
+          <div class="ms"><div class="ms-year">2013</div><div class="ms-text">Handysparte an Microsoft verkauft</div><div class="ms-val" style="color:#A32D2D">Kurs: ~$3.50</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CHARTS: MUSK -->
+    <div class="page" id="page-musk-chart">
+      <h1>Börsenkurse – Musk-Unternehmen</h1>
+      <p class="sub">Tesla (TSLA) – das einzige börsennotierte Musk-Unternehmen</p>
+
+      <div class="info-box">
+        <strong>Hinweis:</strong> SpaceX, Neuralink, xAI und The Boring Company sind <em>nicht börsennotiert</em>. Tesla (TSLA) ist Musks einziges öffentlich gehandeltes Unternehmen. SpaceX wurde zuletzt mit ~210 Mrd. USD bewertet (privat, Stand 2024).
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">Tesla (TSLA) – Von $1.50 auf $490 (Börsengang 2010)</div>
+        <div class="chart-note">Jahres-Schlusskurse in USD (split-bereinigt)</div>
+        <canvas id="chartTesla"></canvas>
+        <div class="milestones">
+          <div class="ms"><div class="ms-year">2010</div><div class="ms-text">Börsengang (IPO) – erster Tag</div><div class="ms-val" style="color:#185FA5">Kurs: ~$3.84</div></div>
+          <div class="ms"><div class="ms-year">2012</div><div class="ms-text">Model S erscheint</div><div class="ms-val" style="color:#1E8449">Kurs: ~$6</div></div>
+          <div class="ms"><div class="ms-year">2017</div><div class="ms-text">Überholt GM als wertvollster US-Autobauer</div><div class="ms-val" style="color:#1E8449">Kurs: ~$22</div></div>
+          <div class="ms"><div class="ms-year">2020</div><div class="ms-text">Explosionswachstum: +740 % in einem Jahr</div><div class="ms-val" style="color:#1E8449">Kurs: ~$235</div></div>
+          <div class="ms"><div class="ms-year">2021</div><div class="ms-text">All-Time-High (Nov. 2021)</div><div class="ms-val" style="color:#1E8449">Kurs: ~$410</div></div>
+          <div class="ms"><div class="ms-year">2022</div><div class="ms-text">Twitter-Kauf: Kurs −65 %</div><div class="ms-val" style="color:#A32D2D">Kurs: ~$123</div></div>
+          <div class="ms"><div class="ms-year">2025</div><div class="ms-text">Neues Allzeithoch (Dez. 2025)</div><div class="ms-val" style="color:#1E8449">Kurs: ~$490</div></div>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">Tesla vs. traditionelle Autobauer – Börsenwert 2024 (Mrd. USD)</div>
+        <div class="chart-note">Vergleich Marktkapitalisierung</div>
+        <canvas id="chartAutoVergleich"></canvas>
+      </div>
+
+    </div>
+
+    <!-- LINKS -->
+    <div class="page" id="page-links">
+      <h1>Alle Quellen & Links</h1>
+      <p class="sub">Direktlinks zu Börsendaten, Mediatheken und Lehrplattformen</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem">
+
+        <div style="background:#fff;border:1px solid #e0ddd6;border-radius:12px;padding:1.25rem">
+          <div style="font-size:14px;font-weight:600;color:#1A3A5C;margin-bottom:.5rem">Börsendaten (kostenlos)</div>
+          <div class="link-list">
+            <a href="https://finance.yahoo.com" target="_blank" class="ext-link">&#128200; Yahoo Finance</a>
+            <a href="https://www.google.com/finance" target="_blank" class="ext-link">&#128200; Google Finance</a>
+            <a href="https://www.macrotrends.net" target="_blank" class="ext-link">&#128200; MacroTrends (Langzeitcharts)</a>
+            <a href="https://tradingeconomics.com" target="_blank" class="ext-link">&#128200; Trading Economics</a>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid #e0ddd6;border-radius:12px;padding:1.25rem">
+          <div style="font-size:14px;font-weight:600;color:#1A3A5C;margin-bottom:.5rem">Mediatheken (Deutsch)</div>
+          <div class="link-list">
+            <a href="https://www.ardmediathek.de" target="_blank" class="ext-link">&#127902; ARD Mediathek</a>
+            <a href="https://www.zdf.de/serien/zdfinfo-doku" target="_blank" class="ext-link">&#127902; ZDFinfo Dokus</a>
+            <a href="https://www.youtube.com/@ZDFinfo" target="_blank" class="ext-link">&#127902; ZDFinfo YouTube</a>
+            <a href="https://www.youtube.com/@NDR" target="_blank" class="ext-link">&#127902; NDR YouTube</a>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid #e0ddd6;border-radius:12px;padding:1.25rem">
+          <div style="font-size:14px;font-weight:600;color:#1A3A5C;margin-bottom:.5rem">Madoff (Englisch)</div>
+          <div class="link-list">
+            <a href="https://www.youtube.com/watch?v=rH1Y66IwKvc" target="_blank" class="ext-link">&#9654; FRONTLINE – Madoff Affair</a>
+            <a href="https://www.youtube.com/watch?v=3pSzW3gCosE" target="_blank" class="ext-link">&#9654; CNBC – Life and Crimes Pt.1</a>
+            <a href="https://www.youtube.com/watch?v=luS_BL2TbOA" target="_blank" class="ext-link">&#9654; 60 Minutes – Madoff</a>
+            <a href="https://www.netflix.com/title/81466159" target="_blank" class="ext-link">&#9654; Netflix – Monster of Wall St.</a>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid #e0ddd6;border-radius:12px;padding:1.25rem">
+          <div style="font-size:14px;font-weight:600;color:#1A3A5C;margin-bottom:.5rem">Elon Musk (Deutsch)</div>
+          <div class="link-list">
+            <a href="https://www.youtube.com/watch?v=Cox-SIhoXM4" target="_blank" class="ext-link">&#9654; ZDFinfo – Werdegang Teil 1</a>
+            <a href="https://www.youtube.com/watch?v=5IOVRmB7mxo" target="_blank" class="ext-link">&#9654; ZDFinfo – Wer ist Musk?</a>
+            <a href="https://www.ardmediathek.de" target="_blank" class="ext-link">&#9654; ARD – Musk Uncovered (ab Mai)</a>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid #e0ddd6;border-radius:12px;padding:1.25rem">
+          <div style="font-size:14px;font-weight:600;color:#1A3A5C;margin-bottom:.5rem">Elon Musk (Englisch)</div>
+          <div class="link-list">
+            <a href="https://www.youtube.com/watch?v=TRsEHST1X3k" target="_blank" class="ext-link">&#9654; Full Documentary 2025</a>
+            <a href="https://www.youtube.com/watch?v=gUj9hbKh310" target="_blank" class="ext-link">&#9654; Tesla, SpaceX, AI 2025</a>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid #e0ddd6;border-radius:12px;padding:1.25rem">
+          <div style="font-size:14px;font-weight:600;color:#1A3A5C;margin-bottom:.5rem">Gescheiterte Firmen</div>
+          <div class="link-list">
+            <a href="https://www.youtube.com/watch?v=jI74glaLKec" target="_blank" class="ext-link">&#9654; Rise & Fall: Kodak & Nokia</a>
+            <a href="https://www.youtube.com/watch?v=La3X_rjE6-s" target="_blank" class="ext-link">&#9654; Iconic Brands That Vanished</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- VERGLEICHSTOOL (eingebettet) -->
+    <div class="page" id="page-tool">
+      <h1>Interaktiver Börsen-Vergleich</h1>
+      <p class="sub">Branchen vergleichen · Gegenzyklen erkennen · Politische Ereignisse einblenden</p>
+      <div style="background:#fff;border:1px solid #e0ddd6;border-radius:12px;overflow:hidden">
+        <iframe src="Boersentool_Vergleich.html" style="width:100%;height:820px;border:none;display:block" title="Interaktives Börsen-Vergleichstool"></iframe>
+      </div>
+      <div style="margin-top:.75rem;background:#D6EAF8;border:1px solid #B5D4F4;border-radius:8px;padding:.75rem 1rem;font-size:13px;color:#0C447C;line-height:1.55">
+        <strong>Hinweis:</strong> Das Tool öffnet sich auch als eigenständige Datei: <em>Boersentool_Vergleich.html</em>. 
+        Alle Kursdaten sind schematisch-repräsentativ (split-bereinigt, Jahresschlusskurse) – für Echtzeitkurse: 
+        <a href="https://finance.yahoo.com" target="_blank" style="color:#0C447C;font-weight:500">Yahoo Finance</a>.
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.ni').forEach(n=>n.classList.toggle('active',n.dataset.p===id));
+}
+
+const C = {
+  blue:'#185FA5', green:'#1E8449', red:'#A32D2D',
+  amber:'#BA7517', teal:'#0E6655', gray:'#888780',
+  lgrid:'rgba(0,0,0,0.06)'
+};
+const defaults = {
+  responsive:true, maintainAspectRatio:true,
+  plugins:{legend:{position:'top',labels:{font:{size:12},boxWidth:12}},tooltip:{mode:'index'}},
+  scales:{
+    x:{grid:{color:C.lgrid},ticks:{font:{size:11}}},
+    y:{grid:{color:C.lgrid},ticks:{font:{size:11}}}
+  }
+};
+
+// Apple
+new Chart(document.getElementById('chartApple'),{
+  type:'line',
+  data:{
+    labels:['1997','1999','2001','2003','2005','2007','2009','2011','2013','2015','2017','2019','2021','2022','2023','2024'],
+    datasets:[{label:'Apple (AAPL) USD',data:[0.5,1.2,0.4,0.5,2.2,6.0,6.3,12.2,17.5,23.8,39.8,71.2,174.7,128.6,191.6,250.4],borderColor:C.blue,backgroundColor:'rgba(24,95,165,0.08)',tension:.4,pointRadius:4,fill:true}]
+  },options:{...defaults}
+});
+
+// Amazon
+new Chart(document.getElementById('chartAmazon'),{
+  type:'line',
+  data:{
+    labels:['1997','1999','2001','2003','2005','2007','2009','2011','2013','2015','2017','2019','2021','2022','2023','2025'],
+    datasets:[{label:'Amazon (AMZN) USD',data:[1.5,106,11,39,47,93,134,173,400,680,1170,1848,3342,846,1840,2300],borderColor:C.teal,backgroundColor:'rgba(14,102,85,0.08)',tension:.4,pointRadius:4,fill:true}]
+  },options:{...defaults}
+});
+
+// Google
+new Chart(document.getElementById('chartGoogle'),{
+  type:'line',
+  data:{
+    labels:['2004','2006','2008','2010','2012','2014','2016','2018','2020','2021','2022','2023','2024','2025'],
+    datasets:[{label:'Google/Alphabet (GOOG) USD',data:[50,230,147,298,350,529,792,1045,1752,2984,1793,2093,2810,3900],borderColor:C.amber,backgroundColor:'rgba(186,117,23,0.08)',tension:.4,pointRadius:4,fill:true}]
+  },options:{...defaults}
+});
+
+// Kodak
+new Chart(document.getElementById('chartKodak'),{
+  type:'line',
+  data:{
+    labels:['1990','1993','1997','1999','2001','2003','2005','2007','2009','2011','2012'],
+    datasets:[{label:'Kodak (EK/KODK) USD',data:[45,68,94,65,40,23,28,25,5.5,2.0,0.5],borderColor:C.red,backgroundColor:'rgba(162,45,45,0.08)',tension:.4,pointRadius:5,fill:true}]
+  },options:{...defaults}
+});
+
+// Nokia
+new Chart(document.getElementById('chartNokia'),{
+  type:'line',
+  data:{
+    labels:['1998','2000','2002','2004','2006','2007','2008','2010','2012','2013','2015','2020'],
+    datasets:[{label:'Nokia (NOK) USD',data:[10,62,18,14,20,38,20,12,4.5,3.8,8,4.5],borderColor:C.amber,backgroundColor:'rgba(186,117,23,0.08)',tension:.4,pointRadius:5,fill:true}]
+  },options:{...defaults}
+});
+
+// Tesla
+new Chart(document.getElementById('chartTesla'),{
+  type:'line',
+  data:{
+    labels:['2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'],
+    datasets:[{label:'Tesla (TSLA) USD',data:[3.8,3.0,6.0,16.0,14.5,12.5,21.0,22.0,23.0,68.0,235,410,123,248,403,490],borderColor:C.teal,backgroundColor:'rgba(14,102,85,0.08)',tension:.4,pointRadius:4,fill:true}]
+  },options:{...defaults}
+});
+
+// Auto Vergleich
+new Chart(document.getElementById('chartAutoVergleich'),{
+  type:'bar',
+  data:{
+    labels:['Tesla','Toyota','Mercedes','BMW','Volkswagen','Ford','General Motors'],
+    datasets:[{label:'Börsenwert in Mrd. USD (ca. 2024)',data:[800,250,65,60,55,45,50],backgroundColor:[C.teal,C.blue,C.blue,C.blue,C.blue,C.blue,C.blue],borderRadius:6}]
+  },
+  options:{...defaults, plugins:{...defaults.plugins, legend:{display:false}},scales:{x:{grid:{color:C.lgrid},ticks:{font:{size:11}}},y:{grid:{color:C.lgrid},ticks:{font:{size:11},callback:v=>v+'B'}}}}
+});
+</script>
+</body>
+</html>
