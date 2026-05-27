@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investment Guide Österreich</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{--bg:#f5f4f0;--surface:#fff;--surface2:#f0efe9;--border:rgba(0,0,0,.1);--border2:rgba(0,0,0,.18);--text:#1a1a18;--text2:#6b6b63;--text3:#9b9b90;--blue:#1a4fd6;--blue-bg:#e8eefb;--blue-text:#0f3099;--green:#1a7a3c;--green-bg:#e8f5ee;--green-text:#0d5228;--red:#c0392b;--red-bg:#fbeaea;--red-text:#8b2820;--amber:#c06b00;--amber-bg:#fef3e2;--amber-text:#8a4a00;--radius:10px;--radius-lg:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+.header{background:var(--text);color:#f5f4f0;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.header-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700}
+.header-sub{font-size:12px;opacity:.55;margin-top:3px}
+.header-badge{font-family:'Syne',sans-serif;font-size:11px;font-weight:600;padding:4px 12px;border:1px solid rgba(255,255,255,.25);border-radius:20px;opacity:.7}
+.main-nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;gap:0;overflow-x:auto}
+.main-nav button{font-family:'Syne',sans-serif;font-size:13px;font-weight:500;padding:14px 18px;border:none;background:none;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s}
+.main-nav button.active{color:var(--text);border-bottom-color:var(--text)}
+.main-nav button:hover:not(.active){color:var(--text)}
+.page{max-width:960px;margin:0 auto;padding:2rem}
+.section{display:none}.section.active{display:block}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin-bottom:1rem}
+.card-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;margin-bottom:.75rem}
+.rule{border-left:3px solid var(--blue);border-radius:0 var(--radius) var(--radius) 0;background:var(--surface2);padding:.85rem 1.1rem;margin-bottom:.75rem}
+.rule-t{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;margin-bottom:4px}
+.rule-d{font-size:13px;color:var(--text2);line-height:1.6}
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:5px}
+.bg{background:var(--green-bg);color:var(--green-text)}.br{background:var(--red-bg);color:var(--red-text)}.bb{background:var(--blue-bg);color:var(--blue-text)}.bw{background:var(--amber-bg);color:var(--amber-text)}
+.asset-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:1.5rem}
+.asset-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1rem;cursor:pointer;transition:border-color .15s}
+.asset-card:hover{border-color:var(--border2)}.asset-card.selected{border:2px solid var(--blue)}
+.itabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.itab{font-size:12px;padding:5px 14px;border-radius:20px;border:1px solid var(--border2);background:none;cursor:pointer;color:var(--text2);transition:all .15s}
+.itab.active{background:var(--text);color:#fff;border-color:var(--text)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.info-box{border-radius:var(--radius);padding:.85rem}
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;margin-bottom:1rem}
+.prod-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1rem;cursor:pointer;transition:border-color .15s}
+.prod-card:hover{border-color:var(--border2)}.prod-card.sel{border:2px solid var(--blue)}
+.sl-row{display:flex;align-items:center;gap:12px;margin-bottom:1rem}
+.sl-row label{font-size:13px;color:var(--text2);min-width:140px}
+.sl-row input[type=range]{flex:1;accent-color:var(--blue);cursor:pointer}
+.sl-val{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;min-width:95px;text-align:right}
+.metric-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:1rem 0}
+.metric{background:var(--surface2);border-radius:var(--radius);padding:.85rem 1rem}
+.m-lbl{font-size:11px;color:var(--text2);margin-bottom:5px;font-weight:500}
+.m-val{font-family:'Syne',sans-serif;font-size:19px;font-weight:600}
+.flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:1rem 0}
+.flow-box{border-radius:var(--radius);padding:.5rem 1rem;font-family:'Syne',sans-serif;font-size:13px;font-weight:600}
+table.tax-t{width:100%;font-size:13px;border-collapse:collapse}
+table.tax-t th{text-align:left;padding:7px 8px;font-size:12px;font-weight:600;font-family:'Syne',sans-serif;color:var(--text2);border-bottom:1px solid var(--border)}
+table.tax-t td{padding:9px 8px;border-bottom:1px solid var(--border)}
+table.tax-t tr:last-child td{border-bottom:none}
+.warn{background:var(--amber-bg);border-radius:var(--radius);padding:.85rem 1.1rem;font-size:12px;color:var(--amber-text);line-height:1.6;margin-top:1rem}
+.warn strong{font-family:'Syne',sans-serif}
+.leg-dot{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:4px;vertical-align:middle}
+.legend-row{display:flex;gap:16px;font-size:12px;color:var(--text2);margin-bottom:8px;flex-wrap:wrap}
+.sec-intro{font-size:14px;color:var(--text2);margin-bottom:1.5rem;line-height:1.6}
+.sec-h{font-family:'Syne',sans-serif;font-size:16px;font-weight:600;margin:1.5rem 0 .85rem}
+.tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+ul.items{font-size:12px;padding-left:1.1rem}
+ul.items li{margin-bottom:3px;line-height:1.5}
+
+/* BEGRIFFE */
+.begriffe-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem}
+.bgriff-btn{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;padding:6px 16px;border-radius:20px;border:1px solid var(--border2);background:var(--surface);cursor:pointer;color:var(--text2);transition:all .15s}
+.bgriff-btn.active{background:var(--text);color:#fff;border-color:var(--text)}
+.begriff-panel{display:none}.begriff-panel.active{display:block}
+.analogy-box{background:var(--blue-bg);border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:1rem;border-left:3px solid var(--blue)}
+.analogy-label{font-family:'Syne',sans-serif;font-size:11px;font-weight:600;color:var(--blue-text);margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em}
+.analogy-text{font-size:14px;color:var(--blue-text);line-height:1.6;font-style:italic}
+.def-text{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:1rem}
+.key-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:1rem 0}
+.key-fact{background:var(--surface2);border-radius:var(--radius);padding:.75rem}
+.kf-label{font-size:11px;color:var(--text2);margin-bottom:3px}
+.kf-val{font-family:'Syne',sans-serif;font-size:13px;font-weight:600}
+.sub-h{font-family:'Syne',sans-serif;font-size:13px;font-weight:600;margin:.9rem 0 .4rem}
+.example-box{background:var(--green-bg);border-radius:var(--radius);padding:.75rem 1rem;font-size:13px;color:var(--green-text);margin-top:.75rem}
+.warning-inline{background:var(--red-bg);border-radius:var(--radius);padding:.75rem 1rem;font-size:13px;color:var(--red-text);margin-top:.75rem}
+
+/* WERTPAPIER PICKER */
+.wp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:1rem}
+.wp-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:.85rem;cursor:pointer;transition:all .15s;position:relative}
+.wp-card:hover{border-color:var(--border2)}
+.wp-card.active{border:2px solid var(--blue);background:var(--blue-bg)}
+.wp-card .wp-check{display:none;position:absolute;top:8px;right:8px;background:var(--blue);color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;align-items:center;justify-content:center;font-weight:700}
+.wp-card.active .wp-check{display:flex}
+.wp-name{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;margin-bottom:3px}
+.wp-type{font-size:11px;color:var(--text2);margin-bottom:5px}
+.wp-ret{font-family:'Syne',sans-serif;font-size:13px;font-weight:600}
+.wp-ret.pos{color:var(--green)}.wp-ret.neg{color:var(--red)}.wp-ret.neu{color:var(--amber)}
+.wp-category{font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;display:inline-block;margin-bottom:5px}
+.alloc-row{display:flex;align-items:center;gap:10px;margin-bottom:.6rem;font-size:13px}
+.alloc-name{min-width:160px;color:var(--text2)}
+.alloc-row input[type=range]{flex:1;accent-color:var(--blue)}
+.alloc-pct{font-family:'Syne',sans-serif;font-weight:600;min-width:40px;text-align:right}
+.alloc-total{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;padding:.6rem .9rem;border-radius:var(--radius);margin-bottom:1rem}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:.85rem}
+.filter-btn{font-size:12px;padding:4px 12px;border-radius:16px;border:1px solid var(--border2);background:none;cursor:pointer;color:var(--text2);transition:all .15s}
+.filter-btn.active{background:var(--surface2);color:var(--text);border-color:var(--border2);font-weight:500}
+.risk-matrix{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rm-cell{border-radius:var(--radius);padding:.9rem;text-align:center}
+@media(max-width:600px){.page{padding:1rem}.header{padding:1.2rem 1rem}.main-nav{padding:0 1rem}.two-col{grid-template-columns:1fr}.risk-matrix{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div>
+    <div class="header-title">Investment Guide Österreich</div>
+    <div class="header-sub" style="font-family:'Inter',sans-serif;font-weight:400">KESt · Begriffe · Anlageklassen · Produkte · Simulator</div>
+  </div>
+  <div class="header-badge">Bildungszweck · Keine Anlageberatung</div>
+</div>
+<nav class="main-nav">
+  <button class="active" onclick="sw('basics')">Grundlagen</button>
+  <button onclick="sw('begriffe')">Begriffe erklärt</button>
+  <button onclick="sw('kest')">KESt &amp; Steuer</button>
+  <button onclick="sw('produkte')">Österr. Produkte</button>
+  <button onclick="sw('simulator')">Portfolio-Simulator</button>
+  <button onclick="sw('rechner')">Steuerrechner</button>
+</nav>
+<div class="page">
+
+<!-- ===== BASICS ===== -->
+<div id="basics" class="section active">
+  <p class="sec-intro">Die wichtigsten Grundregeln der Veranlagung – Grundlage für jede Anlageentscheidung.</p>
+  <div class="sec-h">Goldene Regeln</div>
+  <div class="rule"><div class="rule-t">Diversifikation</div><div class="rule-d">Nie alles auf eine Karte setzen. Verteile Kapital auf verschiedene Anlageklassen, Länder und Branchen, um das Gesamtrisiko zu senken.</div></div>
+  <div class="rule" style="border-left-color:#1a7a3c"><div class="rule-t">Anlagehorizont beachten</div><div class="rule-d">Je länger der Zeithorizont, desto mehr Risiko ist tragbar. Kursschwankungen glätten sich über viele Jahre. Kurzfristig benötigtes Geld gehört nicht in Aktien.</div></div>
+  <div class="rule" style="border-left-color:#c06b00"><div class="rule-t">Kosten minimieren</div><div class="rule-d">Verwaltungsgebühren (TER), Ausgabeaufschläge und Ordergebühren fressen Rendite. ETFs haben oft 5–10× niedrigere Kosten als aktive Fonds.</div></div>
+  <div class="rule" style="border-left-color:#c0392b"><div class="rule-t">Risikoprofil kennen</div><div class="rule-d">Definiere deine persönliche Risikotoleranz. Kannst du einen 30% Kursverlust ohne Panikverkauf durchhalten?</div></div>
+  <div class="rule" style="border-left-color:#7c5cc0"><div class="rule-t">Regelmäßig investieren (Sparplan)</div><div class="rule-d">Monatliche Einzahlungen nutzen den Cost-Average-Effekt: Du kaufst automatisch mehr Anteile wenn Kurse günstig sind.</div></div>
+  <div class="sec-h">Anlageklassen</div>
+  <div class="asset-grid" id="assetGrid"></div>
+  <div id="assetDetail"></div>
+  <div class="sec-h">Risiko-Rendite-Matrix</div>
+  <div class="risk-matrix">
+    <div class="rm-cell" style="background:var(--green-bg)"><div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:var(--green-text);margin-bottom:6px">Niedriges Risiko</div><div style="font-size:12px;color:var(--green);line-height:1.7">Sparbuch<br>Festgeld<br>Staatsanleihen<br><strong>0–3% p.a.</strong></div></div>
+    <div class="rm-cell" style="background:var(--amber-bg)"><div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:var(--amber-text);margin-bottom:6px">Mittleres Risiko</div><div style="font-size:12px;color:var(--amber);line-height:1.7">Anleihen-ETF<br>Mischfonds<br>Immobilien-REIT<br><strong>3–7% p.a.</strong></div></div>
+    <div class="rm-cell" style="background:var(--red-bg)"><div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:var(--red-text);margin-bottom:6px">Hohes Risiko</div><div style="font-size:12px;color:var(--red);line-height:1.7">Aktien-ETF<br>Einzelaktien<br>Krypto<br><strong>7–15%+ p.a.</strong></div></div>
+  </div>
+  <div class="warn"><strong>Wichtig:</strong> Alle Renditeangaben sind historische Durchschnittswerte und keine Garantie für künftige Erträge.</div>
+</div>
+
+<!-- ===== BEGRIFFE ===== -->
+<div id="begriffe" class="section">
+  <p class="sec-intro">Wichtige Fachbegriffe einfach erklärt – mit Alltagsanalogien und konkreten Beispielen.</p>
+  <div class="begriffe-nav" id="begriffeNav"></div>
+  <div id="begriffePanels"></div>
+</div>
+
+<!-- ===== KEST ===== -->
+<div id="kest" class="section">
+  <p class="sec-intro">Die Kapitalertragsteuer (KESt) gilt in Österreich seit 2012 als einheitlicher Satz auf Kapitalerträge – sie wird von inländischen Banken automatisch abgeführt.</p>
+  <div style="display:flex;align-items:baseline;gap:20px;margin-bottom:1.5rem;flex-wrap:wrap">
+    <div><div style="font-size:13px;color:var(--text2);margin-bottom:4px">KESt-Satz (Regelfall)</div><div style="font-family:'Syne',sans-serif;font-size:36px;font-weight:700;color:var(--blue)">27,5%</div></div>
+    <div style="width:1px;height:44px;background:var(--border)"></div>
+    <div><div style="font-size:13px;color:var(--text2);margin-bottom:4px">Sparbuch / Giro (Zinsen)</div><div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:700;color:var(--green)">25%</div></div>
+    <div style="width:1px;height:44px;background:var(--border)"></div>
+    <div><div style="font-size:13px;color:var(--text2);margin-bottom:4px">Abgeltungswirkung</div><div style="margin-top:10px"><span class="badge bg">Endbesteuerung</span></div></div>
+  </div>
+  <div class="sec-h">Was wird mit KESt besteuert?</div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table class="tax-t">
+      <tr><th style="padding:10px 12px">Einkunftsart</th><th>Beispiele</th><th>KESt-Satz</th><th>Automatisch?</th></tr>
+      <tr><td style="font-weight:600;padding:10px 12px">Dividenden</td><td style="color:var(--text2)">Aktien, ETF-Ausschüttungen</td><td><span class="badge bb">27,5%</span></td><td><span class="badge bg">Ja (Bank)</span></td></tr>
+      <tr><td style="font-weight:600;padding:10px 12px">Kursgewinne</td><td style="color:var(--text2)">Aktien, ETF, Anleihen verkauft</td><td><span class="badge bb">27,5%</span></td><td><span class="badge bg">Ja (Bank)</span></td></tr>
+      <tr><td style="font-weight:600;padding:10px 12px">Zinsen (Bank)</td><td style="color:var(--text2)">Sparbuch, Tagesgeld, Festgeld</td><td><span class="badge bg">25%</span></td><td><span class="badge bg">Ja (Bank)</span></td></tr>
+      <tr><td style="font-weight:600;padding:10px 12px">Fondserträge</td><td style="color:var(--text2)">Ausschüttende &amp; thesaurierende Fonds</td><td><span class="badge bb">27,5%</span></td><td><span class="badge bg">Ja (Bank)</span></td></tr>
+      <tr><td style="font-weight:600;padding:10px 12px">Krypto-Gewinne</td><td style="color:var(--text2)">Bitcoin, Ethereum (ab 1.3.2022)</td><td><span class="badge bb">27,5%</span></td><td><span class="badge bw">Nein – Steuererklärung!</span></td></tr>
+      <tr><td style="font-weight:600;padding:10px 12px">Immobilienverkauf</td><td style="color:var(--text2)">Vermietungsobjekte (ImmoESt)</td><td><span class="badge bw">30%</span></td><td><span class="badge bw">Nein – Notar</span></td></tr>
+    </table>
+  </div>
+  <div class="sec-h">Was ist NICHT steuerpflichtig?</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin-bottom:1.5rem">
+    <div class="info-box" style="background:var(--green-bg)"><div style="font-size:12px;font-weight:600;color:var(--green-text);font-family:'Syne',sans-serif;margin-bottom:4px">✓ Hauptwohnsitz-Veräußerung</div><div style="font-size:12px;color:var(--green)">Verkauf der selbst bewohnten Immobilie nach 2 Jahren Hauptwohnsitz</div></div>
+    <div class="info-box" style="background:var(--green-bg)"><div style="font-size:12px;font-weight:600;color:var(--green-text);font-family:'Syne',sans-serif;margin-bottom:4px">✓ Bausparprämie</div><div style="font-size:12px;color:var(--green)">Staatliche Prämie ist steuerbefreit (nicht die Zinsen)</div></div>
+    <div class="info-box" style="background:var(--green-bg)"><div style="font-size:12px;font-weight:600;color:var(--green-text);font-family:'Syne',sans-serif;margin-bottom:4px">✓ Lebensversicherung (alt)</div><div style="font-size:12px;color:var(--green)">Ablaufleistung steuerfrei bei Verträgen vor 2004 und ≥ 10 Jahre</div></div>
+    <div class="info-box" style="background:var(--green-bg)"><div style="font-size:12px;font-weight:600;color:var(--green-text);font-family:'Syne',sans-serif;margin-bottom:4px">✓ Schenkungen / Erbschaft</div><div style="font-size:12px;color:var(--green)">Keine Schenkungssteuer (Meldepflicht ab 50k €/Jahr)</div></div>
+  </div>
+  <div class="sec-h">Wichtige KESt-Regeln</div>
+  <div class="rule"><div class="rule-t">Verlustausgleich im Depot</div><div class="rule-d">Verluste aus Wertpapierverkäufen können mit Gewinnen aus demselben Depot verrechnet werden. Die Bank macht das automatisch. Zwischen verschiedenen Banken: Verlustausgleichsbescheinigung beantragen.</div></div>
+  <div class="rule" style="border-left-color:var(--green)"><div class="rule-t">Abgeltungswirkung = keine Steuererklärungspflicht</div><div class="rule-d">Bei inländischen Banken wird KESt automatisch abgeführt. Ausnahme: ausländische Depots, Krypto, oder Regelbesteuerungsoption.</div></div>
+  <div class="rule" style="border-left-color:var(--amber)"><div class="rule-t">Regelbesteuerungsoption</div><div class="rule-d">Wer ein zu versteuerndes Einkommen unter ca. 12.800 € hat, kann zur Regelbesteuerung optieren – dann greift der persönliche Einkommensteuertarif (oft 0%). Antrag im Zuge der Steuererklärung.</div></div>
+  <div class="rule" style="border-left-color:#d4537e"><div class="rule-t">Thesaurierende Fonds – fiktive Ausschüttung</div><div class="rule-d">Auch wenn ein Fonds keine Ausschüttung zahlt, wird jährlich eine „ausschüttungsgleiche Ertrags"-Steuer fällig (Meldefonds). Bei Nicht-Meldefonds gibt es einen Strafzuschlag.</div></div>
+  <div class="warn"><strong>Wichtig:</strong> Krypto und ausländische Depots müssen selbst in der Steuererklärung angegeben werden!</div>
+</div>
+
+<!-- ===== PRODUKTE ===== -->
+<div id="produkte" class="section">
+  <p class="sec-intro">Typisch österreichische Anlageprodukte – von konservativ bis wachstumsorientiert.</p>
+  <div class="prod-grid" id="prodGrid"></div>
+  <div id="prodDetail"></div>
+</div>
+
+<!-- ===== SIMULATOR ===== -->
+<div id="simulator" class="section">
+  <p class="sec-intro">Stelle dein eigenes Portfolio aus konkreten Wertpapieren zusammen und simuliere die mögliche Wertentwicklung.</p>
+
+  <div class="card">
+    <div class="card-title">Schritt 1 – Wertpapiere wählen</div>
+    <div class="filter-row" id="wpFilter"></div>
+    <div class="wp-grid" id="wpGrid"></div>
+    <div style="font-size:12px;color:var(--text2);margin-top:-.25rem">Klicke auf Karten um sie auszuwählen (mehrere möglich). Dann Gewichtung festlegen.</div>
+  </div>
+
+  <div class="card" id="allocCard" style="display:none">
+    <div class="card-title">Schritt 2 – Gewichtung festlegen</div>
+    <div id="allocRows"></div>
+    <div id="allocTotal" class="alloc-total"></div>
+    <div style="position:relative;width:100%;height:200px">
+      <canvas id="allocChart" role="img" aria-label="Portfolio-Zusammensetzung"></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Schritt 3 – Parameter &amp; Simulation</div>
+    <div class="itabs" id="mixPresets"></div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:1rem">Oder verwende ein Muster-Portfolio (überschreibt Gewichtung oben)</div>
+    <div class="sl-row"><label>Startkapital</label><input type="range" min="1000" max="100000" step="1000" value="10000" id="slCapital" oninput="updateVals()"><span class="sl-val" id="valCapital">10.000 €</span></div>
+    <div class="sl-row"><label>Monatl. Sparrate</label><input type="range" min="0" max="2000" step="50" value="200" id="slMonthly" oninput="updateVals()"><span class="sl-val" id="valMonthly">200 €/Mo</span></div>
+    <div class="sl-row"><label>Anlagehorizont</label><input type="range" min="1" max="40" step="1" value="15" id="slYears" oninput="updateVals()"><span class="sl-val" id="valYears">15 Jahre</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Historische Kursentwicklung (indexiert, Basis=100)</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:.75rem">Typische Kursentwicklung der gewählten Wertpapiere über 20 Jahre (stilisiert, auf Basis historischer Durchschnitte)</div>
+    <div class="legend-row" id="histLegend"></div>
+    <div style="position:relative;width:100%;height:280px">
+      <canvas id="histChart" role="img" aria-label="Historische Kursentwicklung der gewählten Wertpapiere"></canvas>
+    </div>
+  </div>
+
+  <div class="metric-g" id="simMetrics"></div>
+  <div class="legend-row" id="simLegend"></div>
+  <div style="position:relative;width:100%;height:320px;margin-bottom:1rem">
+    <canvas id="simChart" role="img" aria-label="Monte-Carlo Simulation Portfolio-Entwicklung"></canvas>
+  </div>
+  <div class="card" id="simTable"></div>
+  <div class="warn"><strong>Wichtig:</strong> Simulation basiert auf historischen Daten und stochastischen Modellen. Keine Anlageberatung. Vergangene Wertentwicklungen sind kein verlässlicher Indikator für die Zukunft.</div>
+</div>
+
+<!-- ===== RECHNER ===== -->
+<div id="rechner" class="section">
+  <p class="sec-intro">Berechne wie viel KESt auf deinen Anlageertrag anfällt und was netto bleibt.</p>
+  <div class="card">
+    <div class="card-title">Ertrag-Typ</div>
+    <div class="itabs" id="typeChips"></div>
+    <div id="typeDesc" style="font-size:13px;color:var(--text2)"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Parameter</div>
+    <div class="sl-row"><label>Investiertes Kapital</label><input type="range" min="1000" max="200000" step="1000" value="20000" id="rKap" oninput="calc()"><span class="sl-val" id="vKap">20.000 €</span></div>
+    <div class="sl-row"><label>Jahresrendite (brutto)</label><input type="range" min="1" max="20" step="0.5" value="7" id="rRend" oninput="calc()"><span class="sl-val" id="vRend">7,0%</span></div>
+    <div class="sl-row"><label>Anlagedauer (Jahre)</label><input type="range" min="1" max="30" step="1" value="10" id="rJahr" oninput="calc()"><span class="sl-val" id="vJahr">10 Jahre</span></div>
+  </div>
+  <div class="metric-g" id="metricsOut"></div>
+  <div class="flow" id="flowOut"></div>
+  <div class="legend-row"><span><span class="leg-dot" style="background:#639922;opacity:.7"></span>Brutto (ohne Steuer)</span><span><span class="leg-dot" style="background:#1a4fd6"></span>Netto (nach KESt)</span></div>
+  <div style="position:relative;width:100%;height:280px;margin-bottom:1rem"><canvas id="kestChart" role="img" aria-label="Brutto vs. Netto nach KESt"></canvas></div>
+  <div class="card" id="aufschluss"></div>
+  <div class="warn"><strong>Wichtig:</strong> Vereinfachte Schätzung. Bitte einen Steuerberater für konkrete Fälle konsultieren.</div>
+</div>
+</div>
+
+<script>
+// ===== NAV =====
+function sw(t){
+  const tabs=['basics','begriffe','kest','produkte','simulator','rechner'];
+  document.querySelectorAll('.main-nav button').forEach((b,i)=>b.classList.toggle('active',tabs[i]===t));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(t).classList.add('active');
+  if(t==='simulator'){buildSimulator();runSim();}
+  if(t==='rechner')calc();
+}
+
+// ===== BASICS =====
+const assets=[
+  {id:'tagesgeld',name:'Tagesgeld / Festgeld',icon:'💰',risk:'low',riskLabel:'Niedrig',ret:'2–3%',desc:'Bankeinlagen mit garantierter Verzinsung und Einlagensicherung.',pros:['Kapital verfügbar','Keine Schwankungen','Einlagensicherung 100k €'],cons:['Geringe Rendite','Kaufkraftverlust möglich'],chance:'Notfallreserve (3–6 Monatsgehälter).',maxLoss:'0%'},
+  {id:'anleihen',name:'Anleihen-ETF',icon:'📄',risk:'low',riskLabel:'Niedrig–Mittel',ret:'3–5%',desc:'Festverzinsliche Wertpapiere. ETF-Form bietet breite Streuung.',pros:['Zinszahlungen','Weniger volatil','Diversifikation'],cons:['Zinsänderungsrisiko','Inflationsrisiko'],chance:'Stabilisator in Mischportfolios.',maxLoss:'–10 bis –20%'},
+  {id:'etf',name:'Aktien-ETF (MSCI World)',icon:'📈',risk:'med',riskLabel:'Mittel',ret:'6–9%',desc:'Passiv verwaltete Indexfonds. Niedrige Kosten, hohe Diversifikation.',pros:['1600+ Firmen','TER ~0,2%','Sparplan-fähig'],cons:['–50% möglich','Währungsrisiko'],chance:'Basis für Langfristanlage (10+ Jahre).',maxLoss:'–50%'},
+  {id:'aktien',name:'Einzelaktien',icon:'🏭',risk:'high',riskLabel:'Hoch',ret:'–30 bis +50%/Jahr',desc:'Direkte Unternehmensbeteiligung.',pros:['Hohe Gewinnchancen','Dividenden'],cons:['Insolvenzrisiko','Analyseaufwand'],chance:'Beimischung max. 10–20%.',maxLoss:'–100%'},
+  {id:'immobilien',name:'Immobilien / REIT',icon:'🏢',risk:'med',riskLabel:'Mittel',ret:'4–7%',desc:'Direkt oder über REITs an Börse.',pros:['Inflationsschutz','Ausschüttungen'],cons:['Geringe Liquidität','Hohe Einstiegskosten'],chance:'10–20% Portfolioanteil.',maxLoss:'–40%'},
+  {id:'krypto',name:'Kryptowährungen',icon:'₿',risk:'high',riskLabel:'Sehr hoch',ret:'–80 bis +200%',desc:'Bitcoin, Ethereum. Hochspekulativ.',pros:['Hohes Gewinnpotenzial','24/7 handelbar'],cons:['–80% möglich','Regulierungsrisiko'],chance:'Max. 5% des Portfolios.',maxLoss:'–80 bis –100%'},
+];
+function buildAssets(){
+  const g=document.getElementById('assetGrid');
+  assets.forEach(a=>{
+    const bc=a.risk==='low'?'bg':a.risk==='med'?'bw':'br';
+    const d=document.createElement('div');d.className='asset-card';d.id='ac_'+a.id;
+    d.innerHTML=`<div style="font-size:22px;margin-bottom:7px">${a.icon}</div><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:600;margin-bottom:4px">${a.name}</div><div style="font-size:12px;color:var(--text2);margin-bottom:6px">ca. ${a.ret}</div><span class="badge ${bc}">Risiko: ${a.riskLabel}</span>`;
+    d.onclick=()=>{
+      document.querySelectorAll('.asset-card').forEach(c=>c.classList.remove('selected'));
+      d.classList.add('selected');
+      document.getElementById('assetDetail').innerHTML=`<div class="card"><div class="card-title">${a.icon} ${a.name}</div><p style="font-size:13px;color:var(--text2);margin-bottom:.9rem">${a.desc}</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:.85rem"><div style="background:var(--surface2);border-radius:var(--radius);padding:.7rem"><div style="font-size:11px;color:var(--text2);margin-bottom:3px">Rendite</div><div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:600">${a.ret}</div></div><div style="background:var(--surface2);border-radius:var(--radius);padding:.7rem"><div style="font-size:11px;color:var(--text2);margin-bottom:3px">Max. Verlust</div><div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:600">${a.maxLoss}</div></div></div><div class="two-col"><div class="info-box" style="background:var(--green-bg)"><div style="font-size:12px;font-weight:600;color:var(--green-text);font-family:'Syne',sans-serif;margin-bottom:5px">Vorteile</div><ul class="items" style="color:var(--green)">${a.pros.map(p=>`<li>${p}</li>`).join('')}</ul></div><div class="info-box" style="background:var(--red-bg)"><div style="font-size:12px;font-weight:600;color:var(--red-text);font-family:'Syne',sans-serif;margin-bottom:5px">Nachteile</div><ul class="items" style="color:var(--red)">${a.cons.map(c=>`<li>${c}</li>`).join('')}</ul></div></div><div style="background:var(--blue-bg);border-radius:var(--radius);padding:.7rem .9rem;margin-top:.75rem;font-size:13px;color:var(--blue-text)">💡 <strong>Einsatz:</strong> ${a.chance}</div></div>`;
+      document.getElementById('assetDetail').scrollIntoView({behavior:'smooth',block:'nearest'});
+    };
+    g.appendChild(d);
+  });
+}
+
+// ===== BEGRIFFE =====
+const begriffe=[
+  {id:'aktie',name:'Aktie',icon:'🏭',
+   analogy:'Eine Aktie ist wie ein kleines Stück einer Pizza-Fabrik. Wenn die Fabrik gut läuft und Gewinn macht, bekommst du deinen Anteil als Dividende. Wenn die Fabrik wächst, ist dein Stück mehr wert.',
+   def:'Eine Aktie verbrieft einen Eigentumsanteil an einem Unternehmen. Als Aktionär bist du Miteigentümer und hast Anspruch auf einen Anteil am Unternehmensgewinn (Dividende) sowie auf Stimmrechte bei der Hauptversammlung.',
+   facts:[{l:'Mindestanlage',v:'Ab ~1 € (Bruchteile)'},{l:'Risiko',v:'Hoch'},{l:'Rendite',v:'7–12% p.a. historisch'},{l:'Liquidität',v:'Sehr hoch (börsentäglich)'}],
+   sections:[
+     {h:'Wie verdiene ich Geld?',t:'Zwei Wege: (1) Kursgewinn – du kaufst bei 50 € und verkaufst bei 80 €, Gewinn = 30 €. (2) Dividende – das Unternehmen schüttet Gewinne aus, z.B. 2 € pro Aktie jährlich.'},
+     {h:'Was ist der Kurs?',t:'Der Kurs ist der aktuelle Marktpreis, zu dem Käufer und Verkäufer einig sind. Er schwankt sekündlich je nach Angebot und Nachfrage.'},
+     {h:'Was passiert bei Insolvenz?',t:'Aktionäre werden zuletzt ausgezahlt. Im schlimmsten Fall verliert man das gesamte investierte Kapital (Totalverlust). Daher: niemals alles auf eine Aktie setzen!'},
+   ],
+   example:'Apple-Aktie: 2004 für ~1 € (bereinigt) kaufbar, heute über 200 €. Wer 1.000 € investiert hat, hat heute über 200.000 €.',
+   warning:'Einzelaktien können auch auf 0 fallen (z.B. Wirecard 2020). Diversifikation über ETFs ist sicherer.'},
+  {id:'anleihe',name:'Anleihe',icon:'📄',
+   analogy:'Eine Anleihe ist wie ein Kredit, den DU einer Firma oder dem Staat gibst – du bist die Bank! Die Firma zahlt dir dafür regelmäßig Zinsen und am Ende bekommst du dein Geld zurück.',
+   def:'Eine Anleihe (auch Obligation oder Bond) ist ein festverzinsliches Wertpapier. Der Emittent (Staat, Unternehmen) leiht sich Geld vom Anleger, zahlt dafür Zinsen (Kupon) und tilgt am Laufzeitende den Nennwert.',
+   facts:[{l:'Laufzeit',v:'1–30 Jahre'},{l:'Risiko',v:'Niedrig–Mittel'},{l:'Rendite',v:'2–6% p.a.'},{l:'Mindestanlage',v:'Ab 1.000 €'}],
+   sections:[
+     {h:'Wie funktioniert der Zins (Kupon)?',t:'Beispiel: Du kaufst eine Anleihe zu 1.000 € mit 4% Kupon. Jedes Jahr erhältst du 40 € Zinsen. Nach 10 Jahren bekommst du deine 1.000 € zurück.'},
+     {h:'Was ist das Zinsänderungsrisiko?',t:'Wenn Marktzinsen steigen, sinkt der Kurs bestehender Anleihen – weil neue Anleihen bessere Zinsen bieten. Wer bis Laufzeitende hält, bekommt trotzdem sein Geld zurück.'},
+     {h:'Staatsanleihen vs. Unternehmensanleihen',t:'Staatsanleihen (z.B. Österreich, Deutschland) gelten als sehr sicher. Unternehmensanleihen bieten höhere Zinsen, haben aber ein höheres Ausfallrisiko.'},
+   ],
+   example:'Österreichische Staatsanleihe 2033: 3,15% Kupon. Wer 10.000 € investiert, erhält jährlich 315 € Zinsen, 2033 die 10.000 € zurück.',
+   warning:'Bei Insolvenz des Emittenten kann Geld verloren gehen. Staatsanleihen solider Länder gelten als sehr sicher.'},
+  {id:'fonds',name:'Investmentfonds',icon:'🧺',
+   analogy:'Ein Fonds ist wie ein Einkaufskorb, den ein Profi für viele Anleger befüllt. Alle stecken Geld rein, der Fondsmanager kauft damit viele verschiedene Wertpapiere – das Risiko verteilt sich auf viele Schultern.',
+   def:'Ein Investmentfonds sammelt Geld vieler Anleger und investiert es nach einer definierten Strategie in Wertpapiere (Aktien, Anleihen, Immobilien etc.). Ein professioneller Fondsmanager trifft die Anlageentscheidungen.',
+   facts:[{l:'Mindestanlage',v:'Ab 50–500 €'},{l:'Kosten (TER)',v:'0,5–2,5% p.a.'},{l:'Risiko',v:'Je nach Typ'},{l:'Ausgabeaufschlag',v:'0–5%'}],
+   sections:[
+     {h:'Aktiv vs. passiv verwaltete Fonds',t:'Aktive Fonds: Ein Manager wählt Aktien aus (teuer, oft schlechtere Rendite als Markt). Passive Fonds (ETFs): Bilden einen Index ab, keine Auswahl nötig (günstig, marktnahe Rendite).'},
+     {h:'Was kostet ein Fonds?',t:'TER (Total Expense Ratio): laufende Kosten, z.B. 1,5% p.a. bedeutet: bei 10.000 € zahlst du jährlich 150 € Verwaltungsgebühr – auch wenn der Kurs fällt! Plus oft Ausgabeaufschlag von 3–5% beim Kauf.'},
+     {h:'Ausschüttend vs. thesaurierend',t:'Ausschüttend: Gewinne werden regelmäßig ausgezahlt. Thesaurierend: Gewinne werden wiederangelegt (Zinseszinseffekt). In Österreich jährliche KESt auf "ausschüttungsgleiche Erträge" fällig.'},
+   ],
+   example:'Ein aktiver Aktienfonds mit 1,8% TER: Bei 10.000 € und 7% Rendite – nach 20 Jahren ca. 28.000 € netto. Vergleich: ETF mit 0,2% TER: ca. 36.000 € netto. Unterschied: 8.000 €!',
+   warning:'Hohe Kosten fressen langfristig erheblich Rendite. ETFs schlagen aktive Fonds in ca. 80% der Fälle über 15+ Jahre.'},
+  {id:'etf',name:'ETF (Exchange Traded Fund)',icon:'📊',
+   analogy:'Ein ETF ist wie ein Fotografie-Abzug des Aktienmarktes. Er bildet einen Index 1:1 ab – kein Manager, kein Aufwand, keine hohen Kosten. Du bekommst automatisch einen Anteil an hunderten Unternehmen.',
+   def:'Ein ETF ist ein börsengehandelter Indexfonds, der einen Index (z.B. MSCI World, S&P 500, ATX) passiv nachbildet. Er vereint die Diversifikation eines Fonds mit der Flexibilität einer Aktie – und das zu sehr geringen Kosten.',
+   facts:[{l:'Kosten (TER)',v:'0,05–0,5% p.a.'},{l:'Mindestanlage',v:'Ab 1 € (Bruchteile)'},{l:'Handelbarkeit',v:'Börsentäglich'},{l:'Streuung',v:'Bis 1.600+ Positionen'}],
+   sections:[
+     {h:'Was ist ein Index?',t:'Ein Index ist eine Art Rangliste der größten Unternehmen nach Börsenwert. MSCI World = 1.600 größte Firmen weltweit. S&P 500 = 500 größte US-Firmen. ATX = 20 größte österr. Firmen.'},
+     {h:'Wie kaufe ich einen ETF?',t:'Über ein Wertpapierdepot bei einer Bank oder einem Online-Broker (Flatex, Easybank etc.). Suche nach dem Kürzel, z.B. "IE00B4L5Y983" für den MSCI World. Sparplan ab 25 €/Monat möglich.'},
+     {h:'Meldefonds in Österreich',t:'Wichtig: Kaufe nur "Meldefonds" (erkennbar am Präfix OeKB). Die Bank führt die KESt automatisch ab. Bei Nicht-Meldefonds muss man selbst Steuern erklären + Strafzuschlag.'},
+   ],
+   example:'iShares MSCI World ETF: 1.600 Unternehmen, TER 0,20%, seit 2000 ca. +7,5% p.a. durchschnittlich. 10.000 € im Jahr 2000 → heute ca. 44.000 €.',
+   warning:'Auch ETFs verlieren in Krisen stark an Wert (2009: –50%). Langfristiger Horizont (min. 10 Jahre) ist entscheidend.'},
+  {id:'dividende',name:'Dividende',icon:'💵',
+   analogy:'Die Dividende ist wie Miete, die ein Unternehmen seinen Eigentümern (Aktionären) zahlt. Als Aktionär vermietest du sozusagen dein Kapital an das Unternehmen – und bekommst dafür regelmäßig eine Zahlung.',
+   def:'Eine Dividende ist die Gewinnausschüttung eines Unternehmens an seine Aktionäre. Sie wird pro Aktie in Euro festgelegt und üblicherweise einmal jährlich (in den USA oft quartalsweise) ausgezahlt.',
+   facts:[{l:'Häufigkeit',v:'1× jährlich (AT/EU)'},{l:'Besteuerung',v:'27,5% KESt'},{l:'Dividendenrendite',v:'1–5% p.a.'},{l:'Recht auf Dividende',v:'Ab Hauptversammlung'}],
+   sections:[
+     {h:'Wie wird die Dividende berechnet?',t:'Dividendenrendite = (Dividende pro Aktie / Aktienkurs) × 100. Beispiel: Aktie kostet 50 €, Dividende 2 €/Jahr → Rendite = 4%. Das ist vergleichbar mit einem Sparbuch-Zins.'},
+     {h:'Ex-Dividende-Tag',t:'Wer die Aktie am "Ex-Tag" besitzt, bekommt die Dividende. Am Ex-Tag fällt der Kurs um den Dividendenbetrag – es ist kein "Geschenk", sondern Umwandlung von Unternehmenswert in Cash.'},
+   ],
+   example:'Nestlé zahlt ca. 3% Dividendenrendite. Bei 10.000 € Investition: ca. 300 € Dividende/Jahr. Nach KeSt (27,5%): ca. 218 € netto.',
+   warning:'Hohe Dividenden sind kein Qualitätsmerkmal. Unternehmen in Schwierigkeiten können Dividenden kürzen oder streichen.'},
+  {id:'index',name:'Index / Börsenindex',icon:'📉',
+   analogy:'Ein Börsenindex ist wie die Temperatur der Wirtschaft – er zeigt auf einen Blick, wie es "dem Markt" geht. Genauso wie 37°C Körpertemperatur den Gesundheitszustand zusammenfasst, fasst der Index die Entwicklung vieler Aktien zusammen.',
+   def:'Ein Börsenindex ist eine Kennzahl, die die durchschnittliche Kursveränderung einer definierten Gruppe von Aktien misst. Er dient als Benchmark für die Marktentwicklung und als Grundlage für ETFs.',
+   facts:[{l:'MSCI World',v:'1.600 Firmen weltweit'},{l:'S&P 500',v:'500 US-Firmen'},{l:'ATX',v:'20 österr. Firmen'},{l:'DAX',v:'40 dt. Firmen'}],
+   sections:[
+     {h:'Wie wird ein Index berechnet?',t:'Die meisten Indizes sind nach Marktkapitalisierung gewichtet: Große Firmen wie Apple haben mehr Gewicht als kleine. Der MSCI World hat ca. 70% US-Firmen.'},
+     {h:'Warum ist der Index wichtig?',t:'ETFs bilden Indizes nach. Wenn der MSCI World um 5% steigt, steigt dein MSCI-World-ETF ebenfalls um ca. 5% (minus minimale Kosten).'},
+   ],
+   example:'ATX (Austrian Traded Index): Die 20 größten österreichischen Börsenunternehmen, darunter OMV, Erste Bank, Verbund. Startet 1991 bei 1.000 Punkten, heute ca. 3.500 Punkte.',
+   warning:''},
+  {id:'risiko',name:'Risiko &amp; Rendite',icon:'⚖️',
+   analogy:'Risiko und Rendite sind wie Gaspedal und Sicherheitsgurt. Mehr Gas (Risiko) = mehr Tempo (Rendite), aber auch mehr Unfallgefahr. Der Sicherheitsgurt (Diversifikation) schützt – aber ersetzt nicht das Nachdenken.',
+   def:'In der Finanzwelt gilt: Höhere Renditeerwartung = höheres Risiko. Wer mehr verdienen will, muss mehr Schwankungen (Volatilität) und mögliche Verluste akzeptieren. Es gibt keine hohe Rendite ohne Risiko.',
+   facts:[{l:'Sparbuch',v:'~2% / Risiko fast 0'},{l:'Anleihe',v:'~4% / Risiko niedrig'},{l:'ETF',v:'~7% / Risiko mittel'},{l:'Krypto',v:'~?% / Risiko extrem'}],
+   sections:[
+     {h:'Was ist Volatilität?',t:'Volatilität misst, wie stark ein Kurs schwankt. Ein ETF mit 15% Volatilität kann in einem Jahr um +15% oder –15% schwanken. Hohe Volatilität = hohes Risiko = aber auch hohe Chancen.'},
+     {h:'Wie reduziere ich Risiko?',t:'(1) Diversifikation: viele verschiedene Wertpapiere. (2) Langer Anlagehorizont: Schwankungen glätten sich. (3) Regelmäßig investieren: Cost-Average-Effekt. (4) Nur Geld investieren, das man nicht braucht.'},
+   ],
+   example:'MSCI World: In jedem beliebigen 15-Jahres-Zeitraum seit 1970 war die Rendite positiv. Wer nur 1 Jahr investierte, hatte ca. 30% Chance auf Verlust.',
+   warning:'Risiko kann nicht vollständig eliminiert werden. Systemrisiken (Finanzkrise 2008, COVID 2020) treffen alle Anlageklassen gleichzeitig.'},
+  {id:'pa',name:'p.a. (per annum)',icon:'📅',
+   analogy:'„p.a." ist wie der Tacho beim Autofahren – er zeigt deine Geschwindigkeit pro Stunde an, auch wenn du nur 10 Minuten fährst. Genauso zeigt p.a. die Rendite bezogen auf ein volles Jahr, egal über welchen Zeitraum du tatsächlich angelegt hast.',
+   def:'„p.a." kommt aus dem Lateinischen „per annum" und bedeutet „pro Jahr". In der Finanzwelt wird damit angegeben, wie hoch eine Rendite, ein Zinssatz oder eine Gebühr bezogen auf ein Jahr ist. Es ist die wichtigste Vergleichsbasis für Anlageprodukte.',
+   facts:[{l:'Bedeutung',v:'pro Jahr (jährlich)'},{l:'Herkunft',v:'Latein: per annum'},{l:'Verwendung',v:'Zinsen, Renditen, Kosten'},{l:'Vergleichsbasis',v:'Immer auf 12 Monate'}],
+   sections:[
+     {h:'Warum ist p.a. so wichtig?',t:'Ohne p.a. kann man Produkte nicht vergleichen. Ein Festgeld mit „2% für 2 Jahre" entspricht nur 1% p.a. Ein Sparplan mit „7% p.a." verdoppelt sein Kapital ca. alle 10 Jahre (72er-Regel).'},
+     {h:'Die 72er-Regel',t:'Faustregel: 72 geteilt durch den Zinssatz p.a. = Jahre bis zur Kapitalverdopplung. Beispiele: 2% p.a. → 36 Jahre. 6% p.a. → 12 Jahre. 9% p.a. → 8 Jahre. Je höher der Zins, desto schneller verdoppelt sich das Kapital.'},
+     {h:'Effektiv- vs. Nominalzins',t:'Der Nominalzins ist der angegebene Zins. Der Effektivzins berücksichtigt auch Gebühren und Anschlusskredite. Bei Vergleichen immer den Effektivzins p.a. heranziehen – er ist die ehrliche Zahl!'},
+     {h:'Wo begegnet mir p.a.?',t:'Überall: Sparzins 3% p.a., ETF-Rendite 7% p.a., Kreditkosten 5,9% p.a., Fondsverwaltung 1,5% p.a. (TER). Auch negative Renditen werden p.a. angegeben: „–30% p.a." war 2022 für viele Tech-Aktien Realität.'},
+   ],
+   example:'Du legst 1.000 € zu 6% p.a. an. Nach 1 Jahr: 1.060 €. Nach 10 Jahren (mit Zinseszins): 1.791 €. Nach 20 Jahren: 3.207 €. Der Zinseszinseffekt ist der Grund, warum p.a. und langer Zeithorizont so mächtig zusammenwirken.',
+   warning:'Vorsicht bei Werbeversprechen ohne „p.a."-Angabe! „20% Rendite" klingt toll – aber ob das pro Monat, pro Jahr oder über 5 Jahre gilt, macht einen riesigen Unterschied.'},
+];
+
+function buildBegriffe(){
+  const nav=document.getElementById('begriffeNav');
+  const panels=document.getElementById('begriffePanels');
+  begriffe.forEach((b,idx)=>{
+    const btn=document.createElement('button');
+    btn.className='bgriff-btn'+(idx===0?' active':'');
+    btn.innerHTML=`${b.icon} ${b.name}`;
+    btn.onclick=()=>{
+      document.querySelectorAll('.bgriff-btn').forEach(x=>x.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.begriff-panel').forEach(x=>x.classList.remove('active'));
+      document.getElementById('bp_'+b.id).classList.add('active');
+    };
+    nav.appendChild(btn);
+    const panel=document.createElement('div');
+    panel.className='begriff-panel'+(idx===0?' active':'');
+    panel.id='bp_'+b.id;
+    panel.innerHTML=`<div class="analogy-box"><div class="analogy-label">🎯 Analogie</div><div class="analogy-text">${b.analogy}</div></div>
+      <div class="def-text">${b.def}</div>
+      <div class="key-facts">${b.facts.map(f=>`<div class="key-fact"><div class="kf-label">${f.l}</div><div class="kf-val">${f.v}</div></div>`).join('')}</div>
+      ${b.sections.map(s=>`<div class="sub-h">${s.h}</div><p class="def-text" style="margin-bottom:.25rem">${s.t}</p>`).join('')}
+      ${b.example?`<div class="example-box">📌 <strong>Praxisbeispiel:</strong> ${b.example}</div>`:''}
+      ${b.warning?`<div class="warning-inline">⚠️ ${b.warning}</div>`:''}`;
+    panels.appendChild(panel);
+  });
+}
+
+// ===== PRODUKTE =====
+const products=[
+  {id:'bausparer',name:'Bausparer',icon:'🏠',badge:'Konservativ',bc:'bg',zinsen:'2,5–3,5% p.a.',kest:'25% auf Zinsen',praemie:'Staatsprämie variabel (~1,5%)',desc:'Klassisches Sparprodukt mit staatlicher Förderung. Bindung mind. 6 Jahre. Einzahlungen bis 1.200 €/Jahr werden staatlich prämiert.',pros:['Staatliche Prämie','Kapital nach 6 Jahren frei','Einlagensicherung 100k €'],cons:['Niedrige Zinsen','6 Jahre Bindung','Max. 1.200 €/Jahr prämiert'],tags:['Einlagensicherung','Staatsprämie'],kestFree:false},
+  {id:'wohnbau',name:'Wohnbauanleihe',icon:'🏘️',badge:'Konservativ',bc:'bg',zinsen:'2–4% p.a.',kest:'50% der Zinsen KESt-frei!',praemie:'–',desc:'Nur 50% der Zinsen unterliegen der 25% KeSt – effektiver Steuersatz: nur 12,5%. Laufzeiten 5–20 Jahre, Wiener Börse.',pros:['50% der Zinsen steuerfrei','Gute Zinsen','Soziales Investment'],cons:['Kursrisiko','Emittentenrisiko'],tags:['Steuerbonus 12,5%','Wiener Börse'],kestFree:true},
+  {id:'pvk',name:'Zukunftsvorsorge (ZVS)',icon:'❤️',badge:'Mittel',bc:'bw',zinsen:'variabel (fondsgebunden)',kest:'KESt-befreit!',praemie:'Staatsprämie 4,25%',desc:'KESt-befreite Altersvorsorge mit Aktienanteil und Kapitalgarantie. Einzahlungen bis 3.124 €/Jahr mit 4,25% Prämie.',pros:['KESt-frei','4,25% Prämie','Kapitalgarantie'],cons:['Bindung bis 65. LJ','Bei Ausstieg Rückzahlung'],tags:['KESt-frei','Staatsprämie 4,25%','Pension'],kestFree:true},
+  {id:'etfat',name:'ETF-Depot',icon:'📊',badge:'Wachstum',bc:'bb',zinsen:'6–9% p.a. historisch',kest:'27,5% auf Erträge',praemie:'–',desc:'Globale Indexfonds über österr. Broker (Flatex, Easybank). Meldefonds-Status empfohlen für automatische KESt-Abführung.',pros:['Beste Langfristrendite','TER 0,1–0,3%','Sparplan ab 25 €'],cons:['27,5% KESt','Kursschwankungen'],tags:['Meldefonds wichtig','Sparplan'],kestFree:false},
+  {id:'lebensv',name:'Lebensversicherung',icon:'🛡️',badge:'Mittel',bc:'bw',zinsen:'2–4% (klassisch)',kest:'Spezialregelung',praemie:'–',desc:'Prämien bis 2.920 €/Jahr absetzbar. Bei ≥ 10 Jahre + Todesfallsumme ≥ 110%: Ablaufleistung KESt-frei.',pros:['Steuerliche Absetzbarkeit','Hinterbliebenenschutz','KESt-Stundung'],cons:['Hohe Kosten','Geringe Flexibilität'],tags:['Sonderausgaben','KESt-Stundung'],kestFree:false},
+  {id:'praemien',name:'Zukunftssparen (Prämie)',icon:'🐷',badge:'Konservativ',bc:'bg',zinsen:'variabel',kest:'Gewinne KESt-pflichtig',praemie:'Staatsprämie ~4,5%',desc:'Langfristiges Sparprodukt (mind. 10 Jahre), Einzahlungen bis 2.920 €/Jahr, Staatsprämie ca. 4,5%.',pros:['Prämie bis 4,5%','Kapitalgarantie möglich'],cons:['10 Jahre Mindestlaufzeit','Niedrige Zinsen'],tags:['Staatsprämie ~4,5%','Langfristig'],kestFree:false},
+];
+function buildProds(){
+  const g=document.getElementById('prodGrid');
+  products.forEach(p=>{
+    const d=document.createElement('div');d.className='prod-card';d.id='pc_'+p.id;
+    d.innerHTML=`<div style="font-size:22px;margin-bottom:7px">${p.icon}</div><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:600;margin-bottom:4px">${p.name}</div><div style="font-size:12px;color:var(--text2);margin-bottom:6px">${p.zinsen}</div><span class="badge ${p.bc}">${p.badge}</span>`;
+    d.onclick=()=>{
+      document.querySelectorAll('.prod-card').forEach(c=>c.classList.remove('sel'));d.classList.add('sel');
+      document.getElementById('prodDetail').innerHTML=`<div class="card"><div class="card-title">${p.icon} ${p.name}</div><p style="font-size:13px;color:var(--text2);margin-bottom:1rem">${p.desc}</p><div class="two-col" style="margin-bottom:.85rem"><div style="background:var(--surface2);border-radius:var(--radius);padding:.75rem"><div style="font-size:11px;color:var(--text2);margin-bottom:3px">Rendite</div><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:600">${p.zinsen}</div></div><div style="background:${p.kestFree?'var(--green-bg)':'var(--red-bg)'};border-radius:var(--radius);padding:.75rem"><div style="font-size:11px;color:${p.kestFree?'var(--green-text)':'var(--red-text)'};margin-bottom:3px">Steuer</div><div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:600;color:${p.kestFree?'var(--green)':'var(--red)'}">${p.kest}</div></div></div><div class="two-col"><div class="info-box" style="background:var(--green-bg)"><div style="font-size:12px;font-weight:600;color:var(--green-text);font-family:'Syne',sans-serif;margin-bottom:5px">Vorteile</div><ul class="items" style="color:var(--green)">${p.pros.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="info-box" style="background:var(--red-bg)"><div style="font-size:12px;font-weight:600;color:var(--red-text);font-family:'Syne',sans-serif;margin-bottom:5px">Nachteile</div><ul class="items" style="color:var(--red)">${p.cons.map(x=>`<li>${x}</li>`).join('')}</ul></div></div><div class="tag-row">${p.tags.map(t=>`<span class="badge bb">${t}</span>`).join('')}</div>${p.praemie!=='–'?`<div style="background:var(--green-bg);border-radius:var(--radius);padding:.65rem .9rem;margin-top:.75rem;font-size:13px;color:var(--green-text)">🎁 <strong>Staatsprämie:</strong> ${p.praemie}</div>`:''}</div>`;
+      document.getElementById('prodDetail').scrollIntoView({behavior:'smooth',block:'nearest'});
+    };
+    g.appendChild(d);
+  });
+}
+
+// ===== SIMULATOR =====
+const wertpapiere=[
+  {id:'msciworld',name:'MSCI World ETF',shortName:'MSCI World',type:'ETF',cat:'etf',mu:0.085,sigma:0.16,color:'#1a4fd6',histReturn:8.5,example:'iShares Core MSCI World (IE00B4L5Y983)'},
+  {id:'sp500',name:'S&P 500 ETF',shortName:'S&P 500',type:'ETF',cat:'etf',mu:0.095,sigma:0.17,color:'#0f3099',histReturn:9.5,example:'Vanguard S&P 500 (IE00B3XXRP09)'},
+  {id:'atx',name:'ATX (Österreich)',shortName:'ATX',type:'ETF',cat:'etf',mu:0.06,sigma:0.22,color:'#c0392b',histReturn:6.0,example:'Erste ATX ETF'},
+  {id:'emergm',name:'Emerging Markets ETF',shortName:'Emerging Markets',type:'ETF',cat:'etf',mu:0.075,sigma:0.22,color:'#7c5cc0',histReturn:7.0,example:'iShares MSCI EM (IE00B4L5YC18)'},
+  {id:'eurobond',name:'Euro Staatsanleihen ETF',shortName:'EU Staatsanl.',type:'Anleihe-ETF',cat:'anleihe',mu:0.025,sigma:0.05,color:'#1a7a3c',histReturn:2.5,example:'iShares Euro Govt Bond (IE00B4WXJJ64)'},
+  {id:'corpbond',name:'Unternehmensanleihen ETF',shortName:'Unternehmensanl.',type:'Anleihe-ETF',cat:'anleihe',mu:0.035,sigma:0.07,color:'#0d5228',histReturn:3.5,example:'iShares Euro Corp Bond (IE00B3F81R35)'},
+  {id:'apple',name:'Apple (AAPL)',shortName:'Apple',type:'Aktie',cat:'aktie',mu:0.18,sigma:0.28,color:'#888780',histReturn:18.0,example:'Börsenwert ~3 Billionen $'},
+  {id:'nestle',name:'Nestlé (NESN)',shortName:'Nestlé',type:'Aktie',cat:'aktie',mu:0.07,sigma:0.15,color:'#c06b00',histReturn:7.0,example:'Schweizer Konsumgüterriese'},
+  {id:'omv',name:'OMV (OMV)',shortName:'OMV',type:'Aktie',cat:'aktie',mu:0.065,sigma:0.25,color:'#e74c3c',histReturn:6.5,example:'Österreichs Öl- & Gaskonzern'},
+  {id:'erste',name:'Erste Group (EBS)',shortName:'Erste Bank',type:'Aktie',cat:'aktie',mu:0.07,sigma:0.23,color:'#2980b9',histReturn:7.0,example:'Größte österr. Bank'},
+  {id:'verbund',name:'Verbund (VER)',shortName:'Verbund',type:'Aktie',cat:'aktie',mu:0.12,sigma:0.26,color:'#1a7a3c',histReturn:12.0,example:'Österr. Stromerzeuger, ~80% Wasserkraft'},
+  {id:'voest',name:'voestalpine (VOE)',shortName:'voestalpine',type:'Aktie',cat:'aktie',mu:0.055,sigma:0.28,color:'#7c5cc0',histReturn:5.5,example:'Österr. Stahlkonzern, Weltmarktführer Schienen'},
+  {id:'wienerberger',name:'Wienerberger (WIE)',shortName:'Wienerberger',type:'Aktie',cat:'aktie',mu:0.075,sigma:0.24,color:'#c06b00',histReturn:7.5,example:'Weltgrößter Ziegelproduzent, Wien'},
+  {id:'bitcoin',name:'Bitcoin (BTC)',shortName:'Bitcoin',type:'Krypto',cat:'krypto',mu:0.60,sigma:0.85,color:'#f39c12',histReturn:60.0,example:'Größte Kryptowährung, ca. 1 Bio $ Marktkapitalisierung'},
+  {id:'ethereum',name:'Ethereum (ETH)',shortName:'Ethereum',type:'Krypto',cat:'krypto',mu:0.45,sigma:0.90,color:'#9b59b6',histReturn:45.0,example:'Zweitgrößte Krypto, Basis für DeFi & NFTs'},
+  {id:'bausparer',name:'Bausparer',shortName:'Bausparer',type:'Sparprodukt',cat:'spar',mu:0.03,sigma:0.005,color:'#27ae60',histReturn:3.0,example:'Raiffeisen/Bausparkasse Wüstenrot'},
+  {id:'tagesgeld',name:'Tagesgeld',shortName:'Tagesgeld',type:'Sparprodukt',cat:'spar',mu:0.025,sigma:0.002,color:'#16a085',histReturn:2.5,example:'Durchschnitt österr. Banken'},
+];
+
+const catColors={etf:'bb',anleihe:'bg',aktie:'bw',spar:'bg',krypto:'br'};
+const catLabels={etf:'ETF',anleihe:'Anleihe',aktie:'Aktie',spar:'Sparprodukt',krypto:'Krypto'};
+let selectedWP=new Set(['msciworld','eurobond']);
+let allocations={};
+let histChartInst=null,allocChartInst=null,simChartInst=null;
+let simBuilt=false;
+let activeFilter='alle';
+
+const mixes=[
+  {id:'konservativ',name:'Konservativ',wps:{bausparer:40,tagesgeld:30,eurobond:30}},
+  {id:'ausgewogen',name:'Ausgewogen',wps:{msciworld:40,eurobond:30,corpbond:10,tagesgeld:20}},
+  {id:'wachstum',name:'Wachstum',wps:{msciworld:60,sp500:20,eurobond:10,corpbond:10}},
+  {id:'aggressiv',name:'Aggressiv',wps:{sp500:40,msciworld:20,emergm:20,apple:10,atx:10}},
+];
+
+function buildSimulator(){
+  if(simBuilt)return;simBuilt=true;
+  // Filter
+  const fr=document.getElementById('wpFilter');
+  ['alle','etf','anleihe','aktie','spar','krypto'].forEach(cat=>{
+    const b=document.createElement('button');
+    b.className='filter-btn'+(cat==='alle'?' active':'');
+    b.textContent=cat==='alle'?'Alle':catLabels[cat]||cat;
+    b.onclick=()=>{activeFilter=cat;document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderWPGrid();};
+    fr.appendChild(b);
+  });
+  renderWPGrid();
+  // Mix presets
+  const mp=document.getElementById('mixPresets');
+  mixes.forEach(m=>{
+    const b=document.createElement('button');b.className='itab';b.textContent=m.name;
+    b.onclick=()=>{
+      selectedWP=new Set(Object.keys(m.wps));
+      allocations={...m.wps};
+      renderWPGrid();renderAlloc();runSim();
+    };
+    mp.appendChild(b);
+  });
+  wertpapiere.forEach(w=>{if(!allocations[w.id])allocations[w.id]=0;});
+  normalizeAlloc();
+  renderAlloc();
+}
+
+function renderWPGrid(){
+  const g=document.getElementById('wpGrid');g.innerHTML='';
+  wertpapiere.forEach(w=>{
+    if(activeFilter!=='alle'&&w.cat!==activeFilter)return;
+    const d=document.createElement('div');
+    d.className='wp-card'+(selectedWP.has(w.id)?' active':'');
+    const retClass=w.histReturn>=7?'pos':w.histReturn<=3?'neu':'pos';
+    const retLabel=w.cat==='krypto'?`⚠️ Ø ${w.histReturn}% p.a. (extrem volatil)`:`Ø ${w.histReturn}% p.a.`;
+    d.innerHTML=`<div class="wp-check">✓</div><div class="wp-category badge ${catColors[w.cat]}">${catLabels[w.cat]}</div><div class="wp-name">${w.shortName}</div><div class="wp-type" style="font-size:11px;color:var(--text2)">${w.example}</div><div class="wp-ret ${retClass}" style="font-size:${w.cat==='krypto'?'11':'13'}px">${retLabel}</div>`;
+    d.onclick=()=>{
+      if(selectedWP.has(w.id)){if(selectedWP.size>1)selectedWP.delete(w.id);}
+      else selectedWP.add(w.id);
+      normalizeAlloc();renderWPGrid();renderAlloc();runSim();
+    };
+    g.appendChild(d);
+  });
+}
+
+function normalizeAlloc(){
+  const sel=[...selectedWP];
+  let total=sel.reduce((s,id)=>s+(allocations[id]||0),0);
+  if(total===0){const eq=Math.floor(100/sel.length);sel.forEach(id=>allocations[id]=eq);allocations[sel[sel.length-1]]=100-eq*(sel.length-1);}
+  else{sel.forEach(id=>{if(!allocations[id])allocations[id]=0;});
+    const diff=100-total;if(Math.abs(diff)>0.5){const largest=sel.reduce((a,b)=>(allocations[a]||0)>(allocations[b]||0)?a:b);allocations[largest]=(allocations[largest]||0)+diff;}}
+}
+
+function renderAlloc(){
+  const card=document.getElementById('allocCard');
+  const rows=document.getElementById('allocRows');
+  const sel=[...selectedWP];
+  card.style.display=sel.length?'block':'none';
+  rows.innerHTML='';
+  sel.forEach(id=>{
+    const w=wertpapiere.find(x=>x.id===id);if(!w)return;
+    const row=document.createElement('div');row.className='alloc-row';
+    row.innerHTML=`<span class="alloc-name">${w.shortName}</span><input type="range" min="0" max="100" step="5" value="${allocations[id]||0}"><span class="alloc-pct" id="ap_${id}">${allocations[id]||0}%</span>`;
+    const inp=row.querySelector('input');
+    inp.oninput=()=>{allocations[id]=+inp.value;document.getElementById('ap_'+id).textContent=inp.value+'%';updateAllocTotal();runSim();};
+    rows.appendChild(row);
+  });
+  updateAllocTotal();
+  renderAllocChart();
+}
+
+function updateAllocTotal(){
+  const sel=[...selectedWP];
+  const total=sel.reduce((s,id)=>s+(allocations[id]||0),0);
+  const el=document.getElementById('allocTotal');
+  el.textContent='Summe: '+total+'%';
+  el.style.background=Math.abs(total-100)<1?'var(--green-bg)':'var(--red-bg)';
+  el.style.color=Math.abs(total-100)<1?'var(--green-text)':'var(--red-text)';
+}
+
+function renderAllocChart(){
+  const sel=[...selectedWP].filter(id=>allocations[id]>0);
+  const data=sel.map(id=>allocations[id]);
+  const labels=sel.map(id=>wertpapiere.find(x=>x.id===id)?.shortName||id);
+  const colors=sel.map(id=>wertpapiere.find(x=>x.id===id)?.color||'#888');
+  const ctx=document.getElementById('allocChart');
+  if(allocChartInst)allocChartInst.destroy();
+  allocChartInst=new Chart(ctx,{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:12},boxWidth:12}}}}});
+}
+
+function getPortfolioParams(){
+  const sel=[...selectedWP];
+  const total=sel.reduce((s,id)=>s+(allocations[id]||0),0);
+  if(total===0)return{mu:0.065,sigma:0.12};
+  let mu=0,sigmaApprox=0;
+  sel.forEach(id=>{
+    const w=wertpapiere.find(x=>x.id===id);if(!w)return;
+    const wt=(allocations[id]||0)/total;
+    mu+=wt*w.mu;sigmaApprox+=wt*w.sigma;
+  });
+  return{mu,sigma:sigmaApprox};
+}
+
+function genHistData(w,years=20){
+  const data=[100];let v=100;
+  for(let y=1;y<=years;y++){
+    const r=w.mu+w.sigma*(Math.sqrt(-2*Math.log(Math.random()))*Math.cos(2*Math.PI*Math.random()));
+    v=Math.max(1,v*(1+r));data.push(Math.round(v));
+  }
+  return data;
+}
+
+function updateVals(){
+  document.getElementById('valCapital').textContent=Number(document.getElementById('slCapital').value).toLocaleString('de-AT')+'€';
+  document.getElementById('valMonthly').textContent=Number(document.getElementById('slMonthly').value).toLocaleString('de-AT')+' €/Mo';
+  document.getElementById('valYears').textContent=document.getElementById('slYears').value+' Jahre';
+  runSim();
+}
+
+function monteCarlo(cap,mo,yr,mu,sigma,n){
+  const paths=[];
+  for(let i=0;i<n;i++){
+    let v=cap;const path=[v];
+    for(let y=1;y<=yr;y++){
+      const r=mu+sigma*(Math.sqrt(-2*Math.log(Math.random()))*Math.cos(2*Math.PI*Math.random()));
+      v=v*(1+r)+mo*12;path.push(Math.max(0,Math.round(v)));
+    }
+    paths.push(path);
+  }
+  return paths;
+}
+
+function runSim(){
+  if(!document.getElementById('simChart'))return;
+  const cap=+document.getElementById('slCapital').value;
+  const mo=+document.getElementById('slMonthly').value;
+  const yr=+document.getElementById('slYears').value;
+  const{mu,sigma}=getPortfolioParams();
+
+  // Hist chart
+  const sel=[...selectedWP];
+  const histLabels=Array.from({length:21},(_,i)=>'Jahr '+i);
+  const histDatasets=sel.map(id=>{
+    const w=wertpapiere.find(x=>x.id===id);if(!w)return null;
+    return{label:w.shortName,data:genHistData(w,20),borderColor:w.color,backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:.3};
+  }).filter(Boolean);
+  document.getElementById('histLegend').innerHTML=sel.map(id=>{const w=wertpapiere.find(x=>x.id===id);return w?`<span><span class="leg-dot" style="background:${w.color}"></span>${w.shortName} (Ø ${w.histReturn}%)</span>`:''}).join('');
+  const hctx=document.getElementById('histChart');
+  if(histChartInst)histChartInst.destroy();
+  histChartInst=new Chart(hctx,{type:'line',data:{labels:histLabels,datasets:histDatasets},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:d=>`${d.dataset.label}: ${d.raw} (Basis 100)`}}},
+      scales:{x:{grid:{color:'rgba(0,0,0,.05)'},ticks:{font:{size:11},maxTicksLimit:10}},y:{grid:{color:'rgba(0,0,0,.05)'},ticks:{font:{size:11},callback:v=>v}}}}});
+
+  // Monte Carlo
+  const paths=monteCarlo(cap,mo,yr,mu,sigma,200);
+  const labels=Array.from({length:yr+1},(_,i)=>'Jahr '+i);
+  const invested=Array.from({length:yr+1},(_,i)=>Math.round(cap+mo*12*i));
+  const finals=paths.map(p=>p[yr]).sort((a,b)=>a-b);
+  const p10=finals[Math.floor(finals.length*.10)];
+  const p50=finals[Math.floor(finals.length*.50)];
+  const p90=finals[Math.floor(finals.length*.90)];
+  const band10=Array.from({length:yr+1},(_,i)=>{const s=paths.map(p=>p[i]).sort((a,b)=>a-b);return s[Math.floor(s.length*.10)];});
+  const band50=Array.from({length:yr+1},(_,i)=>{const s=paths.map(p=>p[i]).sort((a,b)=>a-b);return s[Math.floor(s.length*.50)];});
+  const band90=Array.from({length:yr+1},(_,i)=>{const s=paths.map(p=>p[i]).sort((a,b)=>a-b);return s[Math.floor(s.length*.90)];});
+  const totalIn=cap+mo*12*yr;
+  const portColor=mu>0.08?'#c0392b':mu>0.05?'#1a4fd6':'#1a7a3c';
+
+  document.getElementById('simMetrics').innerHTML=`<div class="metric"><div class="m-lbl">Eingesetzt</div><div class="m-val">${Math.round(totalIn).toLocaleString('de-AT')} €</div></div><div class="metric"><div class="m-lbl">Pessimistisch (10%)</div><div class="m-val" style="color:var(--red)">${p10.toLocaleString('de-AT')} €</div></div><div class="metric"><div class="m-lbl">Median</div><div class="m-val" style="color:var(--blue)">${p50.toLocaleString('de-AT')} €</div></div><div class="metric"><div class="m-lbl">Optimistisch (90%)</div><div class="m-val" style="color:var(--green)">${p90.toLocaleString('de-AT')} €</div></div>`;
+  document.getElementById('simLegend').innerHTML=`<span><span class="leg-dot" style="background:#1a7a3c;opacity:.4"></span>Optimistisch (90%)</span><span><span class="leg-dot" style="background:${portColor}"></span>Median</span><span><span class="leg-dot" style="background:#c0392b;opacity:.4"></span>Pessimistisch (10%)</span><span><span class="leg-dot" style="background:#999"></span>Eingesetzt</span>`;
+
+  const sctx=document.getElementById('simChart');
+  if(simChartInst)simChartInst.destroy();
+  simChartInst=new Chart(sctx,{type:'line',data:{labels,datasets:[
+    {label:'Optimistisch',data:band90,borderColor:'rgba(26,122,60,.45)',backgroundColor:'rgba(26,122,60,.07)',borderWidth:1.5,pointRadius:0,fill:'+1',tension:.3},
+    {label:'Median',data:band50,borderColor:portColor,backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.3},
+    {label:'Pessimistisch',data:band10,borderColor:'rgba(192,57,43,.45)',backgroundColor:'rgba(192,57,43,.05)',borderWidth:1.5,pointRadius:0,fill:false,tension:.3},
+    {label:'Eingesetzt',data:invested,borderColor:'#999',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[6,3]},
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:d=>`${d.dataset.label}: ${d.raw.toLocaleString('de-AT')} €`}}},
+    scales:{x:{grid:{color:'rgba(0,0,0,.05)'},ticks:{font:{size:11},maxTicksLimit:10}},y:{grid:{color:'rgba(0,0,0,.05)'},ticks:{font:{size:11},callback:v=>(v>=1000000?(v/1000000).toFixed(1)+'M':(v/1000).toFixed(0)+'k')+'€'}}}}});
+
+  const scen=[{name:'Pessimistisch',val:p10,col:'var(--red)'},{name:'Median',val:p50,col:portColor},{name:'Optimistisch',val:p90,col:'var(--green)'}];
+  const hasCrypto=[...selectedWP].some(id=>wertpapiere.find(x=>x.id===id)?.cat==='krypto');
+  document.getElementById('simTable').innerHTML=`<div class="card-title">Szenarien-Übersicht · Portfolio Ø ${(mu*100).toFixed(1)}% Rendite</div>${hasCrypto?'<div style="background:var(--red-bg);border-radius:var(--radius);padding:.6rem .9rem;font-size:12px;color:var(--red-text);margin-bottom:.75rem">⚠️ <strong>Krypto im Portfolio:</strong> Die Simulation unterschätzt das reale Krypto-Risiko. Bitcoin verlor 2022 über 70% seines Wertes innerhalb eines Jahres.</div>':''}<table class="tax-t"><tr><th>Szenario</th><th style="text-align:right">Endwert</th><th style="text-align:right">Gewinn/Verlust</th><th style="text-align:right">Rendite p.a.</th></tr>`+scen.map(s=>{const diff=s.val-totalIn;const pct=((s.val/totalIn-1)*100/yr).toFixed(1);return`<tr><td style="font-family:'Syne',sans-serif;font-weight:600;color:${s.col}">${s.name}</td><td style="text-align:right">${s.val.toLocaleString('de-AT')} €</td><td style="text-align:right;color:${diff>=0?'var(--green)':'var(--red)'}">${diff>=0?'+':''}${diff.toLocaleString('de-AT')} €</td><td style="text-align:right">${pct}%</td></tr>`;}).join('')+'</table>';
+  renderAllocChart();
+}
+
+// ===== STEUERRECHNER =====
+const ertragTypes=[
+  {id:'div',name:'Dividende',rate:0.275,desc:'27,5% KESt auf die gesamte Ausschüttung.'},
+  {id:'kurs',name:'Kursgewinn',rate:0.275,desc:'27,5% KESt auf den Unterschiedsbetrag (Kauf- vs. Verkaufspreis).'},
+  {id:'zins',name:'Zinsen (Sparbuch)',rate:0.25,desc:'Zinserträge auf Spareinlagen – 25% KESt.'},
+  {id:'wba',name:'Wohnbauanleihe',rate:0.125,desc:'Nur 50% der Zinsen unterliegen 25% KESt → effektiv 12,5%.'},
+  {id:'zvs',name:'Zukunftsvorsorge',rate:0,desc:'Erträge vollständig KESt-befreit während der Laufzeit.'},
+];
+let selType=ertragTypes[0];
+let kestChartInst=null;
+
+function buildTypeChips(){
+  const c=document.getElementById('typeChips');
+  ertragTypes.forEach(t=>{
+    const el=document.createElement('button');el.className='itab'+(t===selType?' active':'');el.textContent=t.name;
+    el.onclick=()=>{selType=t;document.querySelectorAll('#typeChips .itab').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.getElementById('typeDesc').textContent=t.desc;calc();};
+    c.appendChild(el);
+  });
+  document.getElementById('typeDesc').textContent=selType.desc;
+}
+
+function calc(){
+  const kap=+document.getElementById('rKap').value;
+  const rendPct=+document.getElementById('rRend').value;
+  const jahre=+document.getElementById('rJahr').value;
+  document.getElementById('vKap').textContent=kap.toLocaleString('de-AT')+'€';
+  document.getElementById('vRend').textContent=rendPct.toFixed(1).replace('.',',')+'%';
+  document.getElementById('vJahr').textContent=jahre+' Jahre';
+  const rend=rendPct/100;const kestRate=selType.rate;
+  let bruttoEnd=kap,nettoEnd=kap,gesamtKest=0;
+  const bruttoArr=[kap],nettoArr=[kap];
+  for(let y=1;y<=jahre;y++){
+    gesamtKest+=bruttoEnd*rend*kestRate;
+    bruttoEnd=bruttoEnd*(1+rend);
+    nettoEnd=nettoEnd*(1+rend*(1-kestRate));
+    bruttoArr.push(Math.round(bruttoEnd));nettoArr.push(Math.round(nettoEnd));
+  }
+  const bruttoG=Math.round(bruttoEnd-kap),nettoG=Math.round(nettoEnd-kap),kestT=Math.round(gesamtKest);
+  const effRate=(kestT/(bruttoG||1)*100).toFixed(1);
+  document.getElementById('metricsOut').innerHTML=`<div class="metric"><div class="m-lbl">Brutto-Endwert</div><div class="m-val">${Math.round(bruttoEnd).toLocaleString('de-AT')} €</div></div><div class="metric"><div class="m-lbl">Netto-Endwert</div><div class="m-val" style="color:var(--blue)">${Math.round(nettoEnd).toLocaleString('de-AT')} €</div></div><div class="metric"><div class="m-lbl">KESt gesamt</div><div class="m-val" style="color:var(--red)">${kestT.toLocaleString('de-AT')} €</div></div><div class="metric"><div class="m-lbl">Eff. Steuerquote</div><div class="m-val">${effRate}%</div></div>`;
+  document.getElementById('flowOut').innerHTML=`<div class="flow-box" style="background:var(--blue-bg);color:var(--blue-text)">${kap.toLocaleString('de-AT')} € eingesetzt</div><span style="color:var(--text3);font-size:18px">→</span><div class="flow-box" style="background:var(--green-bg);color:var(--green-text)">+ ${bruttoG.toLocaleString('de-AT')} € Brutto</div><span style="color:var(--text3);font-size:18px">→</span><div class="flow-box" style="background:var(--red-bg);color:var(--red-text)">− ${kestT.toLocaleString('de-AT')} € KESt (${(kestRate*100).toFixed(1)}%)</div><span style="color:var(--text3);font-size:18px">→</span><div class="flow-box" style="background:var(--green-bg);color:var(--green);font-family:'Syne',sans-serif">${Math.round(nettoEnd).toLocaleString('de-AT')} € netto</div>`;
+  document.getElementById('aufschluss').innerHTML=`<div class="card-title">Aufschlüsselung</div><table class="tax-t"><tr><th>Position</th><th style="text-align:right">Betrag</th><th style="text-align:right">Anteil</th></tr><tr><td>Eingesetztes Kapital</td><td style="text-align:right">${kap.toLocaleString('de-AT')} €</td><td style="text-align:right">${(kap/Math.round(bruttoEnd)*100).toFixed(1)}%</td></tr><tr><td>Brutto-Ertrag</td><td style="text-align:right">${bruttoG.toLocaleString('de-AT')} €</td><td style="text-align:right">${(bruttoG/Math.round(bruttoEnd)*100).toFixed(1)}%</td></tr><tr style="color:var(--red)"><td>KESt-Abzug (${(kestRate*100).toFixed(1)}%)</td><td style="text-align:right">− ${kestT.toLocaleString('de-AT')} €</td><td style="text-align:right">–</td></tr><tr style="font-family:'Syne',sans-serif;font-weight:600"><td>Netto-Endwert</td><td style="text-align:right">${Math.round(nettoEnd).toLocaleString('de-AT')} €</td><td style="text-align:right">100%</td></tr></table>`;
+  const ctx=document.getElementById('kestChart');
+  if(kestChartInst)kestChartInst.destroy();
+  kestChartInst=new Chart(ctx,{type:'line',data:{labels:Array.from({length:jahre+1},(_,i)=>'Jahr '+i),datasets:[
+    {label:'Brutto',data:bruttoArr,borderColor:'#639922',backgroundColor:'rgba(99,153,34,.07)',borderWidth:2,pointRadius:0,fill:true,tension:.3,borderDash:[6,3]},
+    {label:'Netto',data:nettoArr,borderColor:'#1a4fd6',backgroundColor:'rgba(26,79,214,.07)',borderWidth:2.5,pointRadius:0,fill:true,tension:.3},
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:d=>`${d.dataset.label}: ${d.raw.toLocaleString('de-AT')} €`}}},
+    scales:{x:{grid:{color:'rgba(0,0,0,.05)'},ticks:{font:{size:11},maxTicksLimit:10}},y:{grid:{color:'rgba(0,0,0,.05)'},ticks:{font:{size:11},callback:v=>(v>=1000000?(v/1000000).toFixed(1)+'M':(v/1000).toFixed(0)+'k')+'€'}}}}});
+}
+
+// INIT
+buildAssets();
+buildBegriffe();
+buildProds();
+buildTypeChips();
+</script>
+</body>
+</html>
