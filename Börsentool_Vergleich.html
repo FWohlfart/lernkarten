@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Börsen-Vergleichstool</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f5f4f0;color:#1a1a1a;padding:1.25rem}
+h1{font-size:19px;font-weight:600;color:#1A3A5C;margin-bottom:.2rem}
+.sub{font-size:12px;color:#5F5E5A;margin-bottom:1rem}
+.panel{background:#fff;border:1px solid #e0ddd6;border-radius:12px;padding:1rem 1.125rem;margin-bottom:.875rem}
+.pt{font-size:11px;font-weight:600;color:#1A3A5C;margin-bottom:.625rem;text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sel-count{font-size:10px;color:#888780;font-style:italic;font-weight:400;text-transform:none;letter-spacing:0}
+.stabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:.625rem}
+.stab{font-size:11px;padding:3px 9px;border-radius:5px;border:1px solid #D3D1C7;background:#fff;color:#444441;cursor:pointer;transition:all .1s}
+.stab:hover{background:#f5f4f0}
+.stab.on{color:#fff;border-color:transparent}
+/* Stock grid – sorted by sector then AT flag */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(164px,1fr));gap:5px}
+.sbtn{display:flex;align-items:center;gap:6px;padding:5px 9px;border-radius:6px;border:1px solid #D3D1C7;background:#fff;font-size:11px;color:#444441;cursor:pointer;text-align:left;transition:all .1s;min-width:0}
+.sbtn:hover{background:#f5f4f0}
+.sbtn.sel{border-width:2px;font-weight:500}
+/* AT stocks: subtle left red border, always visible */
+.sbtn.at{border-left:3px solid #CC0000}
+.sbtn.at.sel{border-left-width:3px}
+.sw{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.slabel{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sflag{font-size:9px;flex-shrink:0}
+/* Section heading within grid */
+.sec-heading{grid-column:1/-1;font-size:10px;font-weight:600;color:#888780;letter-spacing:.05em;text-transform:uppercase;padding:.25rem 0 .1rem;border-bottom:1px solid #e0ddd6;margin-top:.25rem}
+.sec-heading:first-child{margin-top:0}
+/* Controls */
+.crow{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-bottom:.75rem}
+.cg{display:flex;flex-direction:column;gap:3px}
+.cl{font-size:10px;color:#5F5E5A;font-weight:500}
+select{font-size:11px;border:1px solid #D3D1C7;border-radius:5px;padding:3px 7px;background:#fff;color:#1a1a1a}
+input[type=range]{padding:0;width:130px;accent-color:#1A3A5C;border:none}
+.rv{font-size:11px;color:#1A3A5C;font-weight:500;min-width:32px}
+.btn{font-size:11px;padding:5px 10px;border-radius:6px;border:1px solid #D3D1C7;background:#fff;color:#444441;cursor:pointer;white-space:nowrap;transition:all .1s}
+.btn:hover{background:#f5f4f0}
+.btn.at{background:#CC0000;color:#fff;border-color:#CC0000}
+.btn.at:hover{background:#aa0000}
+.btn.danger{background:#FCEBEB;color:#A32D2D;border-color:#F7C1C1}
+.btn.danger:hover{background:#f9d0d0}
+/* Chart */
+.chart-canvas-area{position:relative;width:100%;height:380px}
+.leg-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:.5rem}
+.leg-i{display:flex;align-items:center;gap:5px;font-size:11px;color:#444441}
+.leg-swatch{width:22px;height:3px;flex-shrink:0;border-radius:1px}
+.note{font-size:10px;color:#5F5E5A;font-style:italic;margin-top:3px}
+/* Stats */
+.sgrid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px;margin-top:.625rem}
+.sc{background:#f5f4f0;border-radius:7px;padding:.5rem .75rem}
+.sc.at-sc{border-left:3px solid #CC0000}
+.sn{font-size:10px;color:#5F5E5A;margin-bottom:1px}
+.sv{font-size:14px;font-weight:600}
+.ss{font-size:9px;color:#888780}
+.empty{font-size:12px;color:#888780;text-align:center;padding:2.5rem;border:1px dashed #D3D1C7;border-radius:8px}
+/* Events */
+.ev-panel{background:#f5f4f0;border-radius:8px;padding:.75rem;margin-bottom:.75rem}
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:3px;margin-top:.5rem}
+.ev-row{display:flex;align-items:center;gap:5px;font-size:11px;color:#444441;padding:2px 5px;border-radius:4px;cursor:pointer}
+.ev-row:hover{background:#ebe9e3}
+.ev-row input{accent-color:#1A3A5C;flex-shrink:0;cursor:pointer}
+.ev-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+/* AT legend pill in sector tabs */
+.at-pill{font-size:9px;padding:1px 5px;border-radius:3px;background:#CC0000;color:#fff;margin-left:2px;vertical-align:middle}
+</style>
+</head>
+<body>
+
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden">Interaktives Börsen-Vergleichstool: Internationale und österreichische ATX-Aktien nach Branchen 1995–2025</h2>
+
+<h1>Börsen-Vergleichstool</h1>
+<p class="sub">Branchen vergleichen · Gegenzyklen erkennen · ATX-Unternehmen <span style="color:#CC0000;font-weight:500">🇦🇹</span> direkt neben internationalen · Politische Ereignisse einblenden</p>
+
+<div class="panel">
+  <div class="pt">
+    Unternehmen auswählen
+    <span class="sel-count" id="selCount">0 ausgewählt</span>
+    <span style="font-size:10px;color:#888780;font-weight:400">— <span style="color:#CC0000">🇦🇹 rote Linie</span> = österreichisch (EUR), übrige = international (USD)</span>
+  </div>
+
+  <!-- Single unified sector filter -->
+  <div class="stabs" id="sectorTabs"></div>
+  <div class="sgrid" id="stockGrid"></div>
+
+  <div style="display:flex;gap:5px;margin-top:.75rem;flex-wrap:wrap;align-items:center">
+    <span style="font-size:11px;color:#5F5E5A;font-weight:500">Vorauswahl:</span>
+    <button class="btn" onclick="preset('crisis')">Finanzkrise 2008</button>
+    <button class="btn" onclick="preset('covid')">COVID-19</button>
+    <button class="btn" onclick="preset('energy')">Energie-Wandel</button>
+    <button class="btn" onclick="preset('pharma')">Pharma-Boom</button>
+    <button class="btn at" onclick="preset('austria')">🇦🇹 ATX-Vergleich</button>
+    <button class="btn" onclick="preset('defense')" style="background:#1D3461;color:#fff;border-color:#1D3461">🎯 Rüstung</button>
+    <button class="btn danger" onclick="clearAll()">✕ Zurücksetzen</button>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="pt">Darstellung</div>
+  <div class="crow">
+    <div class="cg">
+      <span class="cl">Von</span>
+      <div style="display:flex;align-items:center;gap:5px">
+        <input type="range" id="yearFrom" min="0" max="30" value="0" step="1" oninput="updateRange()">
+        <span class="rv" id="yfv">1995</span>
+      </div>
+    </div>
+    <div class="cg">
+      <span class="cl">Bis</span>
+      <div style="display:flex;align-items:center;gap:5px">
+        <input type="range" id="yearTo" min="0" max="30" value="30" step="1" oninput="updateRange()">
+        <span class="rv" id="ytv">2025</span>
+      </div>
+    </div>
+    <div class="cg">
+      <span class="cl">Skala</span>
+      <select id="scaleMode" onchange="renderChart()">
+        <option value="indexed" selected>Indexiert (Start = 100)</option>
+        <option value="absolute">Absolut (EUR/USD)</option>
+        <option value="log">Logarithmisch</option>
+      </select>
+    </div>
+    <div class="cg">
+      <span class="cl">Ereignisse</span>
+      <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
+        <label style="display:flex;align-items:center;gap:4px;font-size:11px;cursor:pointer">
+          <input type="checkbox" id="showEv" checked onchange="renderOverlay()"> Einblenden
+        </label>
+        <button class="btn" onclick="toggleEvPanel()">Verwalten</button>
+        <button class="btn" id="evToggleBtn" onclick="toggleAllEv()">Alle aus</button>
+      </div>
+    </div>
+  </div>
+  <p class="note" id="scaleNote">Indexiert: Alle Kurse starten bei 100 – direkter Vergleich. 🇦🇹 in EUR, übrige in USD.</p>
+
+  <div class="ev-panel" id="evPanel" style="display:none">
+    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:.5rem">
+      <span style="font-size:11px;font-weight:500;color:#1A3A5C">Ereignisse ein-/ausblenden:</span>
+      <button class="btn" onclick="setAllEv(true)">Alle an</button>
+      <button class="btn" onclick="setAllEv(false)">Alle aus</button>
+    </div>
+    <div class="ev-grid" id="evList"></div>
+  </div>
+</div>
+
+<div class="panel">
+  <div id="emptyMsg" class="empty">Bitte mindestens ein Unternehmen auswählen</div>
+  <div id="chartWrap" style="display:none">
+    <div style="position:relative;width:100%">
+      <div class="chart-canvas-area">
+        <canvas id="chart" role="img" aria-label="Kursverlauf ausgewählter Aktien">Aktienkurse 1995–2025.</canvas>
+      </div>
+      <div id="evTimeline"></div>
+    </div>
+    <div class="leg-row" id="legend"></div>
+    <div class="sgrid2" id="stats"></div>
+  </div>
+</div>
+
+<script>
+const YEARS=[1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+
+// All stocks in one object – austria:true marks ATX, sector is unified
+const ALL={
+  // ── Technologie ─────────────────────────────────────────
+  AAPL: {name:'Apple',         sector:'Technologie', color:'#185FA5', currency:'USD',
+    data:[0.4,0.5,0.4,0.5,0.9,0.8,0.4,0.3,0.4,0.8,1.5,2.4,6.0,3.0,5.0,10,12,18,19.5,24,23.5,26.5,40,37,72,130,174,128,192,250,200]},
+  MSFT: {name:'Microsoft',     sector:'Technologie', color:'#4A235A', currency:'USD',
+    data:[5,5.5,6.5,15,37,22,14,21,26,28,27,29,35,20,31,26,26,27,37,46,55,62,84,101,158,222,336,239,374,420,450]},
+  GOOGL:{name:'Google/Alphabet',sector:'Technologie',color:'#BA7517', currency:'USD',
+    data:[null,null,null,null,null,null,null,null,null,50,175,230,340,147,310,296,322,350,528,530,760,790,1050,1046,1340,1752,2984,1793,2093,2810,3900]},
+  AMZN: {name:'Amazon',        sector:'Technologie', color:'#0E6655', currency:'USD',
+    data:[null,null,1.5,6,106,64,11,18,52,44,47,39,93,51,134,180,173,250,398,310,670,750,1170,1500,1870,3250,3340,840,1840,2200,2350]},
+  TSLA: {name:'Tesla',         sector:'Technologie', color:'#0F6E56', currency:'USD',
+    data:[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,3.8,3,6,15,14.5,12.5,21,22,23,68,235,410,123,248,403,490]},
+  NVDA: {name:'NVIDIA',        sector:'Technologie', color:'#27500A', currency:'USD',
+    data:[null,null,null,null,null,null,0.2,0.2,0.3,0.3,0.4,0.5,0.7,0.4,0.5,0.6,0.7,0.8,1,1.3,1.6,2,5,5,6,13,28,15,50,130,140]},
+  AMS:  {name:'ams-OSRAM',     sector:'Technologie', color:'#639922', currency:'EUR', austria:true,
+    data:[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,6,8,12,20,10,6,8,6,4,3,3]},
+
+  // ── Energie ─────────────────────────────────────────────
+  XOM:    {name:'ExxonMobil',       sector:'Energie', color:'#A32D2D', currency:'USD',
+    data:[20,21,23,25,40,37,36,33,36,51,56,76,92,56,66,68,72,85,88,96,72,88,82,65,65,33,54,110,105,108,108]},
+  BP:     {name:'BP (Öl/Gas)',      sector:'Energie', color:'#E24B4A', currency:'USD',
+    data:[11,12,13,14,18,24,23,20,18,25,28,35,40,24,27,35,30,28,30,32,25,28,30,27,22,18,22,28,34,36,30]},
+  NEE:    {name:'NextEra (Solar/Wind)',sector:'Energie',color:'#3B6D11',currency:'USD',
+    data:[3,3.5,4,4.5,5,5.5,5,5.5,6,7,9,12,16,13,19,22,29,32,35,43,50,61,74,74,88,77,92,72,75,73,78]},
+  ENPH:   {name:'Enphase (Solar)',  sector:'Energie', color:'#97C459', currency:'USD',
+    data:[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,5,20,170,200,130,130,80,75]},
+  OMV:    {name:'OMV',              sector:'Energie', color:'#CC0000', currency:'EUR', austria:true,
+    data:[null,null,null,null,null,8,7,5,8,14,20,28,42,22,24,26,29,30,34,38,28,35,48,40,42,28,40,55,42,42,50]},
+  VERBUND:{name:'Verbund (Strom)',  sector:'Energie', color:'#FF6666', currency:'EUR', austria:true,
+    data:[null,null,null,null,null,8,7,7,8,10,14,20,28,16,18,19,22,24,28,30,24,28,32,34,42,50,90,65,70,85,90]},
+
+  // ── Finanzen / Banken ────────────────────────────────────
+  ERSTE:{name:'Erste Group Bank',   sector:'Finanzen', color:'#CC0000', currency:'EUR', austria:true,
+    data:[null,null,null,null,null,null,15,12,16,24,32,45,52,14,18,24,28,18,26,28,24,28,32,28,35,22,35,30,35,55,60]},
+  RBI:  {name:'Raiffeisen Bank Intl.',sector:'Finanzen',color:'#E24B4A',currency:'EUR',austria:true,
+    data:[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,28,10,12,14,12,14,18,20,22,12,18,15,18,18,15]},
+
+  // ── Immobilien ──────────────────────────────────────────
+  AMT:    {name:'American Tower (REIT)',sector:'Immobilien',color:'#854F0B',currency:'USD',
+    data:[null,null,null,null,null,null,null,null,null,null,null,18,28,22,34,43,54,66,80,95,95,115,155,151,218,225,267,197,175,180,175]},
+  SPG:    {name:'Simon Property (Shopping)',sector:'Immobilien',color:'#633806',currency:'USD',
+    data:[null,null,20,22,25,28,26,23,28,32,38,55,70,40,60,80,100,145,150,170,180,155,172,138,120,55,130,116,128,140,135]},
+  PLD:    {name:'Prologis (Logistik)',sector:'Immobilien',color:'#EF9F27',currency:'USD',
+    data:[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,28,32,38,48,65,65,85,102,170,112,120,110,105]},
+  WIENERB:{name:'Wienerberger (Bau)', sector:'Immobilien',color:'#FF8C42',currency:'EUR',austria:true,
+    data:[null,null,null,null,null,null,8,5,8,12,18,24,30,10,12,10,12,10,14,16,14,16,20,18,22,18,28,22,26,32,30]},
+
+  // ── Kommunikation ────────────────────────────────────────
+  META:   {name:'Meta (Facebook)',  sector:'Kommunikation',color:'#0C447C',currency:'USD',
+    data:[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,26,55,78,105,115,178,130,209,273,336,120,350,585,640]},
+  NFLX:   {name:'Netflix',          sector:'Kommunikation',color:'#533AB7',currency:'USD',
+    data:[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,49,115,123,191,267,323,540,616,334,445,700,830]},
+  DIS:    {name:'Disney',           sector:'Kommunikation',color:'#7F77DD',currency:'USD',
+    data:[16,18,22,24,28,28,20,14,18,24,24,30,32,22,30,38,38,50,70,90,110,107,108,110,132,170,177,85,88,90,100]},
+  T:      {name:'AT&T',             sector:'Kommunikation',color:'#378ADD',currency:'USD',
+    data:[14,16,17,18,30,18,17,13,16,16,22,27,41,28,25,27,28,33,35,35,33,42,38,30,37,27,26,18,15,18,22]},
+  TELEAT: {name:'A1 Telekom Austria',sector:'Kommunikation',color:'#FF6666',currency:'EUR',austria:true,
+    data:[null,null,null,null,null,null,11,10,10,12,13,14,16,12,10,9,8,6,6,6,7,7,7,7,7,7,8,8,8,9,9]},
+
+  // ── Pharmazie ────────────────────────────────────────────
+  JNJ:  {name:'Johnson & Johnson',  sector:'Pharmazie',color:'#D85A30',currency:'USD',
+    data:[20,22,24,28,35,52,46,50,48,52,60,65,65,58,65,62,66,70,92,105,103,113,140,128,145,153,172,180,148,147,145]},
+  PFE:  {name:'Pfizer',             sector:'Pharmazie',color:'#993C1D',currency:'USD',
+    data:[15,17,22,28,32,46,45,32,29,32,26,27,26,17,18,17,19,25,30,31,32,32,36,42,39,36,61,45,28,25,27]},
+  MRNA: {name:'Moderna',            sector:'Pharmazie',color:'#F0997B',currency:'USD',
+    data:[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,19,150,270,185,95,45,55]},
+  NVO:  {name:'Novo Nordisk (Ozempic)',sector:'Pharmazie',color:'#D4537E',currency:'USD',
+    data:[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,5,6,7,9,12,17,21,28,32,44,53,90,120,100,108,80]},
+
+  // ── Industrie ────────────────────────────────────────────
+  VOEST:  {name:'voestalpine (Stahl)',  sector:'Industrie',color:'#CC0000',currency:'EUR',austria:true,
+    data:[null,null,null,null,null,null,2,2,3,5,9,14,22,8,10,14,22,28,32,36,28,26,30,22,25,20,26,25,24,28,32]},
+  ANDRITZ:{name:'Andritz (Maschinenbau)',sector:'Industrie',color:'#FF6666',currency:'EUR',austria:true,
+    data:[null,null,null,null,null,null,null,null,null,null,8,14,22,12,18,22,30,35,40,48,42,40,42,38,42,32,42,42,50,55,60]},
+  CAT:    {name:'Caterpillar (Baumasch.)',sector:'Industrie',color:'#EF9F27',currency:'USD',
+    data:[18,18,20,22,26,30,22,20,22,30,36,46,70,38,44,60,80,88,90,100,72,92,130,120,138,152,200,230,260,340,360]},
+  GE:     {name:'General Electric',  sector:'Industrie',color:'#4A235A',currency:'USD',
+    data:[12,14,16,20,36,38,26,22,26,32,34,36,38,16,14,16,18,20,22,24,25,28,26,8,10,10,12,8,8,10,15]},
+  SIE:    {name:'Siemens',            sector:'Industrie',color:'#0C447C',currency:'EUR',
+    data:[50,55,62,70,90,70,40,30,45,58,70,80,90,42,58,80,80,70,80,90,90,110,120,90,115,130,150,130,160,180,200]},
+
+  // ── Logistik ─────────────────────────────────────────────
+  POST: {name:'Österr. Post',        sector:'Logistik',color:'#CC0000',currency:'EUR',austria:true,
+    data:[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,25,28,30,32,34,38,36,40,28,40,36,38,38,35]},
+  UPS:  {name:'UPS (Pakete)',        sector:'Logistik', color:'#854F0B',currency:'USD',
+    data:[null,null,null,null,null,50,40,30,30,32,40,46,72,48,52,56,72,72,82,94,96,108,120,102,110,170,195,180,160,140,130]},
+  FDX:  {name:'FedEx',               sector:'Logistik', color:'#4A235A',currency:'USD',
+    data:[30,28,38,44,48,40,28,20,26,38,80,108,90,60,52,78,88,90,120,150,148,178,250,200,195,250,300,220,240,270,280]},
+  MAERSK:{name:'Maersk (Schifffahrt)',sector:'Logistik', color:'#185FA5',currency:'USD',
+    data:[null,null,null,null,null,null,null,null,null,null,null,50,70,30,28,35,40,40,60,100,80,90,120,130,200,260,800,1200,900,850,600]},
+  DHL:  {name:'Deutsche Post/DHL',   sector:'Logistik', color:'#EF9F27',currency:'EUR',
+    data:[null,null,null,null,null,null,null,null,null,null,11,16,22,10,10,12,14,14,18,22,20,25,32,26,32,38,48,38,40,38,30]},
+
+  // ── Rüstung & Verteidigung ───────────────────────────────
+  LMT:  {name:'Lockheed Martin',     sector:'Rüstung',  color:'#1D3461',currency:'USD',
+    data:[null,null,null,null,null,null,null,null,null,null,55,65,90,80,74,78,80,88,130,150,200,240,290,330,360,330,385,400,440,540,520]},
+  NOC:  {name:'Northrop Grumman',    sector:'Rüstung',  color:'#376996',currency:'USD',
+    data:[null,null,null,null,null,null,null,null,null,null,40,50,65,50,45,55,58,62,80,112,160,228,268,300,344,300,374,420,420,480,590]},
+  RTX:  {name:'RTX (Raytheon)',      sector:'Rüstung',  color:'#5B8DB8',currency:'USD',
+    data:[null,null,null,null,null,null,null,null,null,null,22,26,35,28,22,24,28,32,40,48,58,72,80,80,78,56,80,88,95,120,125]},
+  RHM:  {name:'Rheinmetall',         sector:'Rüstung',  color:'#888780',currency:'EUR',
+    data:[null,null,null,null,null,null,null,null,null,null,20,28,35,20,18,22,26,28,32,35,25,30,38,45,58,55,75,130,250,550,1400]},
+  BA:   {name:'Boeing',              sector:'Rüstung',  color:'#0C447C',currency:'USD',
+    data:[26,30,38,40,36,60,36,30,26,44,62,88,96,40,48,66,66,74,88,120,130,178,326,330,360,172,210,145,200,170,170]},
+
+  // ── Gescheitert ──────────────────────────────────────────
+  KODK:{name:'Kodak (historisch)', sector:'Gescheitert',color:'#888780',currency:'USD',
+    data:[55,65,94,75,65,55,40,28,22,28,25,24,22,8,5,3,2,0.5,null,null,null,null,null,null,null,null,null,null,null,null,null]},
+  NOK: {name:'Nokia (historisch)', sector:'Gescheitert',color:'#5F5E5A',currency:'USD',
+    data:[5,8,11,22,45,62,28,14,14,14,18,20,38,12,12,11,8,4,4,8,7,5,5.5,5.5,4,4.5,5,4.5,4.5,4.5,4]},
+};
+
+const EVENTS=[
+  {year:1999,label:'Dotcom-Boom',color:'#3B6D11'},
+  {year:2001,label:'9/11 & Dotcom-Crash',color:'#A32D2D'},
+  {year:2003,label:'Irakkrieg',color:'#854F0B'},
+  {year:2007,label:'iPhone-Launch',color:'#185FA5'},
+  {year:2008,label:'Finanzkrise',color:'#A32D2D'},
+  {year:2009,label:'Obama-Konjunkturpaket',color:'#3B6D11'},
+  {year:2012,label:'Eurokrise',color:'#E24B4A'},
+  {year:2015,label:'Pariser Klimaabkommen',color:'#3B6D11'},
+  {year:2016,label:'Brexit & Trump-Wahl',color:'#BA7517'},
+  {year:2018,label:'US-China Handelskrieg',color:'#A32D2D'},
+  {year:2020,label:'COVID-19 Pandemie',color:'#A32D2D'},
+  {year:2020,label:'Fed: Nullzins',color:'#378ADD'},
+  {year:2021,label:'Impfstoff-Zulassungen',color:'#3B6D11'},
+  {year:2022,label:'Ukraine-Krieg & Inflation',color:'#A32D2D'},
+  {year:2022,label:'Fed/EZB Zinserhöhung',color:'#E24B4A'},
+  {year:2023,label:'KI-Boom (ChatGPT)',color:'#185FA5'},
+  {year:2024,label:'Trump-Wahl 2024',color:'#BA7517'},
+  {year:2025,label:'US-Zölle & Handelskrieg',color:'#A32D2D'},
+];
+
+// Derive unified sector list, AT sectors mapped to matching int sectors where possible
+const SECTORS=['alle',...new Set(Object.values(ALL).map(s=>s.sector))];
+const SCOL={
+  'alle':'#1A3A5C','Technologie':'#185FA5','Energie':'#3B6D11',
+  'Finanzen':'#0C447C','Immobilien':'#854F0B','Kommunikation':'#4A235A',
+  'Pharmazie':'#993C1D','Industrie':'#444441','Logistik':'#EF9F27',
+  'Rüstung':'#1D3461','Gescheitert':'#888780'
+};
+
+let selected=new Set();
+let activeFilter='alle';
+let activeEv=new Set(EVENTS.map((_,i)=>i));
+let allEvOn=true;
+let chartInst=null;
+
+// ── Sector tabs ──────────────────────────────────────────────────────────────
+function initTabs(){
+  document.getElementById('sectorTabs').innerHTML=SECTORS.map(s=>{
+    const atCount=Object.values(ALL).filter(v=>v.sector===s&&v.austria).length;
+    const atBadge=atCount&&s!=='alle'?`<span class="at-pill">🇦🇹 ${atCount}</span>`:'';
+    return`<button class="stab${s==='alle'?' on':''}" style="${s==='alle'?'background:'+SCOL['alle']+';color:#fff':''}"
+      onclick="filterSec('${s}',this)">${s==='alle'?'Alle':s}${atBadge}</button>`;
+  }).join('');
+}
+
+function filterSec(s,btn){
+  activeFilter=s;
+  document.querySelectorAll('#sectorTabs .stab').forEach(b=>{b.classList.remove('on');b.style.background='';b.style.color='';});
+  btn.classList.add('on');
+  btn.style.background=SCOL[s]||SCOL['alle'];
+  btn.style.color='#fff';
+  renderGrid();
+}
+
+// ── Stock grid ───────────────────────────────────────────────────────────────
+function renderGrid(){
+  const entries=Object.entries(ALL).filter(([,v])=>activeFilter==='alle'||v.sector===activeFilter);
+
+  // Group by sector for section headings (only when showing all)
+  let html='';
+  if(activeFilter==='alle'){
+    const bySector={};
+    entries.forEach(([k,v])=>{
+      if(!bySector[v.sector]) bySector[v.sector]=[];
+      bySector[v.sector].push([k,v]);
+    });
+    Object.entries(bySector).forEach(([sec,items])=>{
+      const atCnt=items.filter(([,v])=>v.austria).length;
+      const badge=atCnt?` <span style="font-size:9px;color:#CC0000">🇦🇹 ${atCnt}</span>`:'';
+      html+=`<div class="sec-heading">${sec}${badge}</div>`;
+      html+=items.map(([k,v])=>stockBtn(k,v)).join('');
+    });
+  } else {
+    // Within a sector, show AT first, then international
+    const atItems=entries.filter(([,v])=>v.austria);
+    const intItems=entries.filter(([,v])=>!v.austria);
+    if(atItems.length){
+      html+=`<div class="sec-heading">🇦🇹 Österreich (EUR)</div>`;
+      html+=atItems.map(([k,v])=>stockBtn(k,v)).join('');
+      if(intItems.length) html+=`<div class="sec-heading">International (USD)</div>`;
+    }
+    html+=intItems.map(([k,v])=>stockBtn(k,v)).join('');
+  }
+  document.getElementById('stockGrid').innerHTML=html;
+  updateSelCount();
+}
+
+function stockBtn(k,v){
+  const isSel=selected.has(k);
+  const atCls=v.austria?' at':'';
+  const selStyle=isSel?`border-color:${v.color};color:${v.color};background:${v.color}15`:'';
+  return`<button class="sbtn${atCls}${isSel?' sel':''}" id="sb_${k}"
+    style="${selStyle}" onclick="toggleStock('${k}')">
+    <span class="sw" style="background:${v.color}"></span>
+    <span class="slabel">${v.name}</span>
+    ${v.austria?`<span class="sflag">🇦🇹</span>`:''}
+  </button>`;
+}
+
+function updateSelCount(){
+  document.getElementById('selCount').textContent=selected.size?`${selected.size} ausgewählt`:'0 ausgewählt';
+}
+
+function toggleStock(k){
+  selected.has(k)?selected.delete(k):selected.add(k);
+  renderGrid(); renderChart(); renderStats();
+}
+
+function clearAll(){
+  selected.clear(); renderGrid(); renderChart(); renderStats();
+}
+
+// ── Presets ──────────────────────────────────────────────────────────────────
+function preset(id){
+  const P={
+    crisis: {keys:['AAPL','AMZN','XOM','JNJ','SPG','KODK','ERSTE','OMV'],f:8,t:16},
+    covid:  {keys:['TSLA','MRNA','NFLX','XOM','SPG','NEE','VERBUND'],f:23,t:28},
+    energy: {keys:['XOM','BP','NEE','ENPH','OMV','VERBUND','TSLA'],f:15,t:30},
+    pharma: {keys:['JNJ','PFE','MRNA','NVO','MSFT','META'],f:18,t:30},
+    austria:{keys:['OMV','VERBUND','ERSTE','RBI','VOEST','ANDRITZ','WIENERB','POST'],f:10,t:30},
+    defense:{keys:['LMT','NOC','RTX','RHM','BA'],f:8,t:30},
+  };
+  const p=P[id]; if(!p) return;
+  selected=new Set(p.keys);
+  document.getElementById('yearFrom').value=p.f;
+  document.getElementById('yearTo').value=p.t;
+  updateRange(); renderGrid(); renderChart(); renderStats();
+}
+
+// ── Range ────────────────────────────────────────────────────────────────────
+function updateRange(){
+  let f=parseInt(document.getElementById('yearFrom').value);
+  let t=parseInt(document.getElementById('yearTo').value);
+  if(t<=f){t=Math.min(f+1,30);document.getElementById('yearTo').value=t;}
+  document.getElementById('yfv').textContent=YEARS[f];
+  document.getElementById('ytv').textContent=YEARS[t];
+  renderChart();
+}
+
+// ── Events ───────────────────────────────────────────────────────────────────
+function initEvList(){
+  document.getElementById('evList').innerHTML=EVENTS.map((e,i)=>`
+    <label class="ev-row">
+      <input type="checkbox" id="ec${i}" checked onchange="toggleEv(${i},this)">
+      <span class="ev-dot" style="background:${e.color}"></span>
+      <span>${e.year}: ${e.label}</span>
+    </label>`).join('');
+}
+function toggleEv(i,el){activeEv[el.checked?'add':'delete'](i);syncEvBtn();renderOverlay();}
+function toggleEvPanel(){const p=document.getElementById('evPanel');p.style.display=p.style.display==='none'?'block':'none';}
+function setAllEv(on){EVENTS.forEach((_,i)=>{activeEv[on?'add':'delete'](i);const c=document.getElementById('ec'+i);if(c)c.checked=on;});allEvOn=on;syncEvBtn();renderOverlay();}
+function toggleAllEv(){setAllEv(!allEvOn);}
+function syncEvBtn(){allEvOn=activeEv.size===EVENTS.length;document.getElementById('evToggleBtn').textContent=allEvOn?'Alle aus':'Alle an';}
+
+// ── Chart ────────────────────────────────────────────────────────────────────
+function getRange(){return{f:parseInt(document.getElementById('yearFrom').value),t:parseInt(document.getElementById('yearTo').value)};}
+
+function renderChart(){
+  const {f,t}=getRange();
+  const mode=document.getElementById('scaleMode').value;
+  const notes={
+    indexed:'Indexiert: Alle Kurse starten bei 100 – direkter Vergleich. 🇦🇹 in EUR (gestrichelt), übrige in USD.',
+    absolute:'Absolut: Originalwährung (EUR 🇦🇹 / USD) – Preisunterschiede wirken sich auf die Y-Achse aus.',
+    log:'Logarithmisch: Gleiche prozentuale Veränderungen erscheinen als gleich große Abstände.'
+  };
+  document.getElementById('scaleNote').textContent=notes[mode];
+
+  const sel=Array.from(selected);
+  document.getElementById('emptyMsg').style.display=sel.length?'none':'block';
+  document.getElementById('chartWrap').style.display=sel.length?'block':'none';
+  if(!sel.length) return;
+
+  const labels=YEARS.slice(f,t+1);
+  const datasets=sel.map(k=>{
+    const s=ALL[k];
+    const raw=s.data.slice(f,t+1);
+    let vals=raw;
+    if(mode==='indexed'){
+      const base=raw.find(v=>v!=null);
+      if(base) vals=raw.map(v=>v==null?null:+(v/base*100).toFixed(2));
+    }
+    return{
+      label:s.name+(s.austria?' 🇦🇹':''),
+      data:vals,
+      borderColor:s.color,
+      backgroundColor:'transparent',
+      tension:.35,pointRadius:2,pointHoverRadius:5,
+      fill:false,spanGaps:false,borderWidth:2.5,
+      borderDash:s.austria?[5,3]:undefined
+    };
+  });
+
+  if(chartInst) chartInst.destroy();
+  chartInst=new Chart(document.getElementById('chart').getContext('2d'),{
+    type:'line',data:{labels,datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      layout:{padding:{top:8}},
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:c=>{
+          const v=c.raw; if(v==null) return null;
+          const s=ALL[sel[c.datasetIndex]];
+          if(mode==='indexed') return `${c.dataset.label}: ${Math.round(v)} Pkt`;
+          return `${c.dataset.label}: ${s.currency} ${v<10?v.toFixed(2):Math.round(v).toLocaleString('de-DE')}`;
+        }}}
+      },
+      scales:{
+        x:{grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{size:10},maxRotation:0,
+          callback:(v,i)=>{const y=labels[i];return y%5===0||labels.length<=10?y:''}}},
+        y:{type:mode==='log'?'logarithmic':'linear',
+          grid:{color:'rgba(0,0,0,0.04)'},
+          ticks:{font:{size:10},callback:v=>{
+            if(mode==='indexed') return Math.round(v)+'';
+            return v>=1000?Math.round(v/1000)+'k':v;
+          }}}
+      }
+    }
+  });
+  renderLegend(sel);
+  renderOverlay();
+}
+
+function renderLegend(sel){
+  document.getElementById('legend').innerHTML=sel.map(k=>{
+    const s=ALL[k];
+    const dash=s.austria?`repeating-linear-gradient(90deg,${s.color} 0,${s.color} 5px,transparent 5px,transparent 8px)`:`${s.color}`;
+    return`<div class="leg-i">
+      <div class="leg-swatch" style="background:${s.austria?'none':s.color};${s.austria?`background-image:repeating-linear-gradient(90deg,${s.color} 0,${s.color} 5px,transparent 5px,transparent 8px)`:''};height:3px;width:22px;border-radius:1px"></div>
+      <span>${s.name}${s.austria?' 🇦🇹':''}</span>
+      <span style="font-size:9px;color:#888780">${s.sector}</span>
+    </div>`;
+  }).join('');
+}
+
+// ── Event overlay ─────────────────────────────────────────────────────────────
+function renderOverlay(){
+  const el=document.getElementById('evTimeline');
+  if(!document.getElementById('showEv').checked||!chartInst){el.innerHTML='';return;}
+  const {f,t}=getRange();
+  const labels=YEARS.slice(f,t+1);
+  const ca=chartInst.chartArea;
+  if(!ca){setTimeout(renderOverlay,200);return;}
+
+  const xLeft=ca.left, W=ca.right-ca.left, n=labels.length;
+  const step=W/Math.max(n-1,1);
+
+  const byIdx={};
+  EVENTS.forEach((ev,i)=>{
+    if(!activeEv.has(i)) return;
+    const xi=labels.indexOf(ev.year);
+    if(xi===-1) return;
+    (byIdx[xi]||(byIdx[xi]=[])).push(ev);
+  });
+
+  if(!Object.keys(byIdx).length){el.innerHTML='';return;}
+  const maxR=Math.max(...Object.values(byIdx).map(a=>a.length));
+  const RH=18,TH=6;
+
+  let html=`<div style="position:relative;height:${TH+maxR*RH+4}px;margin-top:3px;overflow:visible">`;
+  Object.entries(byIdx).forEach(([xi,evs])=>{
+    const x=xLeft+parseInt(xi)*step;
+    html+=`<div style="position:absolute;left:${x}px;top:0;width:1.5px;height:${TH}px;background:${evs[0].color};opacity:.8"></div>`;
+    evs.forEach((ev,r)=>{
+      html+=`<div style="position:absolute;left:${x}px;top:${TH+r*RH}px;transform:translateX(-50%);
+        background:${ev.color};color:#fff;font-size:9.5px;white-space:nowrap;
+        padding:2px 6px;border-radius:3px;line-height:${RH-3}px;z-index:10;
+        box-shadow:0 1px 3px rgba(0,0,0,.2)">${ev.year}: ${ev.label}</div>`;
+    });
+  });
+  html+='</div>';
+  el.innerHTML=html;
+}
+
+// ── Stats ─────────────────────────────────────────────────────────────────────
+function renderStats(){
+  const {f,t}=getRange();
+  const sel=Array.from(selected);
+  const el=document.getElementById('stats');
+  if(!sel.length){el.innerHTML='';return;}
+  el.innerHTML=sel.map(k=>{
+    const s=ALL[k];
+    const sl=s.data.slice(f,t+1).filter(v=>v!=null);
+    if(sl.length<2) return`<div class="sc${s.austria?' at-sc':''}"><div class="sn">${s.name}${s.austria?' 🇦🇹':''}</div><div class="sv" style="color:${s.color}">–</div><div class="ss">keine Daten</div></div>`;
+    const sv=sl[0],ev=sl[sl.length-1];
+    const pct=((ev-sv)/sv*100).toFixed(0);
+    const col=+pct>0?'#1E8449':'#A32D2D';
+    return`<div class="sc${s.austria?' at-sc':''}">
+      <div class="sn">${s.name}${s.austria?' 🇦🇹':''}</div>
+      <div class="sv" style="color:${col}">${+pct>0?'+':''}${pct}%</div>
+      <div class="ss">${s.currency} ${sv<10?sv.toFixed(2):Math.round(sv)} → ${s.currency} ${ev<10?ev.toFixed(2):Math.round(ev)}</div>
+    </div>`;
+  }).join('');
+}
+
+window.addEventListener('resize',()=>{if(chartInst) renderOverlay();});
+initTabs(); renderGrid(); initEvList(); renderChart();
+</script>
+</body>
+</html>
